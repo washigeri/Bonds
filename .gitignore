@@ -4,3 +4,5 @@ Bonds.csproj
 Temp/
 .vs/
 etc/
+Assembly-CSharp.csproj
+obj/
