@@ -30,6 +30,7 @@ public class CameraController : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        cameraSpeed = 5;
         Vector2 player1Pos = player1.transform.position;
         camTransform.position = new Vector3(player1Pos.x, player1Pos.y, zOffset);
         cameraHeight = Camera.main.orthographicSize * 2f;
