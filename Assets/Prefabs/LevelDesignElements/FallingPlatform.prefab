@@ -25,7 +25,7 @@ GameObject:
   - component: {fileID: 50924217543844222}
   - component: {fileID: 114398147996862092}
   - component: {fileID: 251207603037331844}
-  m_Layer: 12
+  m_Layer: 13
   m_Name: FallingPlatform
   m_TagString: ground
   m_Icon: {fileID: 0}
@@ -153,7 +153,7 @@ PlatformEffector2D:
   m_UseColliderMask: 1
   m_ColliderMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 4294966783
   m_RotationalOffset: 0
   m_UseOneWay: 0
   m_UseOneWayGrouping: 0

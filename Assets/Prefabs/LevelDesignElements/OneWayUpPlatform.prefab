@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 23111026366593574}
   - component: {fileID: 61299820839810622}
   - component: {fileID: 251996813309714404}
-  m_Layer: 12
+  m_Layer: 13
   m_Name: OneWayUpPlatform
   m_TagString: ground
   m_Icon: {fileID: 0}
@@ -37,7 +37,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1906478672892110}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5, y: 3, z: 0}
+  m_LocalPosition: {x: 2.5, y: 3, z: 0}
   m_LocalScale: {x: 4, y: 0.5, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
@@ -119,7 +119,7 @@ PlatformEffector2D:
   m_UseColliderMask: 1
   m_ColliderMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 4294966783
   m_RotationalOffset: 0
   m_UseOneWay: 1
   m_UseOneWayGrouping: 0

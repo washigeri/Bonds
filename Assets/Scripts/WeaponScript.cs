@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class WeaponScript : MonoBehaviour {
+public abstract class WeaponScript : MonoBehaviour {
 
     public int damage;
     public int range;
@@ -24,7 +24,7 @@ public class WeaponScript : MonoBehaviour {
             if (handScript.isAttacking)
             {
                 collision.gameObject.GetComponent<EnemyController>().RemoveHealth(this.damage);
-                StartCoroutine(changeText());
+                StartCoroutine(ChangeText());
             }
            
         }
@@ -37,7 +37,7 @@ public class WeaponScript : MonoBehaviour {
         this.defaultText = this.textInfo.text;
 	}
 
-    private IEnumerator changeText()
+    private IEnumerator ChangeText()
     {
         this.textInfo.text = "Hit !";
         this.textInfo.color = new Color(1, 0, 0);
@@ -46,5 +46,11 @@ public class WeaponScript : MonoBehaviour {
         this.textInfo.color = new Color(1, 1, 1);
         yield break;
     }
+
+    protected abstract IEnumerator WeakAttack();
+
+    protected abstract IEnumerator StrongAttack();
+
+    protected abstract IEnumerator Skill();
 	
 }
