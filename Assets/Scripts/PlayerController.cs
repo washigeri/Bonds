@@ -10,6 +10,8 @@ public abstract class PlayerController : MonoBehaviour
     public float moveForce = 365f;
     public float maxSpeed = 5f;
     public Transform playerTransform;
+    protected float dirH;
+    protected float dirV;
 
     public Rigidbody2D rb2d;
 

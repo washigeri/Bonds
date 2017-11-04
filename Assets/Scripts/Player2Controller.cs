@@ -5,7 +5,9 @@ using UnityEngine;
 public class Player2Controller : PlayerController
 {
 
-    public bool isDashing = false;
+    private bool isDashing = false;
+    private bool isDashOnCoolDown = false;
+    public float dashAcceleration = 5f;
 
     // Use this for initialization
     protected override void Awake()
@@ -17,9 +19,9 @@ public class Player2Controller : PlayerController
     // Update is called once per frame
     protected override void Update()
     {
-        if (Input.GetButtonDown("Dash") && !isDashing)
+        if (Input.GetButtonDown("Dash") && !isDashOnCoolDown)
         {
-            isDashing = true;
+            StartCoroutine(Dash());
         }
     }
 
@@ -30,8 +32,8 @@ public class Player2Controller : PlayerController
 
     private void Move()
     {
-        float dirH = Input.GetAxisRaw("HorizontalP2");
-        float dirV = Input.GetAxisRaw("VerticalP2");
+        dirH = Input.GetAxisRaw("HorizontalP2");
+        dirV = Input.GetAxisRaw("VerticalP2");
         if (CanMoveH(dirH, isDashing))
         {
             if (dirH * rb2d.velocity.x < maxSpeed)
@@ -75,6 +77,21 @@ public class Player2Controller : PlayerController
         {
             rb2d.velocity = new Vector2(rb2d.velocity.x, 0);
         }
+    }
+
+    IEnumerator Dash()
+    {
+        isDashing = true;
+        maxSpeed *= dashAcceleration;
+        rb2d.velocity = 10f * rb2d.velocity;
+        rb2d.AddForce((faceRight ? 1 : -1) * new Vector2(dirH, dirV), ForceMode2D.Impulse);
+        isDashOnCoolDown = true;
+        yield return new WaitForSeconds(0.1f);
+        isDashing = false;
+        maxSpeed /= dashAcceleration;
+        yield return new WaitForSeconds(0.5f);
+        isDashOnCoolDown = false;
+        yield return null;
     }
 
 

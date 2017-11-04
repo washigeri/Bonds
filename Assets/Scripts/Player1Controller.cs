@@ -14,6 +14,12 @@ public class Player1Controller : PlayerController
     public bool grounded = false;
 
 
+    protected override void Awake()
+    {
+        dirV = 0f;
+        base.Awake();
+    }
+
     //Update is called once per frame
     protected override void Update()
     {
@@ -36,7 +42,7 @@ public class Player1Controller : PlayerController
 
     private void Move()
     {
-        float dirH = Input.GetAxisRaw("HorizontalP1");
+        dirH = Input.GetAxisRaw("HorizontalP1");
         if (CanMoveH(dirH, !grounded))
         {
             if (grounded && Input.GetButtonUp("HorizontalP1"))
@@ -92,7 +98,6 @@ public class Player1Controller : PlayerController
                     rb2d.velocity = new Vector2(rb2d.velocity.x, 0f);
                 }
             }
-
         }
     }
 
