@@ -24,8 +24,6 @@ public class Player1Controller : PlayerController
     protected override void Update()
     {
         grounded = Physics2D.Linecast(transform.position, groundCheck.position, 1 << LayerMask.NameToLayer("Ground"));
-
-
         CameraController.isGrounded = grounded;
         CameraController.isLanding = (rb2d.velocity.y < 0f);
 

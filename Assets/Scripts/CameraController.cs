@@ -10,6 +10,7 @@ public class CameraController : MonoBehaviour
     public GameObject player1;
     public GameObject player2;
     public float zOffset;
+    public float yOffset;
     public float cameraSpeed;
 
     [HideInInspector] public static double cameraWidth;
@@ -25,14 +26,14 @@ public class CameraController : MonoBehaviour
     private float distToCenterP2Y;
     private bool isXAligned;
     private bool isYAligned;
-    private float yOffset;
+    private float yCamera;
 
     // Use this for initialization
     void Start()
     {
         cameraSpeed = 5;
         Vector2 player1Pos = player1.transform.position;
-        camTransform.position = new Vector3(player1Pos.x, player1Pos.y, zOffset);
+        camTransform.position = new Vector3(player1Pos.x, player1Pos.y + yOffset, zOffset);
         cameraHeight = Camera.main.orthographicSize * 2f;
         cameraWidth = cameraHeight * Camera.main.aspect;
         xMaxDist = cameraWidth / 2 - 0.5;
@@ -62,7 +63,7 @@ public class CameraController : MonoBehaviour
     {
         Vector3 newCameraPosition = camTransform.position;
         isXAligned = (Mathf.Abs(player1.transform.position.x - newCameraPosition.x) < 0.5f);
-        isYAligned = (Mathf.Abs(player1.transform.position.y - newCameraPosition.y) < 0.5f);
+        isYAligned = (Mathf.Abs(player1.transform.position.y - (newCameraPosition.y - yOffset)) < 0.5f);
         float distToCenterUpdatedP2X = player2.transform.position.x - camTransform.position.x;
         float distToCenterUpdatedP1X = player1.transform.position.x - camTransform.position.x;
         float distToCenterUpdatedP2Y = player2.transform.position.y - camTransform.position.y;
@@ -78,13 +79,13 @@ public class CameraController : MonoBehaviour
             {
                 if (OnSameSideOfCamera())
                 {
-                    newCameraPosition = Vector3.MoveTowards(newCameraPosition, new Vector3(player1.transform.position.x, newCameraPosition.y, zOffset), Time.deltaTime * cameraSpeed);
+                    newCameraPosition = Vector3.MoveTowards(newCameraPosition, new Vector3(player1.transform.position.x, newCameraPosition.y + yOffset, zOffset), Time.deltaTime * cameraSpeed);
                 }
                 else
                 {
                     if (Mathf.Abs(distToCenterUpdatedP2X) < Mathf.Abs(distToCenterP2X))
                     {
-                        newCameraPosition = Vector3.MoveTowards(newCameraPosition, new Vector3(player1.transform.position.x, newCameraPosition.y, zOffset), Time.deltaTime * cameraSpeed);
+                        newCameraPosition = Vector3.MoveTowards(newCameraPosition, new Vector3(player1.transform.position.x, newCameraPosition.y + yOffset, zOffset), Time.deltaTime * cameraSpeed);
                     }
                 }
             }
@@ -93,7 +94,7 @@ public class CameraController : MonoBehaviour
         {
             if (Mathf.Abs(distToCenterUpdatedP2X) < Mathf.Abs(distToCenterP2X))
             {
-                newCameraPosition = Vector3.MoveTowards(newCameraPosition, new Vector3(player1.transform.position.x, newCameraPosition.y, zOffset), Time.deltaTime * cameraSpeed);
+                newCameraPosition = Vector3.MoveTowards(newCameraPosition, new Vector3(player1.transform.position.x, newCameraPosition.y + yOffset, zOffset), Time.deltaTime * cameraSpeed);
             }
         }
 
@@ -102,23 +103,23 @@ public class CameraController : MonoBehaviour
             if (isGrounded)
             {
                 float playerY = player1.transform.position.y;
-                if(playerY != yOffset)
+                if(playerY != yCamera - yOffset)
                 {
-                    newCameraPosition = Vector3.MoveTowards(newCameraPosition, new Vector3(newCameraPosition.x, playerY, zOffset), Time.deltaTime * cameraSpeed);
-                    yOffset = newCameraPosition.y;
+                    newCameraPosition = Vector3.MoveTowards(newCameraPosition, new Vector3(newCameraPosition.x, playerY + yOffset, zOffset), Time.deltaTime * cameraSpeed);
+                    yCamera = newCameraPosition.y;
                 }
             }
-            else if (isLanding && newCameraPosition.y > player1.transform.position.y)
+            else if (isLanding && newCameraPosition.y > player1.transform.position.y + yOffset)
             {
-                newCameraPosition.y = player1.transform.position.y;
+                newCameraPosition.y = player1.transform.position.y + yOffset;
             }
         }
         else
         {
             if (Mathf.Abs(distToCenterUpdatedP2Y) < Mathf.Abs(distToCenterP2Y))
             {
-                newCameraPosition = Vector3.MoveTowards(newCameraPosition, new Vector3(newCameraPosition.x, player1.transform.position.y, zOffset), Time.deltaTime * cameraSpeed);
-                yOffset = newCameraPosition.y;
+                newCameraPosition = Vector3.MoveTowards(newCameraPosition, new Vector3(newCameraPosition.x, player1.transform.position.y + yOffset, zOffset), Time.deltaTime * cameraSpeed);
+                yCamera = newCameraPosition.y;
             }
         }
 
