@@ -13,6 +13,7 @@ public abstract class PlayerController : MonoBehaviour
     public float maxSpeed = 5f;
     public Transform playerTransform;
 
+    private int maxHp;
     protected int hp;
     protected int agility;
     protected int strengh;
@@ -27,7 +28,8 @@ public abstract class PlayerController : MonoBehaviour
     protected virtual void Awake()
     {
         rb2d = GetComponent<Rigidbody2D>();
-        hp = 50;
+        maxHp = 10;
+        hp = maxHp;
         agility = 1;
         strengh = 1;
         stamina = 1;
@@ -152,6 +154,11 @@ public abstract class PlayerController : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void RestaureHealth(int health)
+    {
+        hp = Mathf.Min(hp + health, maxHp);
     }
 
     public void RemoveHealth(int health)

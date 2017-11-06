@@ -8,6 +8,9 @@ public class GameManager : MonoBehaviour
 
     [HideInInspector] public static GameObject player1;
     [HideInInspector] public static GameObject player2;
+    [HideInInspector] public static int potionNumber;
+    [HideInInspector] public static int maxPotion;
+    [HideInInspector] public static float potionHeal;
 
     public static GameManager gameManager;
 
@@ -25,6 +28,9 @@ public class GameManager : MonoBehaviour
         }
         player1 = GameObject.FindGameObjectWithTag("Player1");
         player2 = GameObject.FindGameObjectWithTag("Player2");
+        potionNumber = 0;
+        maxPotion = 5;
+        potionHeal = 0.5f;
         Physics2D.IgnoreLayerCollision(8, 9, true);
         Physics2D.IgnoreLayerCollision(9, 10, true);
     }
@@ -32,6 +38,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(potionNumber);
         if (player1.GetComponent<Player1Controller>().getHealth() <= 0)
         {
             Debug.Log("You lost, Player 1 died.");
