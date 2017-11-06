@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public abstract class WeaponController : MonoBehaviour {
+public abstract class WeaponController : MonoBehaviour
+{
 
     public int damage;
     public int range;
     public int speed;
-    protected float globalCD = 0.25f; 
+    protected float globalCD = 0.25f;
     protected bool isAttacking = false;
     protected bool isOnGlobalCoolDown = false;
     protected PolygonCollider2D pCollider2D;
@@ -16,10 +17,13 @@ public abstract class WeaponController : MonoBehaviour {
     protected float strongCD;
     protected float skillCD;
     protected string enemyTag;
-  
+    protected string weakName;
+    protected string strongName;
+    protected string skillName;
+
     protected void OnTriggerEnter2D(Collider2D collision)
     {
-        if(!isOnGlobalCoolDown)
+        if (!isOnGlobalCoolDown)
         {
             if (isAttacking)
             {
@@ -32,14 +36,44 @@ public abstract class WeaponController : MonoBehaviour {
     }
 
     // Use this for initialization
-    protected virtual void Awake () {
+    protected virtual void Awake()
+    {
         pCollider2D = GetComponent<PolygonCollider2D>();
-        enemyTag = transform.root.CompareTag("Player2") ? "Spirit" : "Enemy";
+        if (transform.root.CompareTag("Player1"))
+        {
+            enemyTag = "Enemy";
+            weakName = "WeakP1";
+            strongName = "StrongP1";
+            skillName = "SkillP1";
+        }
+        else
+        {
+            enemyTag = "Spirit";
+            weakName = "WeakP2";
+            strongName = "StrongP2";
+            skillName = "SkillP2";
+        }
     }
 
     protected virtual void Update()
     {
         pCollider2D.enabled = !isOnGlobalCoolDown && isAttacking;
+
+        if (!isOnGlobalCoolDown && !isAttacking)
+        {
+            if (Input.GetButtonDown(weakName))
+            {
+                StartCoroutine(WeakAttack());
+            }
+            else if (Input.GetButtonDown(strongName))
+            {
+                StartCoroutine(StrongAttack());
+            }
+            else if (Input.GetButtonDown(skillName))
+            {
+                StartCoroutine(Skill());
+            }
+        }
     }
 
     protected abstract IEnumerator WeakAttack();
@@ -47,5 +81,5 @@ public abstract class WeaponController : MonoBehaviour {
     protected abstract IEnumerator StrongAttack();
 
     protected abstract IEnumerator Skill();
-	
+
 }

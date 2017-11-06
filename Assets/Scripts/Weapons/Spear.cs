@@ -5,21 +5,9 @@ using UnityEngine;
 public class Spear : WeaponController
 {
 
-    // Update is called once per frame
-    protected override void Update()
-    {
-        base.Update();
-        if (!isOnGlobalCoolDown && !isAttacking)
-        {
-            if (Input.GetButtonDown("Fire1"))
-            {
-                StartCoroutine(WeakAttack());
-            }
-        }
-    }
-
     protected override IEnumerator WeakAttack()
     {
+        Debug.Log("Weak attack");
         isAttacking = true;
         yield return new WaitForSeconds(0.25f);
         isAttacking = false;
@@ -30,11 +18,14 @@ public class Spear : WeaponController
 
     protected override IEnumerator StrongAttack()
     {
+        Debug.Log("Strong attack");
         yield return new WaitForSeconds(0f);
     }
 
     protected override IEnumerator Skill()
     {
+        Debug.Log("Skill");
         yield return new WaitForSeconds(0f);
     }
+
 }

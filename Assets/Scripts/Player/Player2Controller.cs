@@ -8,11 +8,13 @@ public class Player2Controller : PlayerController
     private bool isDashing = false;
     private bool isDashOnCoolDown = false;
     public float dashAcceleration = 5f;
+    private float dashCoolDown = 0.25f;
 
     // Use this for initialization
     protected override void Awake()
     {
         base.Awake();
+        isPlayer1 = false;
         rb2d.gravityScale = 0f;
     }
 
@@ -42,9 +44,12 @@ public class Player2Controller : PlayerController
                 rb2d.AddForce(Vector2.right * dirH * moveForce);
             }
 
-            if (Mathf.Abs(rb2d.velocity.x) > maxSpeed)
+            if (!isDashing)
             {
-                rb2d.velocity = new Vector2(Mathf.Sign(rb2d.velocity.x) * maxSpeed, rb2d.velocity.y);
+                if (Mathf.Abs(rb2d.velocity.x) > maxSpeed)
+                {
+                    rb2d.velocity = new Vector2(Mathf.Sign(rb2d.velocity.x) * maxSpeed, rb2d.velocity.y);
+                }
             }
 
             if (dirH > 0 && !faceRight)
@@ -69,10 +74,14 @@ public class Player2Controller : PlayerController
                 rb2d.AddForce(Vector2.up * dirV * moveForce);
             }
 
-            if (Mathf.Abs(rb2d.velocity.y) > maxSpeed)
+            if (!isDashing)
             {
-                rb2d.velocity = new Vector2(rb2d.velocity.x, Mathf.Sign(rb2d.velocity.y) * maxSpeed);
+                if (Mathf.Abs(rb2d.velocity.y) > maxSpeed)
+                {
+                    rb2d.velocity = new Vector2(rb2d.velocity.x, Mathf.Sign(rb2d.velocity.y) * maxSpeed);
+                }
             }
+           
         }
         else
         {
@@ -90,7 +99,7 @@ public class Player2Controller : PlayerController
         yield return new WaitForSeconds(0.1f);
         isDashing = false;
         maxSpeed /= dashAcceleration;
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(dashCoolDown);
         isDashOnCoolDown = false;
         yield return null;
     }

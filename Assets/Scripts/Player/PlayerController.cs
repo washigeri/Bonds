@@ -7,6 +7,7 @@ public abstract class PlayerController : MonoBehaviour
 
     [HideInInspector] public bool faceRight = true;
     [HideInInspector] public bool isDead = false;
+    protected bool isPlayer1;
 
     public float moveForce = 365f;
     public float maxSpeed = 5f;

@@ -17,6 +17,7 @@ public class Player1Controller : PlayerController
     protected override void Awake()
     {
         dirV = 0f;
+        isPlayer1 = true;
         base.Awake();
     }
 
