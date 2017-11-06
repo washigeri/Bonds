@@ -15,10 +15,6 @@ public abstract class WeaponController : MonoBehaviour {
     protected float weakCD;
     protected float strongCD;
     protected float skillCD;
-
-    public Text textInfo;
-
-    private string defaultText;
   
     protected void OnTriggerEnter2D(Collider2D collision)
     {

@@ -15,7 +15,6 @@ public class Spear : WeaponController
             {
                 StartCoroutine(WeakAttack());
             }
-            
         }
     }
 
@@ -24,7 +23,6 @@ public class Spear : WeaponController
         isAttacking = true;
         yield return new WaitForSeconds(0.25f);
         isAttacking = false;
-        //TODO: Faire une pause correspondant à la vitesse de l'arme
         isOnGlobalCoolDown = true;
         yield return new WaitForSeconds(globalCD);
         isOnGlobalCoolDown = false;

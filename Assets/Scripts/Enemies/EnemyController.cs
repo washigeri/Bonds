@@ -10,14 +10,19 @@ public abstract class EnemyController : MonoBehaviour
     [HideInInspector] public bool faceRight = false;
 
     public Transform enemyTransform;
-    public Transform targetTransform;
     public LayerMask layerMask;
 
+    protected GameObject player;
+    protected Transform targetTransform;
+    protected bool isSpirit;
+
+    protected float attackCD;
+    protected bool isOnCD;
 
     protected float health;
     protected float attackRange;
     protected float speed;
-    protected float damage;
+    protected int damage;
     protected float detectionRange;
     protected bool canAttack = false;
     protected bool hasATarget = false;
@@ -27,8 +32,6 @@ public abstract class EnemyController : MonoBehaviour
     {
         health -= loss;
     }
-
-
 
     // Update is called once per frame
     protected virtual void Update()
@@ -42,14 +45,17 @@ public abstract class EnemyController : MonoBehaviour
         {
             int dirToLook = (targetTransform.position.x > enemyTransform.position.x) ? 1 : -1;
             Vector2 end;
-            if(Mathf.Abs(enemyTransform.position.x - targetTransform.position.x) <= detectionRange)
+            if (Mathf.Abs(enemyTransform.position.x - targetTransform.position.x) <= detectionRange || hasATarget)
             {
                 end = new Vector2(enemyTransform.position.x + detectionRange * dirToLook, enemyTransform.position.y);
-                RaycastHit2D hit = Physics2D.Raycast(enemyTransform.position, Vector2.right * dirToLook, detectionRange, ~layerMask);
-                Debug.DrawRay(enemyTransform.position, Vector2.right * dirToLook * detectionRange, Color.green);
-                if (hit.collider != null)
+                RaycastHit2D hit = Physics2D.Raycast(enemyTransform.position, Vector2.right * dirToLook, (hasATarget ? Mathf.Infinity : detectionRange), ~layerMask);
+                if (hasATarget && !player.GetComponent<Player1Controller>().grounded)
                 {
-                    hasATarget = hit.collider.CompareTag("Player1");
+                    hasATarget = true;
+                }
+                else if (hit.collider != null)
+                {
+                    hasATarget = hit.collider.CompareTag(player.tag);
                 }
                 else
                 {
@@ -63,10 +69,13 @@ public abstract class EnemyController : MonoBehaviour
             if (hasATarget)
             {
                 end = new Vector2(enemyTransform.position.x + attackRange * dirToLook, enemyTransform.position.y);
-                canAttack = Physics2D.Linecast(enemyTransform.position, end, 1 << LayerMask.NameToLayer("Player1"));
+                canAttack = Physics2D.Linecast(enemyTransform.position, end, 1 << LayerMask.NameToLayer(player.tag));
                 if (canAttack)
                 {
-                    StartCoroutine(Attack());
+                    if (!isOnCD)
+                    {
+                        StartCoroutine(Attack());
+                    }
                 }
                 else
                 {

@@ -101,7 +101,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   faceRight: 1
   enemyTransform: {fileID: 4021968332097064}
-  targetTransform: {fileID: 0}
   layerMask:
     serializedVersion: 2
     m_Bits: 17920

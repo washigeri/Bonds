@@ -6,10 +6,17 @@ public abstract class PlayerController : MonoBehaviour
 {
 
     [HideInInspector] public bool faceRight = true;
+    [HideInInspector] public bool isDead = false;
 
     public float moveForce = 365f;
     public float maxSpeed = 5f;
     public Transform playerTransform;
+
+    protected int hp;
+    protected int agility;
+    protected int strengh;
+    protected int stamina;
+
     protected float dirH;
     protected float dirV;
 
@@ -19,18 +26,25 @@ public abstract class PlayerController : MonoBehaviour
     protected virtual void Awake()
     {
         rb2d = GetComponent<Rigidbody2D>();
+        hp = 10;
+        agility = 1;
+        strengh = 1;
+        stamina = 1;
     }
 
-    protected abstract void Update();
+    protected virtual void Update()
+    {
+        isDead = (hp <= 0);
+    }
 
     protected abstract void FixedUpdate();
 
     protected float GetAxisRaw(string axis, float dir)
     {
-        
+
         if (Input.GetButtonDown(axis))
         {
-            if(dir == 0f)
+            if (dir == 0f)
             {
                 return 0f;
             }
@@ -69,7 +83,7 @@ public abstract class PlayerController : MonoBehaviour
                     return true;
                 }
             }
-            else if(dirH > 0)
+            else if (dirH > 0)
             {
                 if (xDiff > 0)
                 {
@@ -137,6 +151,16 @@ public abstract class PlayerController : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void RemoveHealth(int health)
+    {
+        hp -= health;
+    }
+
+    public int getHealth()
+    {
+        return hp;
     }
 
     protected void Flip()

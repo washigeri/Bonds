@@ -145,6 +145,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   faceRight: 1
+  isDead: 0
   moveForce: 365
   maxSpeed: 5
   playerTransform: {fileID: 4951183635090766}
