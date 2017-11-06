@@ -13,6 +13,7 @@ TagManager:
   - RealEnemy
   - Weapon
   - Spirit
+  - Plateform
   layers:
   - Default
   - TransparentFX
