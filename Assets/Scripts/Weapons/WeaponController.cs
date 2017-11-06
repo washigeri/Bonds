@@ -15,6 +15,7 @@ public abstract class WeaponController : MonoBehaviour {
     protected float weakCD;
     protected float strongCD;
     protected float skillCD;
+    protected string enemyTag;
   
     protected void OnTriggerEnter2D(Collider2D collision)
     {
@@ -22,7 +23,7 @@ public abstract class WeaponController : MonoBehaviour {
         {
             if (isAttacking)
             {
-                if (collision.gameObject.CompareTag("RealEnemy"))
+                if (collision.gameObject.CompareTag(enemyTag))
                 {
                     collision.gameObject.GetComponent<EnemyController>().RemoveHealth(damage);
                 }
@@ -33,7 +34,8 @@ public abstract class WeaponController : MonoBehaviour {
     // Use this for initialization
     protected virtual void Awake () {
         pCollider2D = GetComponent<PolygonCollider2D>();
-	}
+        enemyTag = transform.root.CompareTag("Player2") ? "Spirit" : "Enemy";
+    }
 
     protected virtual void Update()
     {

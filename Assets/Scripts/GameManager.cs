@@ -5,14 +5,15 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
 
-    private GameObject player1;
-    private GameObject player2;
+    [HideInInspector] public static GameObject player1;
+    [HideInInspector] public static GameObject player2;
 
 	// Use this for initialization
 	void Awake () {
-        Physics2D.IgnoreLayerCollision(8, 9, true);
         player1 = GameObject.FindGameObjectWithTag("Player1");
         player2 = GameObject.FindGameObjectWithTag("Player2");
+        Physics2D.IgnoreLayerCollision(8, 9, true);
+        Physics2D.IgnoreLayerCollision(9, 10, true);
     }
 	
 	// Update is called once per frame
@@ -25,6 +26,7 @@ public class GameManager : MonoBehaviour {
         else if(player2.GetComponent<Player2Controller>().getHealth() <= 0)
         {
             Debug.Log("You Lost, Player 2 died again");
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
 	}
 

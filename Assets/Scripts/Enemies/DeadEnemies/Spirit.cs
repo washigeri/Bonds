@@ -2,18 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Orc : EnemyController {
+public class Spirit : DeadEnemy {
 
-
-
-    protected void Awake()
+    protected override void Awake()
     {
-        isSpirit = false;
-        player = GameObject.FindGameObjectWithTag("Player1");
-        targetTransform = player.transform;
+        base.Awake();
         attackCD = 2f;
         health = 10f;
-        speed = 5f;
+        speed = 2.5f;
         damage = 2;
         attackRange = 1f;
         detectionRange = 10f;
@@ -21,10 +17,9 @@ public class Orc : EnemyController {
 
     protected override IEnumerator Attack()
     {
-        player.GetComponent<Player1Controller>().RemoveHealth(damage);
+        player.GetComponent<PlayerController>().RemoveHealth(damage);
         isOnCD = true;
         yield return new WaitForSeconds(attackCD);
         isOnCD = false;
     }
-
 }

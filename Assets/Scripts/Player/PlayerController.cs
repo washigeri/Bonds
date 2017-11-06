@@ -26,7 +26,7 @@ public abstract class PlayerController : MonoBehaviour
     protected virtual void Awake()
     {
         rb2d = GetComponent<Rigidbody2D>();
-        hp = 10;
+        hp = 50;
         agility = 1;
         strengh = 1;
         stamina = 1;
