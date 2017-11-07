@@ -51,13 +51,11 @@ public abstract class DeadEnemy : EnemyController
         {
             if (!isOnCD)
             {
-                Debug.Log("I attack you");
                 StartCoroutine(Attack());
             }
         }
         else
         {
-            Debug.Log("I am coming");
             MoveTowards(player.transform.position);
         }
     }
@@ -67,10 +65,8 @@ public abstract class DeadEnemy : EnemyController
         int playerID = GetTarget();
         if (IsVisible(playerID))
         {
-            Debug.Log("I can see " + playerID + " 1");
             hasATarget = playerID;
             player = hasATarget == 1 ? GameManager.player1 : GameManager.player2;
-            Debug.Log("his name is " + player.name + " 1");
             TryToAttackOrMove();
         }
         else
@@ -86,15 +82,12 @@ public abstract class DeadEnemy : EnemyController
             playerID = playerID == 1 ? 2 : 1;
             if (IsVisible(playerID))
             {
-                Debug.Log("I can see " + playerID + " 2");
                 hasATarget = playerID;
                 player = hasATarget == 1 ? GameManager.player1 : GameManager.player2;
-                Debug.Log("his name is " + player.name + " 2");
                 TryToAttackOrMove();
             }
             else
             {
-                Debug.Log("no target");
                 hasATarget = 0;
             }
         }

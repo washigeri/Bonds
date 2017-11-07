@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4909849859052542}
   - component: {fileID: 212176896781596250}
   - component: {fileID: 60070655976236208}
+  - component: {fileID: 114517006680450048}
   m_Layer: 0
   m_Name: Spear
   m_TagString: Untagged
@@ -229,6 +230,23 @@ PolygonCollider2D:
       - {x: -2.52, y: -4.125}
       - {x: -2.28, y: -3.845}
       - {x: -2.22, y: -3.955}
+--- !u!114 &114517006680450048
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1261927106208678}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c78a02423467efa43abd5981d70822f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 7
+  range: 7
+  speed: 4
+  weakName: 
+  strongName: 
+  skillName: 
 --- !u!212 &212176896781596250
 SpriteRenderer:
   m_ObjectHideFlags: 1

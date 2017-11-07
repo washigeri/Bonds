@@ -18,6 +18,8 @@ public class Player1Controller : PlayerController
     {
         dirV = 0f;
         isPlayer1 = true;
+        potionBindName = "HealP1";
+        interactBindName = "InteractP1";
         base.Awake();
     }
 
@@ -28,7 +30,6 @@ public class Player1Controller : PlayerController
         grounded = Physics2D.Linecast(transform.position, groundCheck.position, 1 << LayerMask.NameToLayer("Ground"));
         CameraController.isGrounded = grounded;
         CameraController.isLanding = (rb2d.velocity.y < 0f);
-        Debug.Log(hp);
         if (Input.GetButtonDown("Jump") && grounded)
         {
             jump = true;
@@ -37,10 +38,73 @@ public class Player1Controller : PlayerController
 
     protected override void FixedUpdate()
     {
-        Move();
+        MoveWithVelocity();
     }
 
-    private void Move()
+    private void MoveWithVelocity()
+    {
+        dirH = Input.GetAxisRaw("HorizontalP1");
+        bool canMoveH = CanMoveH(dirH, !grounded);
+        if (!canMoveH)
+        {
+            rb2d.velocity = new Vector2(0f, rb2d.velocity.y);
+        }
+        else
+        {
+            if (grounded && Input.GetButtonUp("HorizontalP1"))
+            {
+                rb2d.velocity = new Vector2(0, rb2d.velocity.y);
+            }
+
+            if (dirH != 0f)
+            {
+                rb2d.velocity = new Vector2(dirH * maxSpeed, rb2d.velocity.y);
+            }
+
+            if (Mathf.Abs(rb2d.velocity.x) > maxSpeed)
+            {
+                rb2d.velocity = new Vector2(Mathf.Sign(rb2d.velocity.x) * maxSpeed, rb2d.velocity.y);
+            }
+
+            if (dirH > 0 && !faceRight)
+            {
+                Flip();
+            }
+
+            else if (dirH < 0 && faceRight)
+            {
+                Flip();
+            }
+        }
+
+        if (jump)
+        {
+            rb2d.AddForce(new Vector2(0f, jumpForce));
+            jump = false;
+        }
+
+        if (!grounded)
+        {
+            Debug.Log("J'entre");
+            bool isFalling;
+            if ((isFalling = rb2d.velocity.y < 0f))
+            {
+                if (!CanMoveV(-1f, true))
+                {
+                    rb2d.velocity = new Vector2(rb2d.velocity.x, 0f);
+                }
+            }
+            else
+            {
+                if (!CanMoveV(1f, true))
+                {
+                    rb2d.velocity = new Vector2(rb2d.velocity.x, 0f);
+                }
+            }
+        }
+    }
+
+    private void MoveWithForces()
     {
         dirH = Input.GetAxisRaw("HorizontalP1");
         if (CanMoveH(dirH, !grounded))

@@ -17,23 +17,9 @@ public abstract class WeaponController : MonoBehaviour
     protected float strongCD;
     protected float skillCD;
     protected string enemyTag;
-    protected string weakName;
-    protected string strongName;
-    protected string skillName;
-
-    protected void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (!isOnGlobalCoolDown)
-        {
-            if (isAttacking)
-            {
-                if (collision.gameObject.CompareTag(enemyTag))
-                {
-                    collision.gameObject.GetComponent<EnemyController>().RemoveHealth(damage);
-                }
-            }
-        }
-    }
+    [HideInInspector] public string weakName;
+    [HideInInspector] public string strongName;
+    [HideInInspector] public string skillName;
 
     // Use this for initialization
     protected virtual void Awake()
@@ -52,6 +38,20 @@ public abstract class WeaponController : MonoBehaviour
             weakName = "WeakP2";
             strongName = "StrongP2";
             skillName = "SkillP2";
+        }
+    }
+
+    protected void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (!isOnGlobalCoolDown)
+        {
+            if (isAttacking)
+            {
+                if (collision.gameObject.CompareTag(enemyTag))
+                {
+                    collision.gameObject.GetComponent<EnemyController>().RemoveHealth(damage);
+                }
+            }
         }
     }
 

@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Potion : MonoBehaviour {
-
-    [HideInInspector] public int hpRegen;
+public class Potion : MonoBehaviour
+{
+    
     private bool pickedUp = false;
+    private bool isLanded = false;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(GameManager.potionNumber < GameManager.maxPotion)
+        if (GameManager.potionNumber < GameManager.maxPotion)
         {
-            Debug.Log(collision.tag);
             if (collision.CompareTag("Player1"))
             {
                 if (!pickedUp)
@@ -22,8 +22,22 @@ public class Potion : MonoBehaviour {
                     Destroy(gameObject);
                 }
             }
-            
+
         }
+
+        if (!isLanded)
+        {
+            if (collision.CompareTag("ground") || collision.CompareTag("Plateform"))
+            {
+                isLanded = true;
+                GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePositionY;
+            }
+        }
+
+
     }
+
+
+
 
 }

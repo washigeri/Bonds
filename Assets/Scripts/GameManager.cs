@@ -33,20 +33,18 @@ public class GameManager : MonoBehaviour
         potionHeal = 0.5f;
         Physics2D.IgnoreLayerCollision(8, 9, true);
         Physics2D.IgnoreLayerCollision(9, 10, true);
+        Physics2D.IgnoreLayerCollision(4, 12, false);
     }
 
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(potionNumber);
-        if (player1.GetComponent<Player1Controller>().getHealth() <= 0)
+        if (player1.GetComponent<Player1Controller>().GetHealth() <= 0)
         {
-            Debug.Log("You lost, Player 1 died.");
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
-        else if (player2.GetComponent<Player2Controller>().getHealth() <= 0)
+        else if (player2.GetComponent<Player2Controller>().GetHealth() <= 0)
         {
-            Debug.Log("You Lost, Player 2 died again");
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
     }

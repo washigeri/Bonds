@@ -9,7 +9,7 @@ public abstract class PlayerController : MonoBehaviour
     [HideInInspector] public bool isDead = false;
     protected bool isPlayer1;
 
-    public float moveForce = 365f;
+    protected float moveForce;
     public float maxSpeed = 5f;
     public Transform playerTransform;
 
@@ -22,6 +22,9 @@ public abstract class PlayerController : MonoBehaviour
     protected float dirH;
     protected float dirV;
 
+    protected string potionBindName;
+    protected string interactBindName;
+
     public Rigidbody2D rb2d;
 
     // Use this for initialization
@@ -29,15 +32,17 @@ public abstract class PlayerController : MonoBehaviour
     {
         rb2d = GetComponent<Rigidbody2D>();
         maxHp = 10;
-        hp = maxHp;
+        hp = 2;
         agility = 1;
         strengh = 1;
         stamina = 1;
+        moveForce = 365f;
     }
 
     protected virtual void Update()
     {
         isDead = (hp <= 0);
+        CheckForInputs();
     }
 
     protected abstract void FixedUpdate();
@@ -156,7 +161,36 @@ public abstract class PlayerController : MonoBehaviour
         }
     }
 
-    public void RestaureHealth(int health)
+    protected void UsePotion()
+    {
+        if (GameManager.potionNumber > 0)
+        {
+            RestaureHealth((int)(GameManager.potionHeal * maxHp));
+            GameManager.potionNumber--;
+        }
+    }
+
+    protected void CheckForInputs()
+    {
+        if (Input.GetButtonDown(potionBindName))
+        {
+            UsePotion();
+        }
+        if (Input.GetButtonDown(interactBindName))
+        {
+            PickUpWeapon();
+        }
+    }
+
+    private void PickUpWeapon()
+    {
+        Transform myWeapon = gameObject.GetComponentInChildren<WeaponController>().transform;
+        Debug.Log(myWeapon.name);
+        Instantiate(myWeapon);
+        Destroy(myWeapon.gameObject);
+    }
+
+    private void RestaureHealth(int health)
     {
         hp = Mathf.Min(hp + health, maxHp);
     }
@@ -166,7 +200,7 @@ public abstract class PlayerController : MonoBehaviour
         hp -= health;
     }
 
-    public int getHealth()
+    public int GetHealth()
     {
         return hp;
     }
