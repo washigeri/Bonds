@@ -32,7 +32,7 @@ public abstract class PlayerController : MonoBehaviour
     {
         rb2d = GetComponent<Rigidbody2D>();
         maxHp = 10;
-        hp = 2;
+        hp = maxHp;
         agility = 1;
         strengh = 1;
         stamina = 1;
@@ -176,18 +176,18 @@ public abstract class PlayerController : MonoBehaviour
         {
             UsePotion();
         }
-        if (Input.GetButtonDown(interactBindName))
-        {
-            PickUpWeapon();
-        }
     }
 
-    private void PickUpWeapon()
+    public void DropWeapon()
     {
-        Transform myWeapon = gameObject.GetComponentInChildren<WeaponController>().transform;
-        Debug.Log(myWeapon.name);
-        Instantiate(myWeapon);
-        Destroy(myWeapon.gameObject);
+        WeaponController myWeapon = gameObject.GetComponentInChildren<WeaponController>();
+        if(myWeapon != null)
+        {
+            myWeapon.gameObject.GetComponent<WeaponController>().SetOwner(false);
+            myWeapon.gameObject.transform.parent = null;
+            myWeapon.transform.localScale = new Vector3(Mathf.Abs(myWeapon.transform.localScale.x), Mathf.Abs(myWeapon.transform.localScale.y), Mathf.Abs(myWeapon.transform.localScale.z));
+            myWeapon.transform.localRotation = new Quaternion(myWeapon.transform.localRotation.x, myWeapon.transform.localRotation.y, myWeapon.transform.localRotation.z * (faceRight ? 1 : -1), myWeapon.transform.localRotation.w);
+        }
     }
 
     private void RestaureHealth(int health)

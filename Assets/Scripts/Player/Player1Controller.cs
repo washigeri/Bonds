@@ -86,8 +86,8 @@ public class Player1Controller : PlayerController
         if (!grounded)
         {
             Debug.Log("J'entre");
-            bool isFalling;
-            if ((isFalling = rb2d.velocity.y < 0f))
+            bool isFalling = (rb2d.velocity.y < 0f);
+            if (isFalling)
             {
                 if (!CanMoveV(-1f, true))
                 {
@@ -147,8 +147,8 @@ public class Player1Controller : PlayerController
         }
         if (!grounded)
         {
-            bool isFalling;
-            if ((isFalling = rb2d.velocity.y < 0f))
+            bool isFalling = (rb2d.velocity.y < 0f);
+            if (isFalling)
             {
                 if (!CanMoveV(-1f, true))
                 {

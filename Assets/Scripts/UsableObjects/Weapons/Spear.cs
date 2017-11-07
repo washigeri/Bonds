@@ -5,6 +5,12 @@ using UnityEngine;
 public class Spear : WeaponController
 {
 
+    protected override void Awake()
+    {
+        weaponName = "Spear";
+        base.Awake();
+    }
+
     protected override IEnumerator WeakAttack()
     {
         Debug.Log("Weak attack");
