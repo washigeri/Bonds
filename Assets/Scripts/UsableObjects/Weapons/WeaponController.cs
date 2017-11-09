@@ -90,8 +90,8 @@ public abstract class WeaponController : MonoBehaviour
                 PlayerController playerController = collision.gameObject.GetComponent<PlayerController>();
                 playerController.DropWeapon();
                 gameObject.transform.parent = collision.gameObject.transform.Find("Hand");
-                this.transform.localPosition = Vector3.zero;
-                this.transform.localScale = new Vector3(Mathf.Abs(this.transform.localScale.x), Mathf.Abs(this.transform.localScale.y), Mathf.Abs(this.transform.localScale.z));
+                transform.localPosition = Vector3.zero;
+                transform.localScale = new Vector3(Mathf.Abs(this.transform.localScale.x), Mathf.Abs(this.transform.localScale.y), Mathf.Abs(this.transform.localScale.z));
                 hasOwner = true;
                 SetPlayerInfo();
             }

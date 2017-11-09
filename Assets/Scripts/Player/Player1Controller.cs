@@ -85,7 +85,6 @@ public class Player1Controller : PlayerController
 
         if (!grounded)
         {
-            Debug.Log("J'entre");
             bool isFalling = (rb2d.velocity.y < 0f);
             if (isFalling)
             {
