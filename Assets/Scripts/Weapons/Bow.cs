@@ -38,7 +38,17 @@ public class Bow : WeaponController
     private void Shoot()
     {
         GameObject arrow = Instantiate(Resources.Load("Prefabs/Weapons/Arrow"), gameObject.transform.position, Quaternion.Euler(0,0,0)) as GameObject;
-        arrow.GetComponent<Arrow>().SetParameters(attacksDamage[isAttacking], enemyTag, (gameObject.transform.root.GetComponent<PlayerController>().faceRight ? 1 : -1), gameObject.transform.position);
+        PlayerController player = gameObject.transform.root.GetComponent<PlayerController>();
+        int direction;
+        if(player.GetDirH() == 0f && player.GetDirV() != 0f)
+        {
+            direction = 0;
+        }
+        else
+        {
+            direction = player.faceRight ? 1 : -1;
+        }
+        arrow.GetComponent<Arrow>().SetParameters(attacksDamage[isAttacking], enemyTag, direction, gameObject.transform.position);
     }
 
     protected override IEnumerator StrongAttack()

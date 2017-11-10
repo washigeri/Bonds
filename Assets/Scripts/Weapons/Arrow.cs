@@ -22,7 +22,7 @@ public class Arrow : MonoBehaviour {
     private void Awake()
     {
         isSet = false;
-        range = 20f;
+        range = 10f;
         moveSpeed = 10f;
         distance = 0f;
         rb2d = GetComponent<Rigidbody2D>();

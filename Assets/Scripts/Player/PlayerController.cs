@@ -205,6 +205,16 @@ public abstract class PlayerController : MonoBehaviour
         return hp;
     }
 
+    public float GetDirH()
+    {
+        return dirH;
+    }
+
+    public float GetDirV()
+    {
+        return dirV;
+    }
+
     protected void Flip()
     {
         faceRight = !faceRight;

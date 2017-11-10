@@ -28,11 +28,16 @@ public class Player1Controller : PlayerController
     {
         base.Update();
         grounded = Physics2D.Linecast(transform.position, groundCheck.position, 1 << LayerMask.NameToLayer("Ground"));
+        if (grounded || rb2d.velocity.y < 0f)
+        {
+            dirV = 0f;
+        }
         CameraController.isGrounded = grounded;
         CameraController.isLanding = (rb2d.velocity.y < 0f);
         if (Input.GetButtonDown("Jump") && grounded)
         {
             jump = true;
+            dirV = 1f;
         }
     }
 
