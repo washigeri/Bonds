@@ -27,6 +27,7 @@ public abstract class EnemyController : MonoBehaviour
     // Update is called once per frame
     protected virtual void Update()
     {
+        Debug.Log(health);
         if (this.health <= 0)
         {
             Destroy(gameObject);

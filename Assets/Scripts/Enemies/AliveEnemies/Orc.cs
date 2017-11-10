@@ -8,7 +8,7 @@ public class Orc : AliveEnemy {
     {
         base.Awake();
         attackCD = 2f;
-        health = 10f;
+        health = 100f;
         speed = 5f;
         damage = 2;
         attackRange = 1f;

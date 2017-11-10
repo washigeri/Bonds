@@ -103,7 +103,7 @@ MonoBehaviour:
   enemyTransform: {fileID: 4151195660148604}
   layerMask:
     serializedVersion: 2
-    m_Bits: 17920
+    m_Bits: 17936
   isSpirit: 0
 --- !u!212 &212668004742783110
 SpriteRenderer:

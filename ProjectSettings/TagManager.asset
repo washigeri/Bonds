@@ -4,7 +4,6 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - ground
   - Enemy
   - Wall
   - Obstacle
@@ -15,6 +14,7 @@ TagManager:
   - Spirit
   - Plateform
   - Potion
+  - Ground
   layers:
   - Default
   - TransparentFX

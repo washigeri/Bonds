@@ -34,6 +34,7 @@ public class GameManager : MonoBehaviour
         Physics2D.IgnoreLayerCollision(8, 9, true);
         Physics2D.IgnoreLayerCollision(9, 10, true);
         Physics2D.IgnoreLayerCollision(4, 12, false);
+        Physics2D.IgnoreLayerCollision(4, 10, true);
     }
 
     // Update is called once per frame

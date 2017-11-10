@@ -46,7 +46,7 @@ public class Gamecontrol : MonoBehaviour
 
     public void PreSave()
     {
-                player1 = GameObject.FindGameObjectWithTag("Player1");
+        player1 = GameObject.FindGameObjectWithTag("Player1");
         player2 = GameObject.FindGameObjectWithTag("Player2");
 
         //potionNumber = 

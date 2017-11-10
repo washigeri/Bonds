@@ -1,0 +1,1585 @@
+fileFormatVersion: 2
+guid: 676b4ef33f0c04343abff5f0314104e3
+timeCreated: 1510211714
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: weapons3_0
+    21300002: weapons3_1
+    21300004: weapons3_2
+    21300006: weapons3_3
+    21300008: weapons3_4
+    21300010: weapons3_5
+    21300012: weapons3_6
+    21300014: weapons3_7
+    21300016: weapons3_8
+    21300018: weapons3_9
+    21300020: weapons3_10
+    21300022: weapons3_11
+    21300024: weapons3_12
+    21300026: weapons3_13
+    21300028: weapons3_14
+    21300030: weapons3_15
+    21300032: weapons3_16
+    21300034: weapons3_17
+    21300036: weapons3_18
+    21300038: weapons3_19
+    21300040: weapons3_20
+    21300042: weapons3_21
+    21300044: weapons3_22
+    21300046: weapons3_23
+    21300048: weapons3_24
+    21300050: weapons3_25
+    21300052: weapons3_26
+    21300054: weapons3_27
+    21300056: weapons3_28
+    21300058: weapons3_29
+    21300060: weapons3_30
+    21300062: weapons3_31
+    21300064: weapons3_32
+    21300066: weapons3_33
+    21300068: weapons3_34
+    21300070: weapons3_35
+    21300072: weapons3_36
+    21300074: weapons3_37
+    21300076: weapons3_38
+    21300078: weapons3_39
+    21300080: weapons3_40
+    21300082: weapons3_41
+    21300084: weapons3_42
+    21300086: weapons3_43
+    21300088: weapons3_44
+    21300090: weapons3_45
+    21300092: weapons3_46
+    21300094: weapons3_47
+    21300096: weapons3_48
+    21300098: weapons3_49
+    21300100: weapons3_50
+    21300102: weapons3_51
+    21300104: weapons3_52
+    21300106: weapons3_53
+    21300108: weapons3_54
+    21300110: weapons3_55
+    21300112: weapons3_56
+    21300114: weapons3_57
+    21300116: weapons3_58
+    21300118: weapons3_59
+    21300120: weapons3_60
+    21300122: weapons3_61
+    21300124: weapons3_62
+    21300126: weapons3_63
+    21300128: weapons3_64
+    21300130: weapons3_65
+    21300132: weapons3_66
+    21300134: weapons3_67
+    21300136: weapons3_68
+    21300138: weapons3_69
+    21300140: weapons3_70
+    21300142: weapons3_71
+    21300144: weapons3_72
+    21300146: weapons3_73
+    21300148: weapons3_74
+    21300150: weapons3_75
+    21300152: weapons3_76
+    21300154: weapons3_77
+    21300156: weapons3_78
+    21300158: weapons3_79
+    21300160: weapons3_80
+    21300162: weapons3_81
+    21300164: weapons3_82
+    21300166: weapons3_83
+    21300168: weapons3_84
+    21300170: weapons3_85
+    21300172: weapons3_86
+    21300174: weapons3_87
+    21300176: weapons3_88
+    21300178: weapons3_89
+    21300180: weapons3_90
+    21300182: weapons3_91
+    21300184: weapons3_92
+    21300186: weapons3_93
+    21300188: weapons3_94
+    21300190: weapons3_95
+    21300192: weapons3_96
+    21300194: weapons3_97
+    21300196: weapons3_98
+    21300198: weapons3_99
+  externalObjects: {}
+  serializedVersion: 4
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: -1
+    aniso: -1
+    mipBias: -1
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: weapons3_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 401.6
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_1
+      rect:
+        serializedVersion: 2
+        x: 42
+        y: 401.6
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_2
+      rect:
+        serializedVersion: 2
+        x: 84
+        y: 401.6
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_3
+      rect:
+        serializedVersion: 2
+        x: 126
+        y: 401.6
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_4
+      rect:
+        serializedVersion: 2
+        x: 168
+        y: 401.6
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_5
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 401.6
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_6
+      rect:
+        serializedVersion: 2
+        x: 252
+        y: 401.6
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_7
+      rect:
+        serializedVersion: 2
+        x: 294
+        y: 401.6
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_8
+      rect:
+        serializedVersion: 2
+        x: 336
+        y: 401.6
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_9
+      rect:
+        serializedVersion: 2
+        x: 378
+        y: 401.6
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_10
+      rect:
+        serializedVersion: 2
+        x: 420
+        y: 401.6
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_11
+      rect:
+        serializedVersion: 2
+        x: 462
+        y: 401.6
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_12
+      rect:
+        serializedVersion: 2
+        x: 504
+        y: 401.6
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_13
+      rect:
+        serializedVersion: 2
+        x: 546
+        y: 401.6
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_14
+      rect:
+        serializedVersion: 2
+        x: 588
+        y: 401.6
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_15
+      rect:
+        serializedVersion: 2
+        x: 630
+        y: 401.6
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_16
+      rect:
+        serializedVersion: 2
+        x: 672
+        y: 401.6
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_17
+      rect:
+        serializedVersion: 2
+        x: 714
+        y: 401.6
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_18
+      rect:
+        serializedVersion: 2
+        x: 756
+        y: 401.6
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_19
+      rect:
+        serializedVersion: 2
+        x: 798
+        y: 401.6
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_20
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 301.6
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_21
+      rect:
+        serializedVersion: 2
+        x: 42
+        y: 301.6
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_22
+      rect:
+        serializedVersion: 2
+        x: 84
+        y: 301.6
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_23
+      rect:
+        serializedVersion: 2
+        x: 126
+        y: 301.6
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_24
+      rect:
+        serializedVersion: 2
+        x: 168
+        y: 301.6
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_25
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 301.6
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_26
+      rect:
+        serializedVersion: 2
+        x: 252
+        y: 301.6
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_27
+      rect:
+        serializedVersion: 2
+        x: 294
+        y: 301.6
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_28
+      rect:
+        serializedVersion: 2
+        x: 336
+        y: 301.6
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_29
+      rect:
+        serializedVersion: 2
+        x: 378
+        y: 301.6
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_30
+      rect:
+        serializedVersion: 2
+        x: 420
+        y: 301.6
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_31
+      rect:
+        serializedVersion: 2
+        x: 462
+        y: 301.6
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_32
+      rect:
+        serializedVersion: 2
+        x: 504
+        y: 301.6
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_33
+      rect:
+        serializedVersion: 2
+        x: 546
+        y: 301.6
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_34
+      rect:
+        serializedVersion: 2
+        x: 588
+        y: 301.6
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_35
+      rect:
+        serializedVersion: 2
+        x: 630
+        y: 301.6
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_36
+      rect:
+        serializedVersion: 2
+        x: 672
+        y: 301.6
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_37
+      rect:
+        serializedVersion: 2
+        x: 714
+        y: 301.6
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_38
+      rect:
+        serializedVersion: 2
+        x: 756
+        y: 301.6
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_39
+      rect:
+        serializedVersion: 2
+        x: 798
+        y: 301.6
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_40
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 201.6
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_41
+      rect:
+        serializedVersion: 2
+        x: 42
+        y: 201.6
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_42
+      rect:
+        serializedVersion: 2
+        x: 84
+        y: 201.6
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_43
+      rect:
+        serializedVersion: 2
+        x: 126
+        y: 201.6
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_44
+      rect:
+        serializedVersion: 2
+        x: 168
+        y: 201.6
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_45
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 201.6
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_46
+      rect:
+        serializedVersion: 2
+        x: 252
+        y: 201.6
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_47
+      rect:
+        serializedVersion: 2
+        x: 294
+        y: 201.6
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_48
+      rect:
+        serializedVersion: 2
+        x: 336
+        y: 201.6
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_49
+      rect:
+        serializedVersion: 2
+        x: 378
+        y: 201.6
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_50
+      rect:
+        serializedVersion: 2
+        x: 420
+        y: 201.6
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_51
+      rect:
+        serializedVersion: 2
+        x: 462
+        y: 201.6
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_52
+      rect:
+        serializedVersion: 2
+        x: 504
+        y: 201.6
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_53
+      rect:
+        serializedVersion: 2
+        x: 546
+        y: 201.6
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_54
+      rect:
+        serializedVersion: 2
+        x: 588
+        y: 201.6
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_55
+      rect:
+        serializedVersion: 2
+        x: 630
+        y: 201.6
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_56
+      rect:
+        serializedVersion: 2
+        x: 672
+        y: 201.6
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_57
+      rect:
+        serializedVersion: 2
+        x: 714
+        y: 201.6
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_58
+      rect:
+        serializedVersion: 2
+        x: 756
+        y: 201.6
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_59
+      rect:
+        serializedVersion: 2
+        x: 798
+        y: 201.6
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_60
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 101.6
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_61
+      rect:
+        serializedVersion: 2
+        x: 42
+        y: 101.6
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_62
+      rect:
+        serializedVersion: 2
+        x: 84
+        y: 101.6
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_63
+      rect:
+        serializedVersion: 2
+        x: 126
+        y: 101.6
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_64
+      rect:
+        serializedVersion: 2
+        x: 168
+        y: 101.6
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_65
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 101.6
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_66
+      rect:
+        serializedVersion: 2
+        x: 252
+        y: 101.6
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_67
+      rect:
+        serializedVersion: 2
+        x: 294
+        y: 101.6
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_68
+      rect:
+        serializedVersion: 2
+        x: 336
+        y: 101.6
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_69
+      rect:
+        serializedVersion: 2
+        x: 378
+        y: 101.6
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_70
+      rect:
+        serializedVersion: 2
+        x: 420
+        y: 101.6
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_71
+      rect:
+        serializedVersion: 2
+        x: 462
+        y: 101.6
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_72
+      rect:
+        serializedVersion: 2
+        x: 504
+        y: 101.6
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_73
+      rect:
+        serializedVersion: 2
+        x: 546
+        y: 101.6
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_74
+      rect:
+        serializedVersion: 2
+        x: 588
+        y: 101.6
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_75
+      rect:
+        serializedVersion: 2
+        x: 630
+        y: 101.6
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_76
+      rect:
+        serializedVersion: 2
+        x: 672
+        y: 101.6
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_77
+      rect:
+        serializedVersion: 2
+        x: 714
+        y: 101.6
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_78
+      rect:
+        serializedVersion: 2
+        x: 756
+        y: 101.6
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_79
+      rect:
+        serializedVersion: 2
+        x: 798
+        y: 101.6
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_80
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1.5999985
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_81
+      rect:
+        serializedVersion: 2
+        x: 42
+        y: 1.5999985
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_82
+      rect:
+        serializedVersion: 2
+        x: 84
+        y: 1.5999985
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_83
+      rect:
+        serializedVersion: 2
+        x: 126
+        y: 1.5999985
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_84
+      rect:
+        serializedVersion: 2
+        x: 168
+        y: 1.5999985
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_85
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 1.5999985
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_86
+      rect:
+        serializedVersion: 2
+        x: 252
+        y: 1.5999985
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_87
+      rect:
+        serializedVersion: 2
+        x: 294
+        y: 1.5999985
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_88
+      rect:
+        serializedVersion: 2
+        x: 336
+        y: 1.5999985
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_89
+      rect:
+        serializedVersion: 2
+        x: 378
+        y: 1.5999985
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_90
+      rect:
+        serializedVersion: 2
+        x: 420
+        y: 1.5999985
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_91
+      rect:
+        serializedVersion: 2
+        x: 462
+        y: 1.5999985
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_92
+      rect:
+        serializedVersion: 2
+        x: 504
+        y: 1.5999985
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_93
+      rect:
+        serializedVersion: 2
+        x: 546
+        y: 1.5999985
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_94
+      rect:
+        serializedVersion: 2
+        x: 588
+        y: 1.5999985
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_95
+      rect:
+        serializedVersion: 2
+        x: 630
+        y: 1.5999985
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_96
+      rect:
+        serializedVersion: 2
+        x: 672
+        y: 1.5999985
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_97
+      rect:
+        serializedVersion: 2
+        x: 714
+        y: 1.5999985
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_98
+      rect:
+        serializedVersion: 2
+        x: 756
+        y: 1.5999985
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: weapons3_99
+      rect:
+        serializedVersion: 2
+        x: 798
+        y: 1.5999985
+        width: 42.4
+        height: 100.4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    outline: []
+    physicsShape: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

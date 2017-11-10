@@ -37,6 +37,9 @@ public class Player2Controller : PlayerController
 
     private void MoveWithVelocity()
     {
+        //Cette ligne permet au Trigger de l'arme de se réinitialiser meme si le personnage ne bouge pas
+        //Il doit y avoir une vrai solution mais je ne trouve pas
+        rb2d.AddForce(Vector2.zero);
         dirH = Input.GetAxisRaw("HorizontalP2");
         dirV = Input.GetAxisRaw("VerticalP2");
         bool canMoveH = CanMoveH(dirH, isDashing);

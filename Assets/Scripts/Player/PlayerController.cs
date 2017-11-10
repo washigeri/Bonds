@@ -31,7 +31,7 @@ public abstract class PlayerController : MonoBehaviour
     protected virtual void Awake()
     {
         rb2d = GetComponent<Rigidbody2D>();
-        maxHp = 10;
+        maxHp = 100;
         hp = maxHp;
         agility = 1;
         strengh = 1;

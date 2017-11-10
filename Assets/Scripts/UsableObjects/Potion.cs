@@ -27,7 +27,7 @@ public class Potion : MonoBehaviour
 
         if (!isLanded)
         {
-            if (collision.CompareTag("ground") || collision.CompareTag("Plateform"))
+            if (collision.CompareTag("Ground") || collision.CompareTag("Plateform"))
             {
                 isLanded = true;
                 GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePositionY;

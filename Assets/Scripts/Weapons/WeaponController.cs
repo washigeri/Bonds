@@ -5,18 +5,17 @@ using UnityEngine.UI;
 
 public abstract class WeaponController : MonoBehaviour
 {
-    public string weaponName;
+    [HideInInspector] public string weaponName;
 
-    public int damage;
-    public int range;
-    public int speed;
+    protected int damage;
+    protected int range;
+    protected int speed;
     protected float globalCD;
 
     protected bool hasOwner;
-    protected bool isAttacking;
+    protected int isAttacking;
     protected bool isOnGlobalCoolDown;
 
-    protected PolygonCollider2D pCollider2D;
 
     [HideInInspector] public string weakName;
     [HideInInspector] public string strongName;
@@ -26,16 +25,18 @@ public abstract class WeaponController : MonoBehaviour
     protected float strongCD;
     protected float skillCD;
 
+    protected int[] attacksDamage;
+
     protected string enemyTag;
 
     // Use this for initialization
     protected virtual void Awake()
     {
-        pCollider2D = GetComponent<PolygonCollider2D>();
         globalCD = 0.25f;
         hasOwner = transform.root.name.Equals("Player1") || transform.root.name.Equals("Player2");
-        isAttacking = false;
+        isAttacking = -1;
         isOnGlobalCoolDown = false;
+        attacksDamage = new int[] { 10 * damage / 3, 10 * damage / 2, 10 * damage};
         SetPlayerInfo();
     }
 
@@ -48,7 +49,7 @@ public abstract class WeaponController : MonoBehaviour
             strongName = "StrongP1";
             skillName = "SkillP1";
         }
-        else if(transform.root.CompareTag("Player2"))
+        else if (transform.root.CompareTag("Player2"))
         {
             enemyTag = "Spirit";
             weakName = "WeakP2";
@@ -70,11 +71,11 @@ public abstract class WeaponController : MonoBehaviour
         {
             if (!isOnGlobalCoolDown)
             {
-                if (isAttacking)
+                if (isAttacking >= 0)
                 {
                     if (collision.gameObject.CompareTag(enemyTag))
                     {
-                        collision.gameObject.GetComponent<EnemyController>().RemoveHealth(damage);
+                        collision.gameObject.GetComponent<EnemyController>().RemoveHealth(attacksDamage[isAttacking]);
                     }
                 }
             }
@@ -100,8 +101,7 @@ public abstract class WeaponController : MonoBehaviour
 
     protected virtual void Update()
     {
-        pCollider2D.enabled = (!isOnGlobalCoolDown && isAttacking) || !hasOwner;
-        if (hasOwner && !isOnGlobalCoolDown && !isAttacking)
+        if (hasOwner && !isOnGlobalCoolDown && (isAttacking == -1))
         {
             if (Input.GetButtonDown(weakName))
             {
