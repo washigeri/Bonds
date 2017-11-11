@@ -40,10 +40,14 @@ public class Spear : WeaponController
         yield return new WaitForSeconds(0f);
     }
 
-    protected override IEnumerator Skill()
+    protected override IEnumerator SkillP1()
     {
         Debug.Log("Skill");
         yield return new WaitForSeconds(0f);
     }
 
+    protected override IEnumerator SkillP2()
+    {
+        yield return new WaitForSeconds(0f);
+    }
 }

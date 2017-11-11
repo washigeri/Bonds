@@ -64,9 +64,12 @@ public class Player1Controller : PlayerController
                 rb2d.velocity = new Vector2(0, rb2d.velocity.y);
             }
 
-            if (dirH != 0f)
+            if (!isBlocked)
             {
-                rb2d.velocity = new Vector2(dirH * maxSpeed, rb2d.velocity.y);
+                if (dirH != 0f)
+                {
+                    rb2d.velocity = new Vector2(dirH * maxSpeed, rb2d.velocity.y);
+                }
             }
 
             if (Mathf.Abs(rb2d.velocity.x) > maxSpeed)

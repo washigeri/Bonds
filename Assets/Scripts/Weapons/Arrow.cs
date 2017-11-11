@@ -64,28 +64,45 @@ public class Arrow : MonoBehaviour {
         
     }
 
-    public void SetParameters(int damage, string enemyTag, int direction, Vector3 startPosition)
+    public void SetParameters(int damage, string enemyTag, Vector3 direction, Vector3 startPosition)
     {
         this.damage = damage;
         this.enemyTag = enemyTag;
-        if (direction == -1)
+        this.direction = direction;
+        if (direction == Vector3.left)
         {
-            this.direction = Vector3.left;
             myTransform.localScale = new Vector3(-1, 1, 1);
         }
-        else if(direction == 1)
+        else if(direction == Vector3.left + Vector3.up)
         {
-            this.direction = Vector3.right;
+            myTransform.Rotate(Vector3.forward * 135);
+        }
+        else if(direction == Vector3.up)
+        {
+            myTransform.Rotate(Vector3.forward * 90);
+        }
+        else if (direction == Vector3.right + Vector3.up)
+        {
+            myTransform.Rotate(Vector3.forward * 45);
+        }
+        else if(direction == Vector3.right)
+        {
             myTransform.localScale = new Vector3(1, 1, 1);
         }
-        else
+        else if (direction == Vector3.down + Vector3.right)
         {
-            this.direction = Vector3.up;
-            myTransform.Rotate(Vector3.forward * 90);
+            myTransform.Rotate(Vector3.forward * -45);
+        }
+        else if(direction == Vector3.down)
+        {
+            myTransform.Rotate(Vector3.forward * -90);
+        }
+        else if(direction == Vector3.down + Vector3.left)
+        {
+            myTransform.Rotate(Vector3.forward * -135);
         }
         this.startPosition = startPosition;
         isSet = true;
-        Debug.Log("done");
     }
 
 }

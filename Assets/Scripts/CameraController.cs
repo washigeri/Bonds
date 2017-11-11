@@ -7,8 +7,8 @@ public class CameraController : MonoBehaviour
 
     public Transform camTransform;
 
-    public GameObject player1;
-    public GameObject player2;
+    private GameObject player1;
+    private GameObject player2;
     public float zOffset;
     public float yOffset;
     public float cameraSpeed;
@@ -26,6 +26,12 @@ public class CameraController : MonoBehaviour
     private float distToCenterP2Y;
     private bool isXAligned;
     private float yCamera;
+
+    private void Awake()
+    {
+        player1 = GameObject.FindGameObjectWithTag("Player1");
+        player2 = GameObject.FindGameObjectWithTag("Player2");
+    }
 
     // Use this for initialization
     void Start()

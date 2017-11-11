@@ -13,6 +13,7 @@ public abstract class WeaponController : MonoBehaviour
     protected float globalCD;
 
     protected bool hasOwner;
+    protected int owner;
     protected int isAttacking;
     protected bool isOnGlobalCoolDown;
 
@@ -24,6 +25,9 @@ public abstract class WeaponController : MonoBehaviour
     protected float weakCD;
     protected float strongCD;
     protected float skillCD;
+    
+    protected bool isStrongOnCD;
+    protected bool isSkillOnCD;
 
     protected int[] attacksDamage;
 
@@ -33,7 +37,15 @@ public abstract class WeaponController : MonoBehaviour
     protected virtual void Awake()
     {
         globalCD = 0.25f;
-        hasOwner = transform.root.name.Equals("Player1") || transform.root.name.Equals("Player2");
+        hasOwner = transform.root.CompareTag("Player1") || transform.root.CompareTag("Player2");
+        if (hasOwner)
+        {
+            owner = transform.root.CompareTag("Player1") ? 1 : 2;
+        }
+        else
+        {
+            owner = 0;
+        }
         isAttacking = -1;
         isOnGlobalCoolDown = false;
         attacksDamage = new int[] { 10 * damage / 3, 10 * damage / 2, 10 * damage};
@@ -42,14 +54,14 @@ public abstract class WeaponController : MonoBehaviour
 
     public void SetPlayerInfo()
     {
-        if (transform.root.CompareTag("Player1"))
+        if (owner == 1)
         {
             enemyTag = "Enemy";
             weakName = "WeakP1";
             strongName = "StrongP1";
             skillName = "SkillP1";
         }
-        else if (transform.root.CompareTag("Player2"))
+        else if (owner == 2)
         {
             enemyTag = "Spirit";
             weakName = "WeakP2";
@@ -109,11 +121,24 @@ public abstract class WeaponController : MonoBehaviour
             }
             else if (Input.GetButtonDown(strongName))
             {
-                StartCoroutine(StrongAttack());
+                if (!isStrongOnCD)
+                {
+                    StartCoroutine(StrongAttack());
+                }
             }
             else if (Input.GetButtonDown(skillName))
             {
-                StartCoroutine(Skill());
+                if (!isSkillOnCD)
+                {
+                    if(owner == 1)
+                    {
+                        StartCoroutine(SkillP1());
+                    }
+                    else if(owner == 2)
+                    {
+                        StartCoroutine(SkillP2());
+                    }
+                }
             }
         }
     }
@@ -127,6 +152,8 @@ public abstract class WeaponController : MonoBehaviour
 
     protected abstract IEnumerator StrongAttack();
 
-    protected abstract IEnumerator Skill();
+    protected abstract IEnumerator SkillP1();
+
+    protected abstract IEnumerator SkillP2();
 
 }

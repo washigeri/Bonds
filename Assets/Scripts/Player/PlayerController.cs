@@ -8,6 +8,7 @@ public abstract class PlayerController : MonoBehaviour
     [HideInInspector] public bool faceRight = true;
     [HideInInspector] public bool isDead = false;
     protected bool isPlayer1;
+    public bool isBlocked;
 
     protected float moveForce;
     public float maxSpeed = 5f;
@@ -221,5 +222,15 @@ public abstract class PlayerController : MonoBehaviour
         Vector3 theScale = transform.localScale;
         theScale.x *= -1;
         transform.localScale = theScale;
+    }
+
+    public float GetMaxSpeed()
+    {
+        return maxSpeed;
+    }
+
+    public void SetMaxSpeed(float maxSpeed)
+    {
+        this.maxSpeed = maxSpeed;
     }
 }
