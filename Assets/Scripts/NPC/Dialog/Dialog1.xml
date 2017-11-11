@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<dialog>
+  <NPCName>Jean Michel</NPCName>
+  <speech id ="1">
+    <text>Bonjour {CharacterName} !\nQue puis-je faire pour toi ?\n</text>
+    <duration>4</duration>
+    <hasChoice>True</hasChoice>
+    <choice id ="1">Point de caractéristique</choice>
+    <choice id ="2">Potion</choice>
+  </speech>
+  <speech id ="2">
+    <text>Au revoir !</text>
+    <duration>1.5</duration>
+    <hasChoice>False</hasChoice>
+  </speech>
+</dialog>

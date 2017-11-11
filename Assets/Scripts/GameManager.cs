@@ -40,11 +40,11 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (player1.GetComponent<Player1Controller>().GetHealth() <= 0)
+        if (player1.GetComponent<PlayerController>().GetHealth() <= 0)
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
-        else if (player2.GetComponent<Player2Controller>().GetHealth() <= 0)
+        else if (player2.GetComponent<PlayerController>().GetHealth() <= 0)
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
