@@ -17,7 +17,10 @@ public class Orc : AliveEnemy {
 
     protected override IEnumerator Attack()
     {
-        player.GetComponent<PlayerController>().RemoveHealth(damage);
+        if (!player.GetComponent<PlayerController>().isGod)
+        {
+            player.GetComponent<PlayerController>().RemoveHealth(damage);
+        }
         isOnCD = true;
         yield return new WaitForSeconds(attackCD);
         isOnCD = false;

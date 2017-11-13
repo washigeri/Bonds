@@ -5,6 +5,7 @@ using UnityEngine;
 public class Sword : WeaponController {
 
     private PolygonCollider2D pCollider2D;
+    private float parryDuration;
 
     protected override void Awake()
     {
@@ -12,6 +13,11 @@ public class Sword : WeaponController {
         damage = 10;
         range = 5;
         speed = 3;
+        strongCD = 5f;
+        skillCD = 2f;
+        isStrongOnCD = false;
+        isSkillOnCD = false;
+        parryDuration = 0.25f;
         weaponName = "Sword";
         base.Awake();
     }
@@ -40,7 +46,10 @@ public class Sword : WeaponController {
 
     protected override IEnumerator SkillP1()
     {
-        yield return new WaitForSeconds(0f);
+        player.isGod = true;
+        yield return new WaitForSeconds(parryDuration);
+        player.isGod = false;
+        yield return new WaitForSeconds(skillCD - parryDuration);
     }
 
     protected override IEnumerator SkillP2()

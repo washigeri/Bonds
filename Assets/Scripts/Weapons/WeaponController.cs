@@ -12,6 +12,7 @@ public abstract class WeaponController : MonoBehaviour
     protected int speed;
     protected float globalCD;
 
+    protected PlayerController player;
     protected bool hasOwner;
     protected int owner;
     protected int isAttacking;
@@ -41,10 +42,12 @@ public abstract class WeaponController : MonoBehaviour
         if (hasOwner)
         {
             owner = transform.root.CompareTag("Player1") ? 1 : 2;
+            player = transform.root.GetComponent<PlayerController>();
         }
         else
         {
             owner = 0;
+            player = null;
         }
         isAttacking = -1;
         isOnGlobalCoolDown = false;
@@ -106,6 +109,8 @@ public abstract class WeaponController : MonoBehaviour
                 transform.localPosition = Vector3.zero;
                 transform.localScale = new Vector3(Mathf.Abs(this.transform.localScale.x), Mathf.Abs(this.transform.localScale.y), Mathf.Abs(this.transform.localScale.z));
                 hasOwner = true;
+                owner = transform.root.CompareTag("Player1") ? 1 : 2;
+                player = playerController;
                 SetPlayerInfo();
             }
         }

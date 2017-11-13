@@ -6,6 +6,7 @@ public class Spear : WeaponController
 {
 
     private PolygonCollider2D pCollider2D;
+    private float chargeAcceleration;
 
     protected override void Awake()
     {
@@ -13,6 +14,11 @@ public class Spear : WeaponController
         damage = 7;
         range = 7;
         speed = 4;
+        strongCD = 3f;
+        skillCD = 10f;
+        chargeAcceleration = 5f;
+        isStrongOnCD = false;
+        isSkillOnCD = false;
         weaponName = "Spear";
         base.Awake();
     }
@@ -43,7 +49,18 @@ public class Spear : WeaponController
     protected override IEnumerator SkillP1()
     {
         Debug.Log("Skill");
-        yield return new WaitForSeconds(0f);
+        isAttacking = 2;
+        player.SetMaxSpeed(chargeAcceleration * player.GetMaxSpeed());
+        player.rb2d.AddForce(365f * (player.faceRight ? Vector2.right : Vector2.left), ForceMode2D.Impulse);
+        isSkillOnCD = true;
+        yield return new WaitForSeconds(0.3f);
+        isAttacking = -1;
+        player.SetMaxSpeed(player.GetMaxSpeed() / chargeAcceleration);
+        isOnGlobalCoolDown = true;
+        yield return new WaitForSeconds(globalCD);
+        isOnGlobalCoolDown = false;
+        yield return new WaitForSeconds(skillCD - globalCD);
+        isSkillOnCD = false;
     }
 
     protected override IEnumerator SkillP2()

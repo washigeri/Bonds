@@ -5,9 +5,6 @@ using UnityEngine;
 
 public class Player1Controller : PlayerController
 {
-
-    [HideInInspector] public bool jump = false;
-
     public float jumpForce = 650f;
     public Transform groundCheck;
 
@@ -36,7 +33,7 @@ public class Player1Controller : PlayerController
         CameraController.isLanding = (rb2d.velocity.y < 0f);
         if (Input.GetButtonDown("Jump") && grounded)
         {
-            jump = true;
+            moveHability = true;
             dirV = 1f;
         }
     }
@@ -88,10 +85,10 @@ public class Player1Controller : PlayerController
             }
         }
 
-        if (jump)
+        if (moveHability)
         {
             rb2d.AddForce(new Vector2(0f, jumpForce));
-            jump = false;
+            moveHability = false;
         }
 
         if (!grounded)
@@ -150,10 +147,10 @@ public class Player1Controller : PlayerController
         {
             rb2d.velocity = new Vector2(0, rb2d.velocity.y);
         }
-        if (jump)
+        if (moveHability)
         {
             rb2d.AddForce(new Vector2(0f, jumpForce));
-            jump = false;
+            moveHability = false;
         }
         if (!grounded)
         {

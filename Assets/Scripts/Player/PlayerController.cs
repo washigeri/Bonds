@@ -7,8 +7,11 @@ public abstract class PlayerController : MonoBehaviour
 
     [HideInInspector] public bool faceRight = true;
     [HideInInspector] public bool isDead = false;
+    [HideInInspector] public bool moveHability = false;
+
     protected bool isPlayer1;
     public bool isBlocked;
+    public bool isGod;
 
     protected float moveForce;
     public float maxSpeed = 5f;
@@ -38,6 +41,7 @@ public abstract class PlayerController : MonoBehaviour
         strengh = 1;
         stamina = 1;
         moveForce = 365f;
+        isGod = false;
     }
 
     protected virtual void Update()

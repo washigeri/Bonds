@@ -43,7 +43,6 @@ public class Bow : WeaponController
 
     private Vector3 GetDirection()
     {
-        PlayerController player = gameObject.transform.root.GetComponent<PlayerController>();
         if (player.GetDirH() == 0f && player.GetDirV() != 0f)
         {
            return Vector3.up;
@@ -57,7 +56,6 @@ public class Bow : WeaponController
     private void Shoot(Vector3 direction)
     {
         GameObject arrow = Instantiate(Resources.Load("Prefabs/Weapons/Arrow"), gameObject.transform.position, Quaternion.Euler(0, 0, 0)) as GameObject;
-        PlayerController player = gameObject.transform.root.GetComponent<PlayerController>();
         arrow.GetComponent<Arrow>().SetParameters(attacksDamage[isAttacking], enemyTag, direction, gameObject.transform.position);
     }
 
@@ -95,9 +93,10 @@ public class Bow : WeaponController
 
     protected override IEnumerator SkillP1()
     {
-        PlayerController player = transform.root.GetComponent<PlayerController>();
         player.isBlocked = true;
         player.SetMaxSpeed(disengageAcceleration * player.GetMaxSpeed());
+        player.moveHability = true;
+        yield return new WaitForSeconds(0.1f);
         player.rb2d.AddForce(365f * (player.faceRight ? Vector2.left : Vector2.right), ForceMode2D.Impulse);
         isSkillOnCD = true;
         yield return new WaitForSeconds(0.2f);

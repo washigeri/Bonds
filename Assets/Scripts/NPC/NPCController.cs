@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class NPCController : MonoBehaviour {
 
-    public string name;
+    public string pnjName;
 
     private bool isTalking = false;
     private int dialogIndex = Int32.MinValue;
@@ -76,7 +76,6 @@ public class NPCController : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log(collision.gameObject.tag);
         if (collision.gameObject.CompareTag("Player1")){
             isPlayerInRange = true;
         }
