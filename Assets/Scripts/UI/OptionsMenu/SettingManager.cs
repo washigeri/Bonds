@@ -1,0 +1,115 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.IO;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class SettingManager : MonoBehaviour {
+
+    public Toggle fullscreenToggle;
+    public Dropdown resolutionDropdown;
+    public Dropdown qualityDropdown;
+    public Dropdown antialiasingDropdown;
+    public Dropdown vSyncDropdown;
+    public Slider musicVolumeSlider;
+    public Slider sfxVolumeSlider;
+    public Dropdown difficultyDropdwon;
+    public Button applyButton;
+
+    public AudioSource musicSource;
+    public AudioSource sfxSource;
+
+    public Resolution[] resolutions;
+    public GameSettings gameSettings;
+
+    private void OnEnable()
+    {
+        gameSettings = new GameSettings();
+        
+
+        fullscreenToggle.onValueChanged.AddListener(delegate { OnFullscreenToggle(); });
+        resolutionDropdown.onValueChanged.AddListener(delegate { OnResolutionChange(); });
+        qualityDropdown.onValueChanged.AddListener(delegate { OnTextureQualityChange(); });
+        antialiasingDropdown.onValueChanged.AddListener(delegate { OnAntialiasingChange(); });
+        vSyncDropdown.onValueChanged.AddListener(delegate { OnVSyncChange(); });
+        musicVolumeSlider.onValueChanged.AddListener(delegate { OnMusicVolumeChange(); });
+        applyButton.onClick.AddListener(delegate { OnApplyButtonClick(); });
+        sfxVolumeSlider.onValueChanged.AddListener(delegate { OnSfxVolumeChange(); });
+        difficultyDropdwon.onValueChanged.AddListener(delegate { OnDifficultyChange(); });
+        resolutions = Screen.resolutions;
+        foreach(Resolution resolution in resolutions)
+        {
+            resolutionDropdown.options.Add(new Dropdown.OptionData(resolution.ToString()));
+        }
+        LoadSettings();
+    }
+
+
+    public void OnFullscreenToggle()
+    {
+        
+        gameSettings.fullscreen = Screen.fullScreen = fullscreenToggle.isOn;
+    }
+
+    public void OnResolutionChange()
+    {
+        Screen.SetResolution(resolutions[resolutionDropdown.value].width, resolutions[resolutionDropdown.value].height, Screen.fullScreen);
+        gameSettings.resolutionIndex = resolutionDropdown.value;
+    }
+
+    public void OnTextureQualityChange()
+    {
+       QualitySettings.masterTextureLimit = gameSettings.textureQuality = qualityDropdown.value;
+       
+    }
+
+    public void OnAntialiasingChange()
+    {
+        QualitySettings.antiAliasing = gameSettings.antialiasing = (int) Mathf.Pow(2f, antialiasingDropdown.value);
+    }
+
+    public void OnVSyncChange()
+    {
+        QualitySettings.vSyncCount = gameSettings.vSync = vSyncDropdown.value;
+    }
+    public void OnMusicVolumeChange()
+    {
+        musicSource.volume = gameSettings.musicVolume = musicVolumeSlider.value;
+    }
+
+    public void OnSfxVolumeChange()
+    {
+        sfxSource.volume = gameSettings.sfxVolume = sfxVolumeSlider.value;
+    }
+
+    public void OnDifficultyChange()
+    {
+        gameSettings.difficulty = difficultyDropdwon.value;
+    }
+
+    public void OnApplyButtonClick()
+    {
+        SaveSettings();
+    }
+
+    public void SaveSettings()
+    {
+        string jsonData = JsonUtility.ToJson(gameSettings, true);
+        File.WriteAllText(Application.persistentDataPath + "/gamesettings.json", jsonData);
+    }
+    public void LoadSettings()
+    {
+        gameSettings = JsonUtility.FromJson<GameSettings>(File.ReadAllText(Application.persistentDataPath + "/gamesettings.json"));
+        musicVolumeSlider.value = gameSettings.musicVolume;
+        antialiasingDropdown.value = gameSettings.antialiasing;
+        vSyncDropdown.value = gameSettings.vSync;
+        qualityDropdown.value = gameSettings.textureQuality;
+        resolutionDropdown.value = gameSettings.resolutionIndex;
+        fullscreenToggle.isOn = gameSettings.fullscreen;
+        sfxVolumeSlider.value = gameSettings.sfxVolume;
+        difficultyDropdwon.value = gameSettings.difficulty;
+
+        resolutionDropdown.RefreshShownValue();
+    }
+
+}
