@@ -10,4 +10,4 @@ Ceci est le dépôt GitHub pour le projet de jeu vidéo Bonds dans le cadre du c
 - Pierre BARJON
 - Paul SEICHAIS
 
-###[Trello](https://trello.com/b/HMoCOnFz)
+[Trello](https://trello.com/b/HMoCOnFz)
