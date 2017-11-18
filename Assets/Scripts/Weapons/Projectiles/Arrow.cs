@@ -43,7 +43,6 @@ public class Arrow : MonoBehaviour {
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        Debug.Log("collision stay " + collision.gameObject.tag);
         if (collision.gameObject.CompareTag("Ground") || collision.gameObject.CompareTag("Plateform"))
         {
             Destroy(gameObject);

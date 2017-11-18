@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Bow : WeaponController
 {
-
     private BoxCollider2D bCollider2D;
     private float disengageAcceleration;
 
@@ -55,7 +54,7 @@ public class Bow : WeaponController
 
     private void Shoot(Vector3 direction)
     {
-        GameObject arrow = Instantiate(Resources.Load("Prefabs/Weapons/Arrow"), gameObject.transform.position, Quaternion.Euler(0, 0, 0)) as GameObject;
+        GameObject arrow = Instantiate(Resources.Load("Prefabs/Weapons/Projectiles/Arrow"), gameObject.transform.position, Quaternion.Euler(0, 0, 0)) as GameObject;
         arrow.GetComponent<Arrow>().SetParameters(attacksDamage[isAttacking], enemyTag, direction, gameObject.transform.position);
     }
 
@@ -108,6 +107,14 @@ public class Bow : WeaponController
 
     protected override IEnumerator SkillP2()
     {
-        yield return new WaitForSeconds(0f);
+        GameObject arrow = Instantiate(Resources.Load("Prefabs/Weapons/Projectiles/EnhancedArrow"), gameObject.transform.position, Quaternion.Euler(0, 0, 0)) as GameObject;
+        Vector3 direction = (player.GetDirV() > 0) ? Vector3.up : Vector3.down;
+        arrow.GetComponent<EnhancedArrow>().SetParameters(1.5f, 5f, direction, gameObject.transform.position);
+        isSkillOnCD = true;
+        isOnGlobalCoolDown = true;
+        yield return new WaitForSeconds(globalCD);
+        isOnGlobalCoolDown = false;
+        yield return new WaitForSeconds(12f - globalCD);
+        isSkillOnCD = false;
     }
 }

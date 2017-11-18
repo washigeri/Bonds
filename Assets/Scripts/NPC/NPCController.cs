@@ -34,7 +34,6 @@ public class NPCController : MonoBehaviour {
                 DisplayInteractionText(true);
                 if (Input.GetButtonDown("InteractP1") )
                 {
-                    Debug.Log("Debut dialogue");
                     dialogIndex = -1;
                     isTalking = true;
                 }
@@ -107,20 +106,16 @@ public class NPCController : MonoBehaviour {
         switch (Index)
         {
             case -1:
-                Debug.Log("Case 1");
                 WelcomeDialog();
                 dialogIndex = 0;
                 break;
             case 0:
-                Debug.Log("Case 2");
-
                 GiveChoice();
                 dialogIndex = 1;
                 waitingForChoice = true;
                 yield return new WaitForSeconds(60f);
                 break;
             case 1:
-                Debug.Log("Case 3");
                 SayGoodBye();
                 dialogIndex = Int32.MaxValue;
                 isTalking = false;

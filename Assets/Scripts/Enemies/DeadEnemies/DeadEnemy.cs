@@ -7,8 +7,9 @@ public abstract class DeadEnemy : EnemyController
 
     private int hasATarget = 0;
 
-    protected virtual void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         GetComponent<Rigidbody2D>().gravityScale = 0f;
         player = null;
     }
@@ -62,6 +63,7 @@ public abstract class DeadEnemy : EnemyController
 
     protected override void Action()
     {
+        rb2d.AddForce(Vector2.zero);
         int playerID = GetTarget();
         if (IsVisible(playerID))
         {

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public abstract class EnemyController : MonoBehaviour
 {
-     public bool faceRight = false;
+    [HideInInspector] public bool faceRight = false;
 
     public Transform enemyTransform;
     public LayerMask layerMask;
@@ -20,14 +20,24 @@ public abstract class EnemyController : MonoBehaviour
     protected float attackRange;
     protected float speed;
     protected int damage;
+    protected float damageMultiplier;
     protected float detectionRange;
     protected bool canAttack = false;
+    protected bool isStunned = false;
+    protected Rigidbody2D rb2d;
 
+    protected virtual void Awake()
+    {
+        damageMultiplier = 1f;
+        canAttack = false;
+        isStunned = false;
+        rb2d = GetComponent<Rigidbody2D>();
+    }
 
     // Update is called once per frame
     protected virtual void Update()
     {
-        Debug.Log(health);
+        Debug.Log("Ennemy health " + health);
         if (this.health <= 0)
         {
             Destroy(gameObject);
@@ -60,12 +70,27 @@ public abstract class EnemyController : MonoBehaviour
         enemyTransform.position = nextPosition;
     }
 
-    public void RemoveHealth(int loss)
+    public void RemoveHealth(float loss)
     {
         health -= loss;
     }
 
+    public IEnumerator StunnedRoutine()
+    {
+        isStunned = true;
+        yield return new WaitForSeconds(0.25f);
+        isStunned = false;
+    }
 
+    public bool GetIsStunned()
+    {
+        return isStunned;
+    }
+
+    public void SetIsStunned(bool isStunned)
+    {
+        this.isStunned = isStunned;
+    }
 
     protected void Flip()
     {
@@ -76,4 +101,9 @@ public abstract class EnemyController : MonoBehaviour
     }
 
     protected abstract IEnumerator Attack();
+
+    public void SetDamageMultiplier(float damageMultiplier)
+    {
+        this.damageMultiplier = damageMultiplier;
+    }
 }

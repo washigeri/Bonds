@@ -90,7 +90,9 @@ public abstract class WeaponController : MonoBehaviour
                 {
                     if (collision.gameObject.CompareTag(enemyTag))
                     {
-                        collision.gameObject.GetComponent<EnemyController>().RemoveHealth(attacksDamage[isAttacking]);
+                        EnemyController enemy = collision.gameObject.GetComponent<EnemyController>();
+                        enemy.RemoveHealth(player.GetDamageMultiplier() * attacksDamage[isAttacking]);
+                        StartCoroutine(enemy.StunnedRoutine());
                     }
                 }
             }
@@ -118,6 +120,7 @@ public abstract class WeaponController : MonoBehaviour
 
     protected virtual void Update()
     {
+        //Debug.Log("damage multiplier read is : " + player.GetDamageMultiplier());
         if (hasOwner && !isOnGlobalCoolDown && (isAttacking == -1))
         {
             if (Input.GetButtonDown(weakName))

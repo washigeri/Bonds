@@ -17,8 +17,9 @@ public abstract class PlayerController : MonoBehaviour
     public float maxSpeed = 5f;
     public Transform playerTransform;
 
-    private int maxHp;
-    protected int hp;
+    private float maxHp;
+    protected float damageMultiplier;
+    protected float hp;
     protected int agility;
     protected int strengh;
     protected int stamina;
@@ -35,18 +36,19 @@ public abstract class PlayerController : MonoBehaviour
     protected virtual void Awake()
     {
         rb2d = GetComponent<Rigidbody2D>();
-        maxHp = 100;
+        maxHp = 100f;
         hp = maxHp;
         agility = 1;
         strengh = 1;
         stamina = 1;
         moveForce = 365f;
+        damageMultiplier = 1f;
         isGod = false;
     }
 
     protected virtual void Update()
     {
-        isDead = (hp <= 0);
+        isDead = (hp <= 0f);
         CheckForInputs();
     }
 
@@ -195,17 +197,17 @@ public abstract class PlayerController : MonoBehaviour
         }
     }
 
-    private void RestaureHealth(int health)
+    private void RestaureHealth(float health)
     {
         hp = Mathf.Min(hp + health, maxHp);
     }
 
-    public void RemoveHealth(int health)
+    public void RemoveHealth(float health)
     {
         hp -= health;
     }
 
-    public int GetHealth()
+    public float GetHealth()
     {
         return hp;
     }
@@ -236,5 +238,15 @@ public abstract class PlayerController : MonoBehaviour
     public void SetMaxSpeed(float maxSpeed)
     {
         this.maxSpeed = maxSpeed;
+    }
+
+    public float GetDamageMultiplier()
+    {
+        return damageMultiplier;
+    }
+
+    public void SetDamageMultiplier(float damageMultiplier)
+    {
+        this.damageMultiplier = damageMultiplier;
     }
 }

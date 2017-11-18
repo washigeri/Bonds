@@ -6,13 +6,16 @@ public abstract class AliveEnemy : EnemyController {
 
     protected bool hasATarget = false;
 
-    protected virtual void Awake()
+
+    protected override void Awake()
     {
+        base.Awake();
         player = GameObject.FindGameObjectWithTag("Player1");
     }
 
     protected override void Action()
     {
+        rb2d.AddForce(Vector2.zero);
         int dirToLook = (player.transform.position.x > enemyTransform.position.x) ? 1 : -1;
         Vector2 end;
         if (Mathf.Abs(enemyTransform.position.x - player.transform.position.x) <= detectionRange || hasATarget)
@@ -38,18 +41,21 @@ public abstract class AliveEnemy : EnemyController {
         }
         if (hasATarget)
         {
-            end = new Vector2(enemyTransform.position.x + attackRange * dirToLook, enemyTransform.position.y);
-            canAttack = Physics2D.Linecast(enemyTransform.position, end, 1 << LayerMask.NameToLayer(player.tag));
-            if (canAttack)
+            if (!isStunned)
             {
-                if (!isOnCD)
+                end = new Vector2(enemyTransform.position.x + attackRange * dirToLook, enemyTransform.position.y);
+                canAttack = Physics2D.Linecast(enemyTransform.position, end, 1 << LayerMask.NameToLayer(player.tag));
+                if (canAttack)
                 {
-                    StartCoroutine(Attack());
+                    if (!isOnCD)
+                    {
+                        StartCoroutine(Attack());
+                    }
                 }
-            }
-            else
-            {
-                MoveTowards(player.transform.position);
+                else
+                {
+                    MoveTowards(player.transform.position);
+                }
             }
         }
         else
