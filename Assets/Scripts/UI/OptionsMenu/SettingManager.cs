@@ -22,6 +22,14 @@ public class SettingManager : MonoBehaviour {
     public Resolution[] resolutions;
     public GameSettings gameSettings;
 
+
+    private string settingsPath;
+
+    private void Awake()
+    {
+        settingsPath = Application.persistentDataPath + "/gamesettings.json";
+    }
+
     private void OnEnable()
     {
         gameSettings = new GameSettings();
@@ -41,7 +49,8 @@ public class SettingManager : MonoBehaviour {
         {
             resolutionDropdown.options.Add(new Dropdown.OptionData(resolution.ToString()));
         }
-        LoadSettings();
+        if(File.Exists(settingsPath))
+            LoadSettings();
     }
 
 
@@ -95,11 +104,11 @@ public class SettingManager : MonoBehaviour {
     public void SaveSettings()
     {
         string jsonData = JsonUtility.ToJson(gameSettings, true);
-        File.WriteAllText(Application.persistentDataPath + "/gamesettings.json", jsonData);
+        File.WriteAllText(settingsPath, jsonData);
     }
     public void LoadSettings()
     {
-        gameSettings = JsonUtility.FromJson<GameSettings>(File.ReadAllText(Application.persistentDataPath + "/gamesettings.json"));
+        gameSettings = JsonUtility.FromJson<GameSettings>(File.ReadAllText(settingsPath));
         musicVolumeSlider.value = gameSettings.musicVolume;
         antialiasingDropdown.value = gameSettings.antialiasing;
         vSyncDropdown.value = gameSettings.vSync;

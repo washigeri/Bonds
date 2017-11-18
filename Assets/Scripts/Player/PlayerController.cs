@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public abstract class PlayerController : MonoBehaviour
 {
@@ -20,6 +21,7 @@ public abstract class PlayerController : MonoBehaviour
     private float maxHp;
     protected float damageMultiplier;
     protected float hp;
+    public Slider hpSlider;
     protected int agility;
     protected int strengh;
     protected int stamina;
@@ -200,11 +202,13 @@ public abstract class PlayerController : MonoBehaviour
     private void RestaureHealth(float health)
     {
         hp = Mathf.Min(hp + health, maxHp);
+        hpSlider.value = hp;
     }
 
     public void RemoveHealth(float health)
     {
         hp -= health;
+        hpSlider.value = hp;
     }
 
     public float GetHealth()
