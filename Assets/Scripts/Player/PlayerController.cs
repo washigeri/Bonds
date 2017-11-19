@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public abstract class PlayerController : MonoBehaviour
 {
@@ -26,6 +27,7 @@ public abstract class PlayerController : MonoBehaviour
     protected string interactBindName;
 
     public Rigidbody2D rb2d;
+    public Slider PlayerHealth;
 
     // Use this for initialization
     protected virtual void Awake()
@@ -193,11 +195,14 @@ public abstract class PlayerController : MonoBehaviour
     private void RestaureHealth(int health)
     {
         hp = Mathf.Min(hp + health, maxHp);
+        PlayerHealth.value = hp;
     }
 
     public void RemoveHealth(int health)
     {
         hp -= health;
+        PlayerHealth.value = hp;
+
     }
 
     public int GetHealth()

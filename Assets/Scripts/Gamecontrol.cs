@@ -112,7 +112,10 @@ public class Gamecontrol : MonoBehaviour
 
     public IEnumerator PostLoad()
     {
-        SceneManager.LoadScene(savedScene);
+        if(SceneManager.GetActiveScene().buildIndex != savedScene)
+        {
+            SceneManager.LoadScene(savedScene);
+        }
 
         yield return new WaitForSeconds(0.25f);
 

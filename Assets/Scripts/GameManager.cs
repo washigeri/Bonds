@@ -28,6 +28,8 @@ public class GameManager : MonoBehaviour
         }
         player1 = GameObject.FindGameObjectWithTag("Player1");
         player2 = GameObject.FindGameObjectWithTag("Player2");
+        DontDestroyOnLoad(player1);
+        DontDestroyOnLoad(player2);
         potionNumber = 0;
         maxPotion = 5;
         potionHeal = 0.5f;
