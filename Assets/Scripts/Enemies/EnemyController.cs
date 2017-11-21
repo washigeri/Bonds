@@ -106,4 +106,21 @@ public abstract class EnemyController : MonoBehaviour
     {
         this.damageMultiplier = damageMultiplier;
     }
+
+    public float GetSpeed()
+    {
+        return speed;
+    }
+
+    public void SetSpeed(float speed)
+    {
+        this.speed = speed;
+    }
+
+    public IEnumerator Slow(float speed, float duration)
+    {
+        this.speed *= speed;
+        yield return new WaitForSeconds(duration);
+        this.speed /= speed;
+    }
 }

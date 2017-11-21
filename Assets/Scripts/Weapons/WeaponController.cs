@@ -52,10 +52,10 @@ public abstract class WeaponController : MonoBehaviour
         isAttacking = -1;
         isOnGlobalCoolDown = false;
         attacksDamage = new int[] { 10 * damage / 3, 10 * damage / 2, 10 * damage};
-        SetPlayerInfo();
+        SetWeaponInfo();
     }
 
-    public void SetPlayerInfo()
+    private void SetWeaponInfo()
     {
         if (owner == 1)
         {
@@ -91,7 +91,11 @@ public abstract class WeaponController : MonoBehaviour
                     if (collision.gameObject.CompareTag(enemyTag))
                     {
                         EnemyController enemy = collision.gameObject.GetComponent<EnemyController>();
-                        enemy.RemoveHealth(player.GetDamageMultiplier() * attacksDamage[isAttacking]);
+                        enemy.RemoveHealth(player.GetDamageDoneMultiplier() * attacksDamage[isAttacking]);
+                        if(player.GetEnemySpeedMultiplierDuration() > 0f)
+                        {
+                            StartCoroutine(enemy.Slow(player.GetEnemySpeedMultiplier(), player.GetEnemySpeedMultiplierDuration()));
+                        }
                         StartCoroutine(enemy.StunnedRoutine());
                     }
                 }
@@ -113,7 +117,7 @@ public abstract class WeaponController : MonoBehaviour
                 hasOwner = true;
                 owner = transform.root.CompareTag("Player1") ? 1 : 2;
                 player = playerController;
-                SetPlayerInfo();
+                SetWeaponInfo();
             }
         }
     }

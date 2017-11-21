@@ -12,7 +12,7 @@ public class CheckPoint : MonoBehaviour {
         if (!used)
         {
             used = true;
-            GameManager.gameManager.PreSave();
+            GameManager2.gameManager.Save();
         }
     }
 }

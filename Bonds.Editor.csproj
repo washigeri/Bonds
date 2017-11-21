@@ -282,6 +282,7 @@
     <Compile Include="Assets\Sprites\FantasyHeroes\Editor\UpdateUnitPrefabs.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\Scripts\NPC\Dialog\Dialog1.xml" />
     <None Include="Assets\Sprites\FantasyHeroes\Shaders\ColorizeEyes.shader" />
     <None Include="Assets\Sprites\FantasyHeroes\Shaders\Diffuse-Masked.shader" />
   </ItemGroup>

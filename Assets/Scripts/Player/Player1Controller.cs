@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player1Controller : PlayerController
 {
@@ -18,13 +19,16 @@ public class Player1Controller : PlayerController
         potionBindName = "HealP1";
         interactBindName = "InteractP1";
         base.Awake();
+        Debug.Log("Awake player1");
     }
 
     //Update is called once per frame
     protected override void Update()
     {
+        //Debug.Log(dirH);
         base.Update();
         grounded = Physics2D.Linecast(transform.position, groundCheck.position, 1 << LayerMask.NameToLayer("Ground"));
+        //Debug.Log("is grounded " + grounded);
         if (grounded || rb2d.velocity.y < 0f)
         {
             dirV = 0f;

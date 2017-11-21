@@ -97,14 +97,14 @@ public class GameManager : MonoBehaviour
             potionNumber = potionNumber,
             y = savedPosition[1],
             x = savedPosition[0],
-            savedScene = savedScene,
-            strength = strength,
-            agility = agility,
-            stamina = stamina,
-            weaponTypeP1 = weaponTypeP1,
-            weaponTypeP2 = weaponTypeP2,
-            weaponTierP1 = weaponTierP1,
-            weaponTierP2 = weaponTierP2
+            savedScene = savedScene
+            //strength = strength,
+            //agility = agility,
+            //stamina = stamina,
+            //weaponTypeP1 = weaponTypeP1,
+            //weaponTypeP2 = weaponTypeP2,
+            //weaponTierP1 = weaponTierP1,
+            //weaponTierP2 = weaponTierP2
         };
 
         bf.Serialize(file, data);
@@ -124,13 +124,13 @@ public class GameManager : MonoBehaviour
             potionNumber = data.potionNumber;
             savedPosition = new Vector2(data.x, data.y);
             savedScene = data.savedScene;
-            strength = data.strength;
-            agility = data.agility;
-            stamina = data.stamina;
-            weaponTypeP1 = data.weaponTypeP1;
-            weaponTypeP2 = data.weaponTypeP2;
-            weaponTierP1 = data.weaponTierP1;
-            weaponTierP2 = data.weaponTierP2;
+            //strength = data.strength;
+            //agility = data.agility;
+            //stamina = data.stamina;
+            //weaponTypeP1 = data.weaponTypeP1;
+            //weaponTypeP2 = data.weaponTypeP2;
+            //weaponTierP1 = data.weaponTierP1;
+            //weaponTierP2 = data.weaponTierP2;
 
             StartCoroutine(PostLoad());
         }
@@ -156,23 +156,23 @@ public class GameManager : MonoBehaviour
     }
 }
 
-[Serializable]
-class SavedData
-{
-    [Range(0, 5)]
-    public int potionNumber;
-    public float x;
-    public float y;
-    public int savedScene;
-    public int strength;
-    public int agility;
-    public int stamina;
-    [Range(1, 4)]
-    public int weaponTypeP1;
-    [Range(1, 4)]
-    public int weaponTypeP2;
-    [Range(1, 4)]
-    public int weaponTierP1;
-    [Range(1, 4)]
-    public int weaponTierP2;
-}
+//[Serializable]
+//class SavedData
+//{
+//    [Range(0, 5)]
+//    public int potionNumber;
+//    public float x;
+//    public float y;
+//    public int savedScene;
+//    public int strength;
+//    public int agility;
+//    public int stamina;
+//    [Range(1, 4)]
+//    public int weaponTypeP1;
+//    [Range(1, 4)]
+//    public int weaponTypeP2;
+//    [Range(1, 4)]
+//    public int weaponTierP1;
+//    [Range(1, 4)]
+//    public int weaponTierP2;
+//}

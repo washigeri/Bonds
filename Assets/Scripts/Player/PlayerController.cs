@@ -15,16 +15,20 @@ public abstract class PlayerController : MonoBehaviour
     public bool isGod;
 
     protected float moveForce;
-    public float maxSpeed = 5f;
+    protected float maxSpeed = 5f;
     public Transform playerTransform;
 
-    private float maxHp;
-    protected float damageMultiplier;
+    public float maxHp;
     protected float hp;
-    public Slider hpSlider;
     protected int agility;
     protected int strengh;
     protected int stamina;
+
+    protected float damageDoneMultiplier;
+    protected float damageReceivedMultiplier;
+    protected float speedMultiplier;
+    protected float enemySpeedMultiplier;
+    protected float enemySpeedMultiplierDuration;
 
     protected float dirH;
     protected float dirV;
@@ -44,7 +48,11 @@ public abstract class PlayerController : MonoBehaviour
         strengh = 1;
         stamina = 1;
         moveForce = 365f;
-        damageMultiplier = 1f;
+        damageDoneMultiplier = 1f;
+        damageReceivedMultiplier = 1f;
+        speedMultiplier = 1f;
+        enemySpeedMultiplier = 1f;
+        enemySpeedMultiplierDuration = 0f;
         isGod = false;
     }
 
@@ -52,6 +60,7 @@ public abstract class PlayerController : MonoBehaviour
     {
         isDead = (hp <= 0f);
         CheckForInputs();
+        Debug.Log("Max Speed : " + maxSpeed);
     }
 
     protected abstract void FixedUpdate();
@@ -172,10 +181,10 @@ public abstract class PlayerController : MonoBehaviour
 
     protected void UsePotion()
     {
-        if (GameManager.potionNumber > 0)
+        if (GameManager2.gameManager.potionNumber > 0)
         {
-            RestaureHealth((int)(GameManager.potionHeal * maxHp));
-            GameManager.potionNumber--;
+            RestaureHealth((int)(GameManager2.gameManager.potionHeal * maxHp));
+            GameManager2.gameManager.potionNumber--;
         }
     }
 
@@ -192,23 +201,36 @@ public abstract class PlayerController : MonoBehaviour
         WeaponController myWeapon = gameObject.GetComponentInChildren<WeaponController>();
         if(myWeapon != null)
         {
-            myWeapon.gameObject.GetComponent<WeaponController>().SetOwner(false);
+            myWeapon.SetOwner(false);
             myWeapon.gameObject.transform.parent = null;
             myWeapon.transform.localScale = new Vector3(Mathf.Abs(myWeapon.transform.localScale.x), Mathf.Abs(myWeapon.transform.localScale.y), Mathf.Abs(myWeapon.transform.localScale.z));
             myWeapon.transform.localRotation = new Quaternion(myWeapon.transform.localRotation.x, myWeapon.transform.localRotation.y, myWeapon.transform.localRotation.z * (faceRight ? 1 : -1), myWeapon.transform.localRotation.w);
         }
     }
 
+    public void DropTrinket()
+    {
+        TrinketController myTrinket = gameObject.GetComponentInChildren<TrinketController>();
+        if(myTrinket != null)
+        {
+            myTrinket.SetOwner(false);
+            myTrinket.gameObject.transform.parent = null;
+        }
+    }
+
     private void RestaureHealth(float health)
     {
         hp = Mathf.Min(hp + health, maxHp);
-        hpSlider.value = hp;
     }
 
     public void RemoveHealth(float health)
     {
         hp -= health;
-        hpSlider.value = hp;
+    }
+
+    public void SetHealth(float health)
+    {
+        this.hp = health;
     }
 
     public float GetHealth()
@@ -244,13 +266,59 @@ public abstract class PlayerController : MonoBehaviour
         this.maxSpeed = maxSpeed;
     }
 
-    public float GetDamageMultiplier()
+    public float GetDamageDoneMultiplier()
     {
-        return damageMultiplier;
+        return damageDoneMultiplier;
     }
 
-    public void SetDamageMultiplier(float damageMultiplier)
+    public void SetDamageDoneMultiplier(float damageDoneMultiplier)
     {
-        this.damageMultiplier = damageMultiplier;
+        this.damageDoneMultiplier = damageDoneMultiplier;
+    }
+
+    public float GetDamageReceivedMultiplier()
+    {
+        return damageReceivedMultiplier;
+    }
+
+    public void SetDamageReceivedMultiplier(float damageReceivedMultiplier)
+    {
+        this.damageReceivedMultiplier = damageReceivedMultiplier;
+    }
+
+    public float GetSpeedMutiplier()
+    {
+        return speedMultiplier;
+    }
+
+    public void SetSpeedMultiplier(float speedMultiplier)
+    {
+        this.speedMultiplier = speedMultiplier;
+    }
+
+    public float GetEnemySpeedMultiplier()
+    {
+        return enemySpeedMultiplier;
+    }
+
+    public void SetEnemySpeedMultiplier(float enemySpeedMultiplier)
+    {
+        this.enemySpeedMultiplier = enemySpeedMultiplier;
+    }
+
+    public float GetEnemySpeedMultiplierDuration()
+    {
+        return enemySpeedMultiplierDuration;
+    }
+
+    public void SetEnemySpeedMultiplierDuration(float enemySpeedMultiplierDuration)
+    {
+        this.enemySpeedMultiplierDuration = enemySpeedMultiplierDuration;
+    }
+
+
+    private void OnDestroy()
+    {
+        Debug.Log("Destroying player");
     }
 }

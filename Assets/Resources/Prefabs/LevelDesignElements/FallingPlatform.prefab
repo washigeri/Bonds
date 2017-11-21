@@ -25,6 +25,7 @@ GameObject:
   - component: {fileID: 50924217543844222}
   - component: {fileID: 114398147996862092}
   - component: {fileID: 251207603037331844}
+  - component: {fileID: 114491737005063758}
   m_Layer: 12
   m_Name: FallingPlatform
   m_TagString: Ground
@@ -143,6 +144,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fallDelay: 2
+--- !u!114 &114491737005063758
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1185861838254838}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dde87640e7b0384f989262df3406d4b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!251 &251207603037331844
 PlatformEffector2D:
   m_ObjectHideFlags: 1

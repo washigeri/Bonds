@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player2Controller : PlayerController
 {
@@ -16,6 +17,7 @@ public class Player2Controller : PlayerController
         rb2d.gravityScale = 0f;
         potionBindName = "HealP2";
         interactBindName = "InteractP2";
+        Debug.Log("Awake player2");
     }
 
     // Update is called once per frame

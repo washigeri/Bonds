@@ -15,6 +15,7 @@ TagManager:
   - Plateform
   - Potion
   - Ground
+  - PauseMenu
   layers:
   - Default
   - TransparentFX

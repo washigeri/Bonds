@@ -37,7 +37,7 @@ public class EnhancedArrow : MonoBehaviour
             if (collision.gameObject.CompareTag("Ground"))
             {
                 isGrounded = true;
-                StartCoroutine(collision.gameObject.GetComponent<Ground>().ModifyGround(time, damageMultiplier));
+                StartCoroutine(collision.gameObject.GetComponentInChildren<Ground>().ModifyGround(time, damageMultiplier, damageMultiplier));
                 StartCoroutine(OnDestruction());
             }
         }

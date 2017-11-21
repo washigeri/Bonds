@@ -16,16 +16,16 @@ public abstract class DeadEnemy : EnemyController
 
     private int GetTarget()
     {
-        float dP1 = Vector2.Distance(GameManager.player1.transform.position, enemyTransform.position);
-        float dP2 = Vector2.Distance(GameManager.player2.transform.position, enemyTransform.position);
+        float dP1 = Vector2.Distance(GameManager2.gameManager.player1.transform.position, enemyTransform.position);
+        float dP2 = Vector2.Distance(GameManager2.gameManager.player2.transform.position, enemyTransform.position);
         if (dP1 <= dP2)
         {
-            player = GameManager.player1;
+            player = GameManager2.gameManager.player1;
             return 1;
         }
         else
         {
-            player = GameManager.player2;
+            player = GameManager2.gameManager.player2;
             return 2;
         }
     }
@@ -68,24 +68,24 @@ public abstract class DeadEnemy : EnemyController
         if (IsVisible(playerID))
         {
             hasATarget = playerID;
-            player = hasATarget == 1 ? GameManager.player1 : GameManager.player2;
+            player = hasATarget == 1 ? GameManager2.gameManager.player1 : GameManager2.gameManager.player2;
             TryToAttackOrMove();
         }
         else
         {
             if (playerID == 1)
             {
-                player = GameManager.player2;
+                player = GameManager2.gameManager.player2;
             }
             else
             {
-                player = GameManager.player1;
+                player = GameManager2.gameManager.player1;
             }
             playerID = playerID == 1 ? 2 : 1;
             if (IsVisible(playerID))
             {
                 hasATarget = playerID;
-                player = hasATarget == 1 ? GameManager.player1 : GameManager.player2;
+                player = hasATarget == 1 ? GameManager2.gameManager.player1 : GameManager2.gameManager.player2;
                 TryToAttackOrMove();
             }
             else
