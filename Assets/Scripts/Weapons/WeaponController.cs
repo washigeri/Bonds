@@ -96,7 +96,7 @@ public abstract class WeaponController : MonoBehaviour
                         {
                             enemy.SetSpeedMultiplierParameters(player.GetEnemySpeedMultiplier(), player.GetEnemySpeedMultiplierDuration());
                         }
-                        enemy.SetIsStunned(true);
+                        enemy.SetStunned(true);
                     }
                 }
             }

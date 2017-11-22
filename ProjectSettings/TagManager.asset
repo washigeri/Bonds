@@ -16,6 +16,7 @@ TagManager:
   - Potion
   - Ground
   - PauseMenu
+  - Trinket
   layers:
   - Default
   - TransparentFX

@@ -22,9 +22,9 @@ GameObject:
   - component: {fileID: 212886542824946944}
   - component: {fileID: 61498972748461226}
   - component: {fileID: 114437286610469238}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Trinket3
-  m_TagString: Untagged
+  m_TagString: Trinket
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -81,6 +81,7 @@ MonoBehaviour:
   damageDoneMultiplier: 1
   damageReceivedMultiplier: 1
   enemySpeedMultiplier: 1
+  enemySpeedMultiplierDuration: 0
   speedMultiplier: 1.25
 --- !u!212 &212886542824946944
 SpriteRenderer:

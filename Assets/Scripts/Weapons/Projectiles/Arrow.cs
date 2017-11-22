@@ -43,7 +43,7 @@ public class Arrow : MonoBehaviour {
                 {
                     enemy.SetSpeedMultiplierParameters(shooter.GetEnemySpeedMultiplier(), shooter.GetEnemySpeedMultiplierDuration());
                 }
-                enemy.SetIsStunned(true);
+                enemy.SetStunned(true);
                 Destroy(gameObject);
             }
         }

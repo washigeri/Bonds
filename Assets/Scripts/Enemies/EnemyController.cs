@@ -26,7 +26,9 @@ public abstract class EnemyController : MonoBehaviour
     protected float detectionRange;
     protected bool canAttack;
     protected bool isStunned;
+    private bool stunned;
     private bool isSlowDown;
+    private bool slowDown;
     //private bool isAlreadySlowDown;
     protected Rigidbody2D rb2d;
 
@@ -56,11 +58,11 @@ public abstract class EnemyController : MonoBehaviour
             {
                 speedMultiplierDuration -= Time.deltaTime;
             }
-            if (isStunned)
+            if (stunned)
             {
                 StartCoroutine(StunnedRoutine());
             }
-            if (isSlowDown)
+            if (slowDown)
             {
                 StartCoroutine(Slow());
             }
@@ -97,19 +99,20 @@ public abstract class EnemyController : MonoBehaviour
 
     private IEnumerator StunnedRoutine()
     {
+        stunned = false;
         Debug.Log("starting stunned routine");
         yield return new WaitForSeconds(0.25f);
         isStunned = false;
     }
 
-    public bool GetIsStunned()
+    public bool GetStunned()
     {
-        return isStunned;
+        return stunned;
     }
 
-    public void SetIsStunned(bool isStunned)
+    public void SetStunned(bool stunned)
     {
-        this.isStunned = isStunned;
+        this.stunned = stunned;
     }
 
     protected void Flip()
@@ -158,7 +161,7 @@ public abstract class EnemyController : MonoBehaviour
         }
         else
         {
-            isSlowDown = true;
+            slowDown = true;
             this.speedMultiplier *= speedMultiplier;
             speedMultiplierDuration = duration;
         }
@@ -167,6 +170,7 @@ public abstract class EnemyController : MonoBehaviour
     private IEnumerator Slow()
     {
         Debug.Log("starting slow routine");
+        slowDown = false;
         yield return new WaitUntil(() => speedMultiplierDuration <= 0f);
         this.speedMultiplier = 1f;
         isSlowDown = false;
