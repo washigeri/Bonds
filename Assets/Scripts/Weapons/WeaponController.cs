@@ -94,9 +94,9 @@ public abstract class WeaponController : MonoBehaviour
                         enemy.RemoveHealth(player.GetDamageDoneMultiplier() * attacksDamage[isAttacking]);
                         if(player.GetEnemySpeedMultiplierDuration() > 0f)
                         {
-                            StartCoroutine(enemy.Slow(player.GetEnemySpeedMultiplier(), player.GetEnemySpeedMultiplierDuration()));
+                            enemy.SetSpeedMultiplierParameters(player.GetEnemySpeedMultiplier(), player.GetEnemySpeedMultiplierDuration());
                         }
-                        StartCoroutine(enemy.StunnedRoutine());
+                        enemy.SetIsStunned(true);
                     }
                 }
             }
@@ -105,21 +105,25 @@ public abstract class WeaponController : MonoBehaviour
 
     protected void OnTriggerStay2D(Collider2D collision)
     {
-        if (Input.GetButtonDown("InteractP1") || Input.GetButtonDown("InteractP2"))
+        if (!hasOwner)
         {
-            if (collision.gameObject.CompareTag("Player1") || collision.gameObject.CompareTag("Player2"))
+            if (Input.GetButtonDown("InteractP1") || Input.GetButtonDown("InteractP2"))
             {
-                PlayerController playerController = collision.gameObject.GetComponent<PlayerController>();
-                playerController.DropWeapon();
-                gameObject.transform.parent = collision.gameObject.transform.Find("Hand");
-                transform.localPosition = Vector3.zero;
-                transform.localScale = new Vector3(Mathf.Abs(this.transform.localScale.x), Mathf.Abs(this.transform.localScale.y), Mathf.Abs(this.transform.localScale.z));
-                hasOwner = true;
-                owner = transform.root.CompareTag("Player1") ? 1 : 2;
-                player = playerController;
-                SetWeaponInfo();
+                if (collision.gameObject.CompareTag("Player1") || collision.gameObject.CompareTag("Player2"))
+                {
+                    player = collision.gameObject.GetComponent<PlayerController>();
+                    player.DropWeapon();
+                    gameObject.transform.parent = collision.gameObject.transform.Find("Hand");
+                    player.SetMyWeapon(this);
+                    hasOwner = true;
+                    transform.localPosition = Vector3.zero;
+                    transform.localScale = new Vector3(Mathf.Abs(this.transform.localScale.x), Mathf.Abs(this.transform.localScale.y), Mathf.Abs(this.transform.localScale.z));
+                    owner = transform.root.CompareTag("Player1") ? 1 : 2;
+                    SetWeaponInfo();
+                }
             }
         }
+        
     }
 
     protected virtual void Update()

@@ -31,7 +31,7 @@ public class Spear : WeaponController
 
     protected override IEnumerator WeakAttack()
     {
-        Debug.Log("Weak attack");
+        //Debug.Log("Weak attack");
         isAttacking = 0;
         yield return new WaitForSeconds(0.25f);
         isAttacking = -1;
@@ -42,20 +42,20 @@ public class Spear : WeaponController
 
     protected override IEnumerator StrongAttack()
     {
-        Debug.Log("Strong attack");
+        //Debug.Log("Strong attack");
         yield return new WaitForSeconds(0f);
     }
 
     protected override IEnumerator SkillP1()
     {
-        Debug.Log("Skill");
+        //Debug.Log("Skill");
         isAttacking = 2;
-        player.SetMaxSpeed(chargeAcceleration * player.GetMaxSpeed());
+        player.SetSpeedMultiplier(chargeAcceleration * player.GetSpeedMutiplier());
         player.rb2d.AddForce(365f * (player.faceRight ? Vector2.right : Vector2.left), ForceMode2D.Impulse);
         isSkillOnCD = true;
         yield return new WaitForSeconds(0.3f);
         isAttacking = -1;
-        player.SetMaxSpeed(player.GetMaxSpeed() / chargeAcceleration);
+        player.SetSpeedMultiplier(player.GetSpeedMutiplier() / chargeAcceleration);
         isOnGlobalCoolDown = true;
         yield return new WaitForSeconds(globalCD);
         isOnGlobalCoolDown = false;

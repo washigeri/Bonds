@@ -7,6 +7,7 @@ public class Arrow : MonoBehaviour {
     public Transform myTransform;
 
     private bool isSet;
+    private PlayerController shooter;
 
     private int damage;
     private string enemyTag;
@@ -27,6 +28,7 @@ public class Arrow : MonoBehaviour {
         distance = 0f;
         rb2d = GetComponent<Rigidbody2D>();
         rb2d.gravityScale = 0f;
+        shooter = null;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -35,7 +37,13 @@ public class Arrow : MonoBehaviour {
         {
             if (collision.gameObject.CompareTag(enemyTag))
             {
-                collision.gameObject.GetComponent<EnemyController>().RemoveHealth(damage);
+                EnemyController enemy = collision.gameObject.GetComponent<EnemyController>();
+                enemy.RemoveHealth(damage * shooter.GetDamageDoneMultiplier());
+                if(shooter.GetEnemySpeedMultiplierDuration() > 0f)
+                {
+                    enemy.SetSpeedMultiplierParameters(shooter.GetEnemySpeedMultiplier(), shooter.GetEnemySpeedMultiplierDuration());
+                }
+                enemy.SetIsStunned(true);
                 Destroy(gameObject);
             }
         }
@@ -43,7 +51,7 @@ public class Arrow : MonoBehaviour {
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Ground") || collision.gameObject.CompareTag("Plateform"))
+        if (collision.gameObject.CompareTag("Ground"))
         {
             Destroy(gameObject);
         }
@@ -63,8 +71,16 @@ public class Arrow : MonoBehaviour {
         
     }
 
-    public void SetParameters(int damage, string enemyTag, Vector3 direction, Vector3 startPosition)
+    public void SetParameters(int shooter, int damage, string enemyTag, Vector3 direction, Vector3 startPosition)
     {
+        if(shooter == 1)
+        {
+            this.shooter = GameManager.gameManager.player1.GetComponent<PlayerController>();
+        }
+        else if (shooter == 2)
+        {
+            this.shooter = GameManager.gameManager.player2.GetComponent<PlayerController>();
+        }
         this.damage = damage;
         this.enemyTag = enemyTag;
         this.direction = direction;

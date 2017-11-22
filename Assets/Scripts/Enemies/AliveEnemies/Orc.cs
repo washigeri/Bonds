@@ -19,7 +19,6 @@ public class Orc : AliveEnemy {
     {
         if (!player.GetComponent<PlayerController>().isGod)
         {
-            //Debug.Log("damage done : " + damage * player.GetComponent<PlayerController>().GetDamageReceivedMultiplier() * damageMultiplier + " instead of " + damage);
             player.GetComponent<PlayerController>().RemoveHealth(damage * player.GetComponent<PlayerController>().GetDamageReceivedMultiplier() * damageMultiplier);
         }
         isOnCD = true;

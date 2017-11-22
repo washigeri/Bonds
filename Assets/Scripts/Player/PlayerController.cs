@@ -37,6 +37,8 @@ public abstract class PlayerController : MonoBehaviour
     protected string interactBindName;
 
     public Rigidbody2D rb2d;
+    private TrinketController myTrinket;
+    private WeaponController myWeapon;
 
     // Use this for initialization
     protected virtual void Awake()
@@ -54,13 +56,25 @@ public abstract class PlayerController : MonoBehaviour
         enemySpeedMultiplier = 1f;
         enemySpeedMultiplierDuration = 0f;
         isGod = false;
+        myTrinket = null;
+        myWeapon = GetWeaponScript();
+    }
+
+    private WeaponController GetWeaponScript()
+    {
+        return playerTransform.gameObject.GetComponentInChildren<WeaponController>();
     }
 
     protected virtual void Update()
     {
         isDead = (hp <= 0f);
         CheckForInputs();
-        Debug.Log("Max Speed : " + maxSpeed);
+        //Debug.Log("Max Speed = " + maxSpeed);
+        //Debug.Log("speedMultiplier = " + speedMultiplier);
+        //Debug.Log("damageDoneMultiplier = " + damageDoneMultiplier);
+        //Debug.Log("damageReceivedMultiplier = " + damageReceivedMultiplier);
+        //Debug.Log("enemySpeedMultiplier = " + enemySpeedMultiplier);
+        //Debug.Log("enemySpeedMultiplierDuration = " + enemySpeedMultiplierDuration);
     }
 
     protected abstract void FixedUpdate();
@@ -181,10 +195,10 @@ public abstract class PlayerController : MonoBehaviour
 
     protected void UsePotion()
     {
-        if (GameManager2.gameManager.potionNumber > 0)
+        if (GameManager.gameManager.potionNumber > 0)
         {
-            RestaureHealth((int)(GameManager2.gameManager.potionHeal * maxHp));
-            GameManager2.gameManager.potionNumber--;
+            RestaureHealth((int)(GameManager.gameManager.potionHeal * maxHp));
+            GameManager.gameManager.potionNumber--;
         }
     }
 
@@ -198,23 +212,27 @@ public abstract class PlayerController : MonoBehaviour
 
     public void DropWeapon()
     {
-        WeaponController myWeapon = gameObject.GetComponentInChildren<WeaponController>();
+        //WeaponController myWeapon = gameObject.GetComponentInChildren<WeaponController>();
         if(myWeapon != null)
         {
+            Debug.Log("im in");
             myWeapon.SetOwner(false);
             myWeapon.gameObject.transform.parent = null;
             myWeapon.transform.localScale = new Vector3(Mathf.Abs(myWeapon.transform.localScale.x), Mathf.Abs(myWeapon.transform.localScale.y), Mathf.Abs(myWeapon.transform.localScale.z));
             myWeapon.transform.localRotation = new Quaternion(myWeapon.transform.localRotation.x, myWeapon.transform.localRotation.y, myWeapon.transform.localRotation.z * (faceRight ? 1 : -1), myWeapon.transform.localRotation.w);
+            myWeapon = null;
         }
     }
 
     public void DropTrinket()
     {
-        TrinketController myTrinket = gameObject.GetComponentInChildren<TrinketController>();
         if(myTrinket != null)
         {
             myTrinket.SetOwner(false);
+            myTrinket.ToggleSprite();
             myTrinket.gameObject.transform.parent = null;
+            myTrinket.ResetPlayer();
+            myTrinket = null;
         }
     }
 
@@ -316,9 +334,26 @@ public abstract class PlayerController : MonoBehaviour
         this.enemySpeedMultiplierDuration = enemySpeedMultiplierDuration;
     }
 
-
-    private void OnDestroy()
+    public TrinketController GetMyTrinket()
     {
-        Debug.Log("Destroying player");
+        return myTrinket;
     }
+
+    public void SetMyTrinket(TrinketController myTrinket)
+    {
+        this.myTrinket = myTrinket;
+    }
+
+    public WeaponController GetMyWeapon()
+    {
+        return myWeapon;
+    }
+
+    public void SetMyWeapon(WeaponController myWeapon)
+    {
+        this.myWeapon = myWeapon;
+    }
+
+ 
+
 }

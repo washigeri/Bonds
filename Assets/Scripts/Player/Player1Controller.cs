@@ -19,7 +19,7 @@ public class Player1Controller : PlayerController
         potionBindName = "HealP1";
         interactBindName = "InteractP1";
         base.Awake();
-        Debug.Log("Awake player1");
+        //Debug.Log("Awake player1");
     }
 
     //Update is called once per frame
@@ -69,13 +69,13 @@ public class Player1Controller : PlayerController
             {
                 if (dirH != 0f)
                 {
-                    rb2d.velocity = new Vector2(dirH * maxSpeed, rb2d.velocity.y);
+                    rb2d.velocity = new Vector2(dirH * maxSpeed * speedMultiplier, rb2d.velocity.y);
                 }
             }
 
-            if (Mathf.Abs(rb2d.velocity.x) > maxSpeed)
+            if (Mathf.Abs(rb2d.velocity.x) > maxSpeed * speedMultiplier)
             {
-                rb2d.velocity = new Vector2(Mathf.Sign(rb2d.velocity.x) * maxSpeed, rb2d.velocity.y);
+                rb2d.velocity = new Vector2(Mathf.Sign(rb2d.velocity.x) * maxSpeed * speedMultiplier, rb2d.velocity.y);
             }
 
             if (dirH > 0 && !faceRight)
@@ -126,14 +126,14 @@ public class Player1Controller : PlayerController
             }
             else
             {
-                if (dirH * rb2d.velocity.x < maxSpeed)
+                if (dirH * rb2d.velocity.x < maxSpeed * speedMultiplier)
                 {
                     rb2d.AddForce(Vector2.right * dirH * moveForce);
                 }
 
-                if (Mathf.Abs(rb2d.velocity.x) > maxSpeed)
+                if (Mathf.Abs(rb2d.velocity.x) > maxSpeed * speedMultiplier)
                 {
-                    rb2d.velocity = new Vector2(Mathf.Sign(rb2d.velocity.x) * maxSpeed, rb2d.velocity.y);
+                    rb2d.velocity = new Vector2(Mathf.Sign(rb2d.velocity.x) * maxSpeed * speedMultiplier, rb2d.velocity.y);
                 }
 
                 if (dirH > 0 && !faceRight)

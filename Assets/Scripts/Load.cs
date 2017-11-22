@@ -7,7 +7,7 @@ public class Load : MonoBehaviour {
     void OnGUI()
     {
         if(GUI.Button(new Rect(10, 100, 100, 30),"Load")){
-            GameManager2.gameManager.Load();
+            GameManager.gameManager.Load();
         }
     }
 }

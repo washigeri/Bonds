@@ -9,15 +9,15 @@ public class SliderController : MonoBehaviour {
     public int player; 
 
 	private void Update () {
-        if (GameManager2.gameManager.isGameInitialized)
+        if (GameManager.gameManager.isGameInitialized)
         {
             if (player == 1)
             {
-                slider.value = GameManager2.gameManager.player1.GetComponent<PlayerController>().GetHealth();
+                slider.value = GameManager.gameManager.player1.GetComponent<PlayerController>().GetHealth();
             }
             if (player == 2)
             {
-                slider.value = GameManager2.gameManager.player2.GetComponent<PlayerController>().GetHealth();
+                slider.value = GameManager.gameManager.player2.GetComponent<PlayerController>().GetHealth();
             }
         }
         

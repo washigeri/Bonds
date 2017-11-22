@@ -17,7 +17,7 @@ public class Player2Controller : PlayerController
         rb2d.gravityScale = 0f;
         potionBindName = "HealP2";
         interactBindName = "InteractP2";
-        Debug.Log("Awake player2");
+        //Debug.Log("Awake player2");
     }
 
     // Update is called once per frame
@@ -58,15 +58,15 @@ public class Player2Controller : PlayerController
             if (newVelocity.x != 0f || newVelocity.y != 0f)
             {
                 newVelocity.Normalize();
-                newVelocity *= maxSpeed;
+                newVelocity *= maxSpeed * speedMultiplier;
             }
             rb2d.velocity = newVelocity;
 
             if (!moveHability)
             {
-                if (Mathf.Abs(rb2d.velocity.magnitude) > maxSpeed)
+                if (Mathf.Abs(rb2d.velocity.magnitude) > maxSpeed * speedMultiplier)
                 {
-                    rb2d.velocity = rb2d.velocity.normalized * maxSpeed;
+                    rb2d.velocity = rb2d.velocity.normalized * maxSpeed * speedMultiplier;
                 }
             }
 
@@ -88,14 +88,14 @@ public class Player2Controller : PlayerController
         dirV = Input.GetAxisRaw("VerticalP2");
         if (CanMoveH(dirH, moveHability))
         {
-            if (dirH * rb2d.velocity.x < maxSpeed)
+            if (dirH * rb2d.velocity.x < maxSpeed * speedMultiplier)
             {
                 rb2d.AddForce(Vector2.right * dirH * moveForce);
             }
 
             if (!moveHability)
             {
-                if (Mathf.Abs(rb2d.velocity.x) > maxSpeed)
+                if (Mathf.Abs(rb2d.velocity.x) > maxSpeed * speedMultiplier)
                 {
                     rb2d.velocity = new Vector2(Mathf.Sign(rb2d.velocity.x) * maxSpeed, rb2d.velocity.y);
                 }
@@ -118,16 +118,16 @@ public class Player2Controller : PlayerController
 
         if (CanMoveV(dirV, moveHability))
         {
-            if (dirV * rb2d.velocity.y < maxSpeed)
+            if (dirV * rb2d.velocity.y < maxSpeed * speedMultiplier)
             {
                 rb2d.AddForce(Vector2.up * dirV * moveForce);
             }
 
             if (!moveHability)
             {
-                if (Mathf.Abs(rb2d.velocity.y) > maxSpeed)
+                if (Mathf.Abs(rb2d.velocity.y) > maxSpeed * speedMultiplier)
                 {
-                    rb2d.velocity = new Vector2(rb2d.velocity.x, Mathf.Sign(rb2d.velocity.y) * maxSpeed);
+                    rb2d.velocity = new Vector2(rb2d.velocity.x, Mathf.Sign(rb2d.velocity.y) * maxSpeed * speedMultiplier);
                 }
             }
 
@@ -141,7 +141,7 @@ public class Player2Controller : PlayerController
     IEnumerator Dash()
     {
         moveHability = true;
-        maxSpeed *= dashAcceleration;
+        speedMultiplier *= dashAcceleration;
         rb2d.velocity = 10f * rb2d.velocity;
         rb2d.AddForce((faceRight ? 1 : -1) * new Vector2(dirH, dirV), ForceMode2D.Impulse);
         isDashOnCoolDown = true;
@@ -149,7 +149,7 @@ public class Player2Controller : PlayerController
         yield return new WaitForSeconds(0.1f);
         Vector2 y = playerTransform.position;
         moveHability = false;
-        maxSpeed /= dashAcceleration;
+        speedMultiplier /= dashAcceleration;
         yield return new WaitForSeconds(dashCoolDown);
         isDashOnCoolDown = false;
         yield return null;

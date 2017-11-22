@@ -25,7 +25,7 @@ public class Daggers : WeaponController
 
     protected override IEnumerator WeakAttack()
     {
-        Debug.Log("Weak attack");
+        //Debug.Log("Weak attack");
         isAttacking = 0;
         yield return new WaitForSeconds(0.25f);
         isAttacking = -1;

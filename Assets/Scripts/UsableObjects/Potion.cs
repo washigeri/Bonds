@@ -11,13 +11,13 @@ public class Potion : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (GameManager2.gameManager.potionNumber < GameManager2.gameManager.maxPotion)
+        if (GameManager.gameManager.potionNumber < GameManager.gameManager.maxPotion)
         {
             if (collision.CompareTag("Player1"))
             {
                 if (!pickedUp)
                 {
-                    GameManager2.gameManager.potionNumber++;
+                    GameManager.gameManager.potionNumber++;
                     pickedUp = true;
                     Destroy(gameObject);
                 }

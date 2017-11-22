@@ -30,7 +30,7 @@ public class Bow : WeaponController
 
     protected override IEnumerator WeakAttack()
     {
-        Debug.Log("Weak attack");
+        //Debug.Log("Weak attack");
         isAttacking = 0;
         Shoot(GetDirection());
         yield return new WaitForSeconds(0.25f);
@@ -55,12 +55,12 @@ public class Bow : WeaponController
     private void Shoot(Vector3 direction)
     {
         GameObject arrow = Instantiate(Resources.Load("Prefabs/Weapons/Projectiles/Arrow"), gameObject.transform.position, Quaternion.Euler(0, 0, 0)) as GameObject;
-        arrow.GetComponent<Arrow>().SetParameters(attacksDamage[isAttacking], enemyTag, direction, gameObject.transform.position);
+        arrow.GetComponent<Arrow>().SetParameters(owner, attacksDamage[isAttacking], enemyTag, direction, gameObject.transform.position);
     }
 
     protected override IEnumerator StrongAttack()
     {
-        Debug.Log("Strong attack");
+        //Debug.Log("Strong attack");
         isAttacking = 1;
         Vector3 direction = GetDirection();
         if(direction == Vector3.left)

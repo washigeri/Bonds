@@ -12,7 +12,7 @@ public class TrinketController : MonoBehaviour {
     public float speedMultiplier;
 
     private bool hasOwner;
-    private bool isPlayerSet;
+    //private bool isPlayerSet;
 
     private PlayerController player;
 
@@ -20,45 +20,74 @@ public class TrinketController : MonoBehaviour {
     protected virtual void Awake()
     {
         hasOwner = false;
-        isPlayerSet = false;
+        //isPlayerSet = false;
         player = null;
     }
 
     protected void OnTriggerStay2D(Collider2D collision)
     {
-        if (Input.GetButtonDown("InteractP1") || Input.GetButtonDown("InteractP2"))
+        if (!hasOwner)
         {
-            if (collision.gameObject.CompareTag("Player1") || collision.gameObject.CompareTag("Player2"))
+            if (Input.GetButtonDown("InteractP1") || Input.GetButtonDown("InteractP2"))
             {
-                PlayerController playerController = collision.gameObject.GetComponent<PlayerController>();
-                playerController.DropTrinket();
-                gameObject.transform.parent = collision.gameObject.transform.Find("Hand");
-                transform.localPosition = Vector3.zero;
-                hasOwner = true;
-                player = playerController;
+                if (collision.gameObject.CompareTag("Player1") || collision.gameObject.CompareTag("Player2"))
+                {
+                    player = collision.gameObject.GetComponent<PlayerController>();
+                    player.DropTrinket();
+                    gameObject.transform.parent = collision.gameObject.transform.Find("Hand");
+                    player.SetMyTrinket(this);
+                    hasOwner = true;
+                    transform.localPosition = Vector3.zero;
+                    ToggleSprite();
+                    SetPlayer();
+                }
             }
         }
+       
     }
 
-    protected void Update()
+    //protected void Update()
+    //{
+    //    if (hasOwner)
+    //    {
+    //        if (!isPlayerSet)
+    //        {
+    //            Debug.Log("toggle");
+    //            ToggleSprite();
+    //            SetPlayer();
+    //        }
+    //    }
+    //}
+
+    public void ToggleSprite()
     {
-        if (hasOwner)
-        {
-            if (!isPlayerSet)
-            {
-                SetPlayer();
-            }
-        }
+        transform.GetComponent<SpriteRenderer>().enabled = !transform.GetComponent<SpriteRenderer>().enabled;
+        transform.GetComponent<BoxCollider2D>().enabled = !transform.GetComponent<BoxCollider2D>().enabled;
     }
 
     private void SetPlayer()
     {
         player.SetDamageDoneMultiplier(player.GetDamageDoneMultiplier() * damageDoneMultiplier);
         player.SetDamageReceivedMultiplier(player.GetDamageReceivedMultiplier() * damageReceivedMultiplier);
-        player.SetMaxSpeed(player.GetMaxSpeed() * speedMultiplier);
+        player.SetSpeedMultiplier(player.GetSpeedMutiplier() * speedMultiplier);
         player.SetEnemySpeedMultiplier(player.GetEnemySpeedMultiplier() * enemySpeedMultiplier);
         player.SetEnemySpeedMultiplierDuration(Mathf.Max(enemySpeedMultiplierDuration, player.GetEnemySpeedMultiplierDuration()));
-        isPlayerSet = true;
+        //isPlayerSet = true;
+    }
+
+    //public void ResetPlayer(float damageDoneMultiplier, float damageReceivedMultiplier, float speedMultiplier, float enemySpeedMultiplier, float enemySpeedMultiplierDuration)
+    public void ResetPlayer()
+    {
+        Debug.Log("Reseting");
+        player.SetDamageDoneMultiplier(player.GetDamageDoneMultiplier() / damageDoneMultiplier);
+        player.SetDamageReceivedMultiplier(player.GetDamageReceivedMultiplier() / damageReceivedMultiplier);
+        player.SetSpeedMultiplier(player.GetSpeedMutiplier() / speedMultiplier);
+        player.SetEnemySpeedMultiplier(player.GetEnemySpeedMultiplier() / enemySpeedMultiplier);
+        //Debug.Log("player.GetDamageDoneMultiplier() / damageDoneMultiplier = " + player.GetDamageDoneMultiplier() / damageDoneMultiplier);
+        //Debug.Log("player.GetDamageReceivedMultiplier() / damageReceivedMultiplier = " + player.GetDamageReceivedMultiplier() / damageReceivedMultiplier);
+        //Debug.Log("player.GetSpeedMutiplier() / speedMultiplier =" + player.GetSpeedMutiplier() / speedMultiplier);
+        //Debug.Log("player.GetEnemySpeedMultiplier() / enemySpeedMultiplier = " + player.GetEnemySpeedMultiplier() / enemySpeedMultiplier);
+        player.SetEnemySpeedMultiplierDuration(0f);
     }
 
     public void SetOwner(bool hasOwner)
