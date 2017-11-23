@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4160247539876728}
   - component: {fileID: 212747725354586486}
   - component: {fileID: 114263511919368248}
-  - component: {fileID: 60866602260794102}
+  - component: {fileID: 61229172203773948}
   m_Layer: 14
   m_Name: Spear
   m_TagString: Weapon
@@ -35,15 +35,15 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1746778493654430}
-  m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
+  m_LocalRotation: {x: -0, y: -0, z: -0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 3, y: 3, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
---- !u!60 &60866602260794102
-PolygonCollider2D:
+--- !u!61 &61229172203773948
+BoxCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -54,7 +54,7 @@ PolygonCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.029523142, y: -0.031012952}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -64,16 +64,9 @@ PolygonCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: 0.044999998, y: 0.39100006}
-      - {x: 0.024999999, y: 0.39100006}
-      - {x: -0.035, y: 0.35100004}
-      - {x: -0.035, y: -0.48899993}
-      - {x: -0.015, y: -0.49899992}
-      - {x: 0.085, y: -0.49899992}
-      - {x: 0.105, y: -0.35899994}
-      - {x: 0.105, y: 0.33100006}
+  serializedVersion: 2
+  m_Size: {x: 0.15977977, y: 0.8956187}
+  m_EdgeRadius: 0
 --- !u!114 &114263511919368248
 MonoBehaviour:
   m_ObjectHideFlags: 1

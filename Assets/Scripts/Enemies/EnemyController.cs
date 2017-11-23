@@ -15,52 +15,94 @@ public abstract class EnemyController : MonoBehaviour
 
     protected float attackCD;
     protected bool isOnCD;
-
     protected float health;
     protected float attackRange;
+
     protected float speed;
     protected float speedMultiplier;
+
     private float speedMultiplierDuration;
     protected int damage;
     protected float damageMultiplier;
+
     protected float detectionRange;
     protected bool canAttack;
+
     protected bool isStunned;
     private bool stunned;
+    private float stunDuration;
+
     private bool isSlowDown;
     private bool slowDown;
-    //private bool isAlreadySlowDown;
+
+    private bool startedBleeding;
+    private bool isBleeding;
+    private float bleedingDamage;
+    private float bleedingDuration;
+
+    private bool canDrop;
+    private float potionDropRate;
+    private float weaponDropRate;
+    private float trinketDropRate;
+
     protected Rigidbody2D rb2d;
 
     protected virtual void Awake()
     {
+        
         damageMultiplier = 1f;
         speedMultiplier = 1f;
         speedMultiplierDuration = 0f;
         canAttack = false;
         isStunned = false;
+        stunned = false;
+        stunDuration = 0.15f;
         isSlowDown = false;
-        //isAlreadySlowDown = false;
+        slowDown = false;
+        isBleeding = false;
+        bleedingDamage = 0f;
+        bleedingDuration = 0f;
+        canDrop = true;
+        potionDropRate = 0.3f;
+        weaponDropRate = 0.15f;
+        trinketDropRate = 0.15f;
         rb2d = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
     protected virtual void Update()
     {
-        //Debug.Log("Ennemy health " + health);
+        Debug.Log("Ennemy health " + health);
         if (this.health <= 0)
         {
+            if (canDrop)
+            {
+                Drop();
+            }
             Destroy(gameObject);
         }
         else
         {
-            if (speedMultiplierDuration > 0f)
-            {
-                speedMultiplierDuration -= Time.deltaTime;
-            }
             if (stunned)
             {
                 StartCoroutine(StunnedRoutine());
+            }
+            if (isBleeding)
+            {
+                if (!startedBleeding)
+                {
+                    StartCoroutine(StartBleeding());
+                }
+            }
+            if(bleedingDuration > 0f)
+            {
+                RemoveHealth(Time.deltaTime * bleedingDamage / bleedingDuration, true);
+                bleedingDamage -= Time.deltaTime * bleedingDamage / bleedingDuration;
+                bleedingDuration -= Time.deltaTime;
+            }
+            if (speedMultiplierDuration > 0f)
+            {
+                speedMultiplierDuration -= Time.deltaTime;
             }
             if (slowDown)
             {
@@ -92,16 +134,26 @@ public abstract class EnemyController : MonoBehaviour
         enemyTransform.position = nextPosition;
     }
 
-    public void RemoveHealth(float loss)
+    public void RemoveHealth(float loss, bool isBleedingDamage)
     {
-        health -= loss;
+        if (isBleedingDamage)
+        {
+            health -= loss;
+        }
+        else
+        {
+            if (!isStunned)
+            {
+                health -= loss;
+            }
+        }
     }
 
     private IEnumerator StunnedRoutine()
     {
         stunned = false;
         Debug.Log("starting stunned routine");
-        yield return new WaitForSeconds(0.25f);
+        yield return new WaitForSeconds(stunDuration);
         isStunned = false;
     }
 
@@ -167,13 +219,70 @@ public abstract class EnemyController : MonoBehaviour
         }
     }
 
+    public void SetBleedingParameters(float bleedingDamage, float duration)
+    {
+        isBleeding = true;
+        this.bleedingDamage += bleedingDamage;
+        this.bleedingDuration = Mathf.Max(duration, this.bleedingDuration);
+    }
+
+    private IEnumerator StartBleeding()
+    {
+        Debug.Log("starts bleeding");
+        startedBleeding = true;
+        yield return new WaitUntil(() => bleedingDuration <= 0f);
+        bleedingDamage = 0f;
+        bleedingDuration = 0f;
+        isBleeding = false;
+        startedBleeding = false;
+    }
+
     private IEnumerator Slow()
     {
         Debug.Log("starting slow routine");
         slowDown = false;
+        isSlowDown = true;
         yield return new WaitUntil(() => speedMultiplierDuration <= 0f);
         this.speedMultiplier = 1f;
         isSlowDown = false;
     }
 
+    private void Drop()
+    {
+        canDrop = false;
+        float dice = Random.Range(0f, 1f);
+        if(dice <= weaponDropRate)
+        {
+            int weaponType = Random.Range(0, 4);
+            string weaponName;
+            if (weaponType == 0)
+            {
+                weaponName = "Spear";
+            }
+            else if (weaponType == 1)
+            {
+                weaponName = "Sword";
+            }
+            else if (weaponType == 2)
+            {
+                weaponName = "Daggers";
+            }
+            else
+            {
+                weaponName = "Bow";
+            }
+            Instantiate(Resources.Load("Prefabs/Weapons/" + weaponName), enemyTransform.position + new Vector3(Random.Range(0f,1f), Random.Range(0f,1f), 0f), Quaternion.Euler(0,0,-90));
+        }
+        else if(dice <= weaponDropRate + trinketDropRate)
+        {
+            int trinketNumber = Random.Range(1, 5);
+            string trinketName = "Trinket" + trinketNumber;
+            Instantiate(Resources.Load("Prefabs/Weapons/Trinkets/" + trinketName), enemyTransform.position + new Vector3(Random.Range(0f, 1f), Random.Range(0f, 1f), 0f), Quaternion.Euler(0, 0, 0));
+        }
+        dice = Random.Range(0f, 1f);
+        if (dice <= potionDropRate)
+        {
+            Instantiate(Resources.Load("Prefabs/UsableObjects/Potion"), enemyTransform.position + new Vector3(Random.Range(0f, 1f), Random.Range(0f, 1f), 0f), Quaternion.Euler(0, 0, 0));
+        }
+    }
 }

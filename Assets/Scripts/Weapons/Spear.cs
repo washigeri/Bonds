@@ -5,12 +5,12 @@ using UnityEngine;
 public class Spear : WeaponController
 {
 
-    private PolygonCollider2D pCollider2D;
+    private BoxCollider2D bCollider2D;
     private float chargeAcceleration;
 
     protected override void Awake()
     {
-        pCollider2D = GetComponent<PolygonCollider2D>();
+        bCollider2D = GetComponent<BoxCollider2D>();
         damage = 7;
         range = 7;
         speed = 4;
@@ -25,7 +25,7 @@ public class Spear : WeaponController
 
     protected override void Update()
     {
-        pCollider2D.enabled = (!isOnGlobalCoolDown && (isAttacking >= 0)) || !hasOwner;
+        bCollider2D.enabled = (!isOnGlobalCoolDown && (isAttacking >= 0)) || !hasOwner;
         base.Update();
     }
 

@@ -9,7 +9,7 @@ public class Arrow : MonoBehaviour {
     private bool isSet;
     private PlayerController shooter;
 
-    private int damage;
+    private float damage;
     private string enemyTag;
     private Vector3 direction;
     private Vector3 startPosition;
@@ -38,10 +38,14 @@ public class Arrow : MonoBehaviour {
             if (collision.gameObject.CompareTag(enemyTag))
             {
                 EnemyController enemy = collision.gameObject.GetComponent<EnemyController>();
-                enemy.RemoveHealth(damage * shooter.GetDamageDoneMultiplier());
+                enemy.RemoveHealth(damage * shooter.GetDamageDoneMultiplier(), false);
                 if(shooter.GetEnemySpeedMultiplierDuration() > 0f)
                 {
                     enemy.SetSpeedMultiplierParameters(shooter.GetEnemySpeedMultiplier(), shooter.GetEnemySpeedMultiplierDuration());
+                }
+                if (shooter.GetEnemyBleedDuration() > 0f)
+                {
+                    enemy.SetBleedingParameters(shooter.GetEnemyBleedPercentage() * damage * shooter.GetDamageDoneMultiplier(), shooter.GetEnemyBleedDuration());
                 }
                 enemy.SetStunned(true);
                 Destroy(gameObject);
@@ -71,7 +75,7 @@ public class Arrow : MonoBehaviour {
         
     }
 
-    public void SetParameters(int shooter, int damage, string enemyTag, Vector3 direction, Vector3 startPosition)
+    public void SetParameters(int shooter, float damage, string enemyTag, Vector3 direction, Vector3 startPosition)
     {
         if(shooter == 1)
         {

@@ -30,7 +30,7 @@ public abstract class WeaponController : MonoBehaviour
     protected bool isStrongOnCD;
     protected bool isSkillOnCD;
 
-    protected int[] attacksDamage;
+    protected float[] attacksDamage;
 
     protected string enemyTag;
 
@@ -51,7 +51,7 @@ public abstract class WeaponController : MonoBehaviour
         }
         isAttacking = -1;
         isOnGlobalCoolDown = false;
-        attacksDamage = new int[] { 10 * damage / 3, 10 * damage / 2, 10 * damage};
+        attacksDamage = new float[] { 10 * damage / 3, 10 * damage / 2, 10 * damage};
         SetWeaponInfo();
     }
 
@@ -91,10 +91,14 @@ public abstract class WeaponController : MonoBehaviour
                     if (collision.gameObject.CompareTag(enemyTag))
                     {
                         EnemyController enemy = collision.gameObject.GetComponent<EnemyController>();
-                        enemy.RemoveHealth(player.GetDamageDoneMultiplier() * attacksDamage[isAttacking]);
+                        enemy.RemoveHealth(player.GetDamageDoneMultiplier() * attacksDamage[isAttacking], false);
                         if(player.GetEnemySpeedMultiplierDuration() > 0f)
                         {
                             enemy.SetSpeedMultiplierParameters(player.GetEnemySpeedMultiplier(), player.GetEnemySpeedMultiplierDuration());
+                        }
+                        if(player.GetEnemyBleedDuration() > 0f)
+                        {
+                            enemy.SetBleedingParameters(player.GetEnemyBleedPercentage() * attacksDamage[isAttacking] * player.GetDamageDoneMultiplier(), player.GetEnemyBleedDuration());
                         }
                         enemy.SetStunned(true);
                     }
@@ -118,8 +122,10 @@ public abstract class WeaponController : MonoBehaviour
                     hasOwner = true;
                     transform.localPosition = Vector3.zero;
                     transform.localScale = new Vector3(Mathf.Abs(this.transform.localScale.x), Mathf.Abs(this.transform.localScale.y), Mathf.Abs(this.transform.localScale.z));
+                    transform.localEulerAngles = new Vector3(0f, 0f, -90f);
                     owner = transform.root.CompareTag("Player1") ? 1 : 2;
                     SetWeaponInfo();
+                    GameManager.gameManager.RemoveObjectToBeCleaned(gameObject.GetInstanceID());
                 }
             }
         }

@@ -42,6 +42,8 @@ public class GameManager : MonoBehaviour
 
     public int currentScene;
 
+    private List<GameObject> toBeCleanOnSceneChange;
+
     private GameObject pauseMenu;
 
     void Awake()
@@ -78,12 +80,13 @@ public class GameManager : MonoBehaviour
         IgnoreCollision();
         InitializeGameVariables();
         Load();
-        //Debug.Log(savedPosition);
+        toBeCleanOnSceneChange = new List<GameObject>();
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
     private void Update()
     {
+        Debug.Log("toBeCleanOnSceneChange.Count = " + toBeCleanOnSceneChange.Count);
         if (startedGame > -1)
         {
             if (!isSceneLoaded)
@@ -262,6 +265,35 @@ public class GameManager : MonoBehaviour
         {
             Time.timeScale = 1;
             pauseMenu.SetActive(false);
+        }
+    }
+
+    public void CleanSceneOnChange()
+    {
+        foreach(GameObject go in toBeCleanOnSceneChange)
+        {
+            Destroy(go);
+        }
+    }
+
+    public void AddObjectToBeCleaned(GameObject go)
+    {
+        toBeCleanOnSceneChange.Add(go);
+    }
+
+    public void RemoveObjectToBeCleaned(int goID)
+    {
+        bool isRemoved = false;
+        int length = toBeCleanOnSceneChange.Count;
+        int i = 0;
+        while (i < length && !isRemoved)
+        {
+            if(toBeCleanOnSceneChange[i].GetInstanceID() == goID)
+            {
+                toBeCleanOnSceneChange.RemoveAt(i);
+                isRemoved = true;
+            }
+            i++;
         }
     }
 

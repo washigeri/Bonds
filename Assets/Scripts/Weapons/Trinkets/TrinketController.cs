@@ -10,6 +10,8 @@ public class TrinketController : MonoBehaviour {
     public float enemySpeedMultiplier;
     public float enemySpeedMultiplierDuration;
     public float speedMultiplier;
+    public float enemyBleedPercentage;
+    public float enemyBleedDuration;
 
     private bool hasOwner;
     //private bool isPlayerSet;
@@ -40,6 +42,7 @@ public class TrinketController : MonoBehaviour {
                     transform.localPosition = Vector3.zero;
                     ToggleSprite();
                     SetPlayer();
+                    GameManager.gameManager.RemoveObjectToBeCleaned(gameObject.GetInstanceID());
                 }
             }
         }
@@ -72,6 +75,8 @@ public class TrinketController : MonoBehaviour {
         player.SetSpeedMultiplier(player.GetSpeedMutiplier() * speedMultiplier);
         player.SetEnemySpeedMultiplier(player.GetEnemySpeedMultiplier() * enemySpeedMultiplier);
         player.SetEnemySpeedMultiplierDuration(Mathf.Max(enemySpeedMultiplierDuration, player.GetEnemySpeedMultiplierDuration()));
+        player.SetEnemyBleedPercentage(enemyBleedPercentage);
+        player.SetEnemyBleedDuration(enemyBleedDuration);
         //isPlayerSet = true;
     }
 
@@ -83,6 +88,8 @@ public class TrinketController : MonoBehaviour {
         player.SetDamageReceivedMultiplier(player.GetDamageReceivedMultiplier() / damageReceivedMultiplier);
         player.SetSpeedMultiplier(player.GetSpeedMutiplier() / speedMultiplier);
         player.SetEnemySpeedMultiplier(player.GetEnemySpeedMultiplier() / enemySpeedMultiplier);
+        player.SetEnemyBleedPercentage(0f);
+        player.SetEnemyBleedDuration(0f);
         //Debug.Log("player.GetDamageDoneMultiplier() / damageDoneMultiplier = " + player.GetDamageDoneMultiplier() / damageDoneMultiplier);
         //Debug.Log("player.GetDamageReceivedMultiplier() / damageReceivedMultiplier = " + player.GetDamageReceivedMultiplier() / damageReceivedMultiplier);
         //Debug.Log("player.GetSpeedMutiplier() / speedMultiplier =" + player.GetSpeedMutiplier() / speedMultiplier);

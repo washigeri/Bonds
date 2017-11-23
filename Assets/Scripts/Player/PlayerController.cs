@@ -18,7 +18,7 @@ public abstract class PlayerController : MonoBehaviour
     protected float maxSpeed = 5f;
     public Transform playerTransform;
 
-    public float maxHp;
+    [HideInInspector] public float maxHp;
     protected float hp;
     protected int agility;
     protected int strengh;
@@ -29,6 +29,8 @@ public abstract class PlayerController : MonoBehaviour
     protected float speedMultiplier;
     protected float enemySpeedMultiplier;
     protected float enemySpeedMultiplierDuration;
+    protected float enemyBleedPercentage;
+    protected float enemyBleedDuration;
 
     protected float dirH;
     protected float dirV;
@@ -55,6 +57,8 @@ public abstract class PlayerController : MonoBehaviour
         speedMultiplier = 1f;
         enemySpeedMultiplier = 1f;
         enemySpeedMultiplierDuration = 0f;
+        enemyBleedPercentage = 0f;
+        enemyBleedDuration = 0f;
         isGod = false;
         myTrinket = null;
         myWeapon = GetWeaponScript();
@@ -69,12 +73,6 @@ public abstract class PlayerController : MonoBehaviour
     {
         isDead = (hp <= 0f);
         CheckForInputs();
-        //Debug.Log("Max Speed = " + maxSpeed);
-        //Debug.Log("speedMultiplier = " + speedMultiplier);
-        //Debug.Log("damageDoneMultiplier = " + damageDoneMultiplier);
-        //Debug.Log("damageReceivedMultiplier = " + damageReceivedMultiplier);
-        //Debug.Log("enemySpeedMultiplier = " + enemySpeedMultiplier);
-        //Debug.Log("enemySpeedMultiplierDuration = " + enemySpeedMultiplierDuration);
     }
 
     protected abstract void FixedUpdate();
@@ -219,7 +217,8 @@ public abstract class PlayerController : MonoBehaviour
             myWeapon.SetOwner(false);
             myWeapon.gameObject.transform.parent = null;
             myWeapon.transform.localScale = new Vector3(Mathf.Abs(myWeapon.transform.localScale.x), Mathf.Abs(myWeapon.transform.localScale.y), Mathf.Abs(myWeapon.transform.localScale.z));
-            myWeapon.transform.localRotation = new Quaternion(myWeapon.transform.localRotation.x, myWeapon.transform.localRotation.y, myWeapon.transform.localRotation.z * (faceRight ? 1 : -1), myWeapon.transform.localRotation.w);
+            //myWeapon.transform.localRotation = new Quaternion(myWeapon.transform.localRotation.x, myWeapon.transform.localRotation.y, myWeapon.transform.localRotation.z * (faceRight ? 1 : -1), myWeapon.transform.localRotation.w);
+            GameManager.gameManager.AddObjectToBeCleaned(myWeapon.gameObject);
             myWeapon = null;
         }
     }
@@ -232,6 +231,7 @@ public abstract class PlayerController : MonoBehaviour
             myTrinket.ToggleSprite();
             myTrinket.gameObject.transform.parent = null;
             myTrinket.ResetPlayer();
+            GameManager.gameManager.AddObjectToBeCleaned(myTrinket.gameObject);
             myTrinket = null;
         }
     }
@@ -243,7 +243,10 @@ public abstract class PlayerController : MonoBehaviour
 
     public void RemoveHealth(float health)
     {
-        hp -= health;
+        if (!isGod)
+        {
+            hp -= health * damageReceivedMultiplier;
+        }
     }
 
     public void SetHealth(float health)
@@ -332,6 +335,26 @@ public abstract class PlayerController : MonoBehaviour
     public void SetEnemySpeedMultiplierDuration(float enemySpeedMultiplierDuration)
     {
         this.enemySpeedMultiplierDuration = enemySpeedMultiplierDuration;
+    }
+
+    public float GetEnemyBleedPercentage()
+    {
+        return enemyBleedPercentage;
+    }
+
+    public void SetEnemyBleedPercentage(float enemyBleedPercentage)
+    {
+        this.enemyBleedPercentage = enemyBleedPercentage;
+    }
+
+    public float GetEnemyBleedDuration()
+    {
+        return enemyBleedDuration;
+    }
+
+    public void SetEnemyBleedDuration(float enemyBleedDuration)
+    {
+        this.enemyBleedDuration = enemyBleedDuration;
     }
 
     public TrinketController GetMyTrinket()

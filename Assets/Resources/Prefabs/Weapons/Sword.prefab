@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4437025724560280}
   - component: {fileID: 212548688017156562}
   - component: {fileID: 114448631584492412}
-  - component: {fileID: 60391397514969584}
+  - component: {fileID: 61227123635629260}
   m_Layer: 14
   m_Name: Sword
   m_TagString: Weapon
@@ -42,8 +42,8 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
---- !u!60 &60391397514969584
-PolygonCollider2D:
+--- !u!61 &61227123635629260
+BoxCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -54,7 +54,7 @@ PolygonCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.031869553, y: -0.04345818}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -64,16 +64,9 @@ PolygonCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: -0.055, y: 0.19100006}
-      - {x: -0.114999995, y: -0.018999938}
-      - {x: -0.114999995, y: -0.29899994}
-      - {x: -0.074999996, y: -0.43899992}
-      - {x: -0.024999999, y: -0.46899992}
-      - {x: 0.185, y: -0.46899992}
-      - {x: 0.185, y: 0.27100006}
-      - {x: 0.024999999, y: 0.27100006}
+  serializedVersion: 2
+  m_Size: {x: 0.22119473, y: 0.67371774}
+  m_EdgeRadius: 0
 --- !u!114 &114448631584492412
 MonoBehaviour:
   m_ObjectHideFlags: 1

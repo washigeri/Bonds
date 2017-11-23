@@ -78,11 +78,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 338057c8fe8b40943ac246476fa194db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageDoneMultiplier: 2
-  damageReceivedMultiplier: 2
+  damageDoneMultiplier: 1.5
+  damageReceivedMultiplier: 1.5
   enemySpeedMultiplier: 1
   enemySpeedMultiplierDuration: 0
   speedMultiplier: 1
+  enemyBleedPercentage: 0
+  enemyBleedDuration: 0
 --- !u!212 &212886542824946944
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -5,11 +5,11 @@ using UnityEngine;
 public class Daggers : WeaponController
 {
 
-    private PolygonCollider2D pCollider2D;
+    private BoxCollider2D bCollider2D;
 
     protected override void Awake()
     {
-        pCollider2D = GetComponent<PolygonCollider2D>();
+        bCollider2D = GetComponent<BoxCollider2D>();
         damage = 4;
         range = 2;
         speed = 10;
@@ -19,7 +19,7 @@ public class Daggers : WeaponController
 
     protected override void Update()
     {
-        pCollider2D.enabled = (!isOnGlobalCoolDown && (isAttacking >= 0)) || !hasOwner;
+        bCollider2D.enabled = (!isOnGlobalCoolDown && (isAttacking >= 0)) || !hasOwner;
         base.Update();
     }
 

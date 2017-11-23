@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4701562548011320}
   - component: {fileID: 61553166983827268}
   - component: {fileID: 212705770729489992}
-  - component: {fileID: 114800250776232338}
+  - component: {fileID: 114963536293968112}
   m_Layer: 0
   m_Name: LevelEnd
   m_TagString: Untagged
@@ -67,7 +67,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 18.65, y: 22.83}
   m_EdgeRadius: 0
---- !u!114 &114800250776232338
+--- !u!114 &114963536293968112
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -75,10 +75,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1278754124303856}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 695c30e97eb6f4f42a806b528a77c822, type: 3}
+  m_Script: {fileID: 11500000, guid: 10006cdc19aba5f4aa78a7f3f14c1b8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelEndBox: {fileID: 61553166983827268}
 --- !u!212 &212705770729489992
 SpriteRenderer:
   m_ObjectHideFlags: 1

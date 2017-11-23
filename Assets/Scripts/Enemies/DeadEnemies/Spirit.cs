@@ -17,10 +17,8 @@ public class Spirit : DeadEnemy {
 
     protected override IEnumerator Attack()
     {
-        if (!player.GetComponent<PlayerController>().isGod)
-        {
-            player.GetComponent<PlayerController>().RemoveHealth(damage * damageMultiplier);
-        }
+       
+        player.GetComponent<PlayerController>().RemoveHealth(damage * damageMultiplier);
         isOnCD = true;
         yield return new WaitForSeconds(attackCD);
         isOnCD = false;
