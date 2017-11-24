@@ -10,6 +10,7 @@ public class Daggers : WeaponController
     protected override void Awake()
     {
         bCollider2D = GetComponent<BoxCollider2D>();
+        defaultLocalRotation = new Vector3(0f, 0f, -90f);
         damage = 4;
         range = 2;
         speed = 10;
@@ -25,7 +26,6 @@ public class Daggers : WeaponController
 
     protected override IEnumerator WeakAttack()
     {
-        //Debug.Log("Weak attack");
         isAttacking = 0;
         yield return new WaitForSeconds(0.25f);
         isAttacking = -1;

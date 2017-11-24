@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class Player2Controller : PlayerController
 {
     private bool isDashOnCoolDown = false;
-    public float dashAcceleration = 5f;
+    private float dashAcceleration = 5f;
     private float dashCoolDown = 0.25f;
 
     // Use this for initialization
@@ -17,7 +17,6 @@ public class Player2Controller : PlayerController
         rb2d.gravityScale = 0f;
         potionBindName = "HealP2";
         interactBindName = "InteractP2";
-        //Debug.Log("Awake player2");
     }
 
     // Update is called once per frame

@@ -10,6 +10,7 @@ public class Bow : WeaponController
     protected override void Awake()
     {
         bCollider2D = GetComponent<BoxCollider2D>();
+        defaultLocalRotation = Vector3.zero;
         damage = 5;
         range = 10;
         speed = 5;
@@ -30,7 +31,6 @@ public class Bow : WeaponController
 
     protected override IEnumerator WeakAttack()
     {
-        //Debug.Log("Weak attack");
         isAttacking = 0;
         Shoot(GetDirection());
         yield return new WaitForSeconds(0.25f);
@@ -60,7 +60,6 @@ public class Bow : WeaponController
 
     protected override IEnumerator StrongAttack()
     {
-        //Debug.Log("Strong attack");
         isAttacking = 1;
         Vector3 direction = GetDirection();
         if(direction == Vector3.left)
@@ -92,14 +91,14 @@ public class Bow : WeaponController
 
     protected override IEnumerator SkillP1()
     {
-        player.isBlocked = true;
+        player.SetIsBlocked(true);
         player.SetMaxSpeed(disengageAcceleration * player.GetMaxSpeed());
         player.moveHability = true;
         yield return new WaitForSeconds(0.1f);
         player.rb2d.AddForce(365f * (player.faceRight ? Vector2.left : Vector2.right), ForceMode2D.Impulse);
         isSkillOnCD = true;
         yield return new WaitForSeconds(0.2f);
-        player.isBlocked = false;
+        player.SetIsBlocked(false);
         player.SetMaxSpeed(player.GetMaxSpeed() / disengageAcceleration);
         yield return new WaitForSeconds(skillCD);
         isSkillOnCD = false;

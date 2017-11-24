@@ -160,12 +160,12 @@ Prefab:
     - target: {fileID: 224248928595916426, guid: 8d95fc20d7e6c894b8d37dd7c3e27113,
         type: 2}
       propertyPath: m_LocalPosition.x
-      value: 370.5
+      value: 371.5
       objectReference: {fileID: 0}
     - target: {fileID: 224248928595916426, guid: 8d95fc20d7e6c894b8d37dd7c3e27113,
         type: 2}
       propertyPath: m_LocalPosition.y
-      value: 208.5
+      value: 209
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8d95fc20d7e6c894b8d37dd7c3e27113, type: 2}

@@ -27,11 +27,6 @@ public class Ground : MonoBehaviour
         isMultiplierUpdated = false;
     }
 
-    private void Update()
-    {
-        Debug.Log("isModified = " + isModified + " , damage done multiplier = " + damageDoneMultiplier + " damage received multiplier = " + damageReceivedMultiplier);
-    }
-
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Player1"))
@@ -52,11 +47,6 @@ public class Ground : MonoBehaviour
             }
             
         }
-        //if (collision.gameObject.CompareTag("Enemy"))
-        //{
-        //    //Debug.Log("enemy entered collision and set multiplier to " + damageMultiplier);
-        //    collision.gameObject.GetComponent<EnemyController>().SetDamageMultiplier(damageDoneMultiplier);
-        //}
     }
 
     private void OnCollisionStay2D(Collision2D collision)
@@ -65,7 +55,6 @@ public class Ground : MonoBehaviour
         {
             if(isModified && !isMultiplierUpdated)
             {
-                //Debug.Log("player 1 stayed collision and set multiplier to " + damageMultiplier * player1Multiplier);
                 reverseDamageDone = 1f / damageDoneMultiplier;
                 reverseDamageReceived = 1f / damageReceivedMultiplier;
                 player1Controller.SetDamageDoneMultiplier(damageDoneMultiplier * player1Controller.GetDamageDoneMultiplier());
@@ -74,7 +63,6 @@ public class Ground : MonoBehaviour
             }
             else if(!isModified && isMultiplierUpdated)
             {
-                //Debug.Log("player 1 stayed collision and set multiplier to " + player1Multiplier);
                 player1Controller.SetDamageDoneMultiplier(player1Controller.GetDamageDoneMultiplier() * reverseDamageDone);
                 player1Controller.SetDamageReceivedMultiplier(player1Controller.GetDamageReceivedMultiplier() * reverseDamageReceived);
 
@@ -83,11 +71,6 @@ public class Ground : MonoBehaviour
                 ResetVariables();
             }
         }
-        //if (collision.gameObject.CompareTag("Enemy"))
-        //{
-        //    //Debug.Log("multipler set to 1.5 in collision stay for enemy");
-        //    collision.gameObject.GetComponent<EnemyController>().SetDamageMultiplier(damageDoneMultiplier);
-        //}
     }
 
     private void OnCollisionExit2D(Collision2D collision)
@@ -96,18 +79,12 @@ public class Ground : MonoBehaviour
         {
             if (isMultiplierUpdated)
             {
-                //Debug.Log("player 1 exited collision and set multiplier to " + player1Multiplier);
                 player1Controller.SetDamageDoneMultiplier(player1Controller.GetDamageDoneMultiplier() * reverseDamageDone);
                 player1Controller.SetDamageReceivedMultiplier(player1Controller.GetDamageReceivedMultiplier() * reverseDamageReceived);
                 isMultiplierUpdated = false;
                 ResetVariables();
             }
         }
-        //if (collision.gameObject.CompareTag("Enemy"))
-        //{
-        //    //Debug.Log("enemy exited collision and set multiplier to 1");
-        //    collision.gameObject.GetComponent<EnemyController>().SetDamageMultiplier(1f);
-        //}
     }
 
     public IEnumerator ModifyGround(float time, float damageDoneMultiplier, float damageReceivedMultiplier)

@@ -152,7 +152,6 @@ public abstract class EnemyController : MonoBehaviour
     private IEnumerator StunnedRoutine()
     {
         stunned = false;
-        Debug.Log("starting stunned routine");
         yield return new WaitForSeconds(stunDuration);
         isStunned = false;
     }
@@ -239,7 +238,6 @@ public abstract class EnemyController : MonoBehaviour
 
     private IEnumerator Slow()
     {
-        Debug.Log("starting slow routine");
         slowDown = false;
         isSlowDown = true;
         yield return new WaitUntil(() => speedMultiplierDuration <= 0f);

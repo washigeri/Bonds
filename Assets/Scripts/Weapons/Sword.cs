@@ -9,11 +9,13 @@ public class Sword : WeaponController {
     private float strongFullRotation;
     private float strongRotationLeft;
     private float strongRotationSpeed;
+    private float shieldDuration;
 
     protected override void Awake()
     {
         base.Awake();
         bCollider2D = GetComponent<BoxCollider2D>();
+        defaultLocalRotation = new Vector3(0f, 0f, -90f);
         damage = 10;
         range = 5;
         speed = 3;
@@ -25,6 +27,7 @@ public class Sword : WeaponController {
         strongFullRotation = 1080f;
         strongRotationLeft = strongFullRotation;
         strongRotationSpeed = strongFullRotation / 2f;
+        shieldDuration = 0.25f;
         weaponName = "Sword";
         attacksDamage[0] = 34f;
         attacksDamage[1] = 15f;
@@ -37,8 +40,8 @@ public class Sword : WeaponController {
         bCollider2D.enabled = (!isOnGlobalCoolDown && (isAttacking >= 0)) || !hasOwner;
         if(isAttacking == 1)
         {
-            float rotateAngle = strongRotationSpeed * Time.fixedDeltaTime;
-            player.transform.RotateAround(player.transform.position, Vector3.up, rotateAngle);
+            float rotateAngle = strongRotationSpeed * Time.deltaTime;
+            player.transform.Rotate(Vector3.up, rotateAngle);
             strongRotationLeft -= rotateAngle;
         }
         base.Update();
@@ -57,7 +60,6 @@ public class Sword : WeaponController {
 
     protected override IEnumerator StrongAttack()
     {
-        Debug.Log("Strong Attack");
         isAttacking = 1;
         yield return new WaitUntil(() => strongRotationLeft <= 0f);
         isAttacking = -1;
@@ -73,9 +75,9 @@ public class Sword : WeaponController {
 
     protected override IEnumerator SkillP1()
     {
-        player.isGod = true;
+        player.SetIsGod(true);
         yield return new WaitForSeconds(parryDuration);
-        player.isGod = false;
+        player.SetIsGod(false);
         isSkillOnCD = true;
         yield return new WaitForSeconds(skillCD - parryDuration);
         isSkillOnCD = false;
@@ -83,6 +85,14 @@ public class Sword : WeaponController {
 
     protected override IEnumerator SkillP2()
     {
-        yield return new WaitForSeconds(0f);
+        if(GameManager.gameManager.player1 != null)
+        {
+            GameManager.gameManager.player1.GetComponent<PlayerController>().SetIsGod(true);
+            yield return new WaitForSeconds(shieldDuration);
+            GameManager.gameManager.player1.GetComponent<PlayerController>().SetIsGod(false);
+            isSkillOnCD = true;
+            yield return new WaitForSeconds(skillCD);
+            isSkillOnCD = false;
+        }
     }
 }

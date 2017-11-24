@@ -30,37 +30,35 @@ public class TrinketController : MonoBehaviour {
     {
         if (!hasOwner)
         {
-            if (Input.GetButtonDown("InteractP1") || Input.GetButtonDown("InteractP2"))
+            if (Input.GetButtonDown("InteractP1"))
             {
-                if (collision.gameObject.CompareTag("Player1") || collision.gameObject.CompareTag("Player2"))
+                if (collision.gameObject.CompareTag("Player1"))
                 {
-                    player = collision.gameObject.GetComponent<PlayerController>();
-                    player.DropTrinket();
-                    gameObject.transform.parent = collision.gameObject.transform.Find("Hand");
-                    player.SetMyTrinket(this);
-                    hasOwner = true;
-                    transform.localPosition = Vector3.zero;
-                    ToggleSprite();
-                    SetPlayer();
-                    GameManager.gameManager.RemoveObjectToBeCleaned(gameObject.GetInstanceID());
+                    SwapTrinket(collision);
+                }
+            }
+            else if (Input.GetButtonDown("InteractP2"))
+            {
+                if (collision.gameObject.CompareTag("Player2"))
+                {
+                    SwapTrinket(collision);
                 }
             }
         }
-       
     }
 
-    //protected void Update()
-    //{
-    //    if (hasOwner)
-    //    {
-    //        if (!isPlayerSet)
-    //        {
-    //            Debug.Log("toggle");
-    //            ToggleSprite();
-    //            SetPlayer();
-    //        }
-    //    }
-    //}
+    private void SwapTrinket(Collider2D collision)
+    {
+        player = collision.gameObject.GetComponent<PlayerController>();
+        player.DropTrinket();
+        gameObject.transform.parent = collision.gameObject.transform.Find("Hand");
+        player.SetMyTrinket(this);
+        hasOwner = true;
+        transform.localPosition = Vector3.zero;
+        ToggleSprite();
+        SetPlayer();
+        GameManager.gameManager.RemoveObjectToBeCleaned(gameObject.GetInstanceID());
+    }
 
     public void ToggleSprite()
     {
@@ -80,20 +78,14 @@ public class TrinketController : MonoBehaviour {
         //isPlayerSet = true;
     }
 
-    //public void ResetPlayer(float damageDoneMultiplier, float damageReceivedMultiplier, float speedMultiplier, float enemySpeedMultiplier, float enemySpeedMultiplierDuration)
     public void ResetPlayer()
     {
-        Debug.Log("Reseting");
         player.SetDamageDoneMultiplier(player.GetDamageDoneMultiplier() / damageDoneMultiplier);
         player.SetDamageReceivedMultiplier(player.GetDamageReceivedMultiplier() / damageReceivedMultiplier);
         player.SetSpeedMultiplier(player.GetSpeedMutiplier() / speedMultiplier);
         player.SetEnemySpeedMultiplier(player.GetEnemySpeedMultiplier() / enemySpeedMultiplier);
         player.SetEnemyBleedPercentage(0f);
         player.SetEnemyBleedDuration(0f);
-        //Debug.Log("player.GetDamageDoneMultiplier() / damageDoneMultiplier = " + player.GetDamageDoneMultiplier() / damageDoneMultiplier);
-        //Debug.Log("player.GetDamageReceivedMultiplier() / damageReceivedMultiplier = " + player.GetDamageReceivedMultiplier() / damageReceivedMultiplier);
-        //Debug.Log("player.GetSpeedMutiplier() / speedMultiplier =" + player.GetSpeedMutiplier() / speedMultiplier);
-        //Debug.Log("player.GetEnemySpeedMultiplier() / enemySpeedMultiplier = " + player.GetEnemySpeedMultiplier() / enemySpeedMultiplier);
         player.SetEnemySpeedMultiplierDuration(0f);
     }
 

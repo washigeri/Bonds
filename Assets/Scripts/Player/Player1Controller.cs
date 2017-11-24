@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class Player1Controller : PlayerController
 {
-    public float jumpForce = 650f;
+    private float jumpForce = 650f;
     public Transform groundCheck;
 
     public bool grounded = false;
@@ -19,7 +19,6 @@ public class Player1Controller : PlayerController
         potionBindName = "HealP1";
         interactBindName = "InteractP1";
         base.Awake();
-        //Debug.Log("Awake player1");
     }
 
     //Update is called once per frame
@@ -28,7 +27,6 @@ public class Player1Controller : PlayerController
         //Debug.Log(dirH);
         base.Update();
         grounded = Physics2D.Linecast(transform.position, groundCheck.position, 1 << LayerMask.NameToLayer("Ground"));
-        //Debug.Log("is grounded " + grounded);
         if (grounded || rb2d.velocity.y < 0f)
         {
             dirV = 0f;

@@ -11,8 +11,8 @@ public abstract class PlayerController : MonoBehaviour
     [HideInInspector] public bool moveHability = false;
 
     protected bool isPlayer1;
-    public bool isBlocked;
-    public bool isGod;
+    protected bool isBlocked;
+    private bool isGod;
 
     protected float moveForce;
     protected float maxSpeed = 5f;
@@ -213,8 +213,7 @@ public abstract class PlayerController : MonoBehaviour
         //WeaponController myWeapon = gameObject.GetComponentInChildren<WeaponController>();
         if(myWeapon != null)
         {
-            Debug.Log("im in");
-            myWeapon.SetOwner(false);
+            myWeapon.SetHasOwner(false);
             myWeapon.gameObject.transform.parent = null;
             myWeapon.transform.localScale = new Vector3(Mathf.Abs(myWeapon.transform.localScale.x), Mathf.Abs(myWeapon.transform.localScale.y), Mathf.Abs(myWeapon.transform.localScale.z));
             //myWeapon.transform.localRotation = new Quaternion(myWeapon.transform.localRotation.x, myWeapon.transform.localRotation.y, myWeapon.transform.localRotation.z * (faceRight ? 1 : -1), myWeapon.transform.localRotation.w);
@@ -377,6 +376,25 @@ public abstract class PlayerController : MonoBehaviour
         this.myWeapon = myWeapon;
     }
 
+    public bool GetIsGod()
+    {
+        return isGod;
+    }
+
+    public void SetIsGod(bool isGod)
+    {
+        this.isGod = isGod;
+    }
+
+    public bool GetIsBlocked()
+    {
+        return isBlocked;
+    }
+
+    public void SetIsBlocked(bool isBlocked)
+    {
+        this.isBlocked = isBlocked;
+    }
  
 
 }

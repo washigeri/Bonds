@@ -7,6 +7,8 @@ public abstract class WeaponController : MonoBehaviour
 {
     [HideInInspector] public string weaponName;
 
+    protected Vector3 defaultLocalRotation;
+    protected Vector3 defaultLocalPosition;
     protected int damage;
     protected int range;
     protected int speed;
@@ -52,10 +54,13 @@ public abstract class WeaponController : MonoBehaviour
         isAttacking = -1;
         isOnGlobalCoolDown = false;
         attacksDamage = new float[] { 10 * damage / 3, 10 * damage / 2, 10 * damage};
+        defaultLocalPosition = new Vector3(1.3f, 0f, 0f);
+        transform.localPosition = defaultLocalPosition;
+        transform.localEulerAngles = defaultLocalRotation;
         SetWeaponInfo();
     }
 
-    private void SetWeaponInfo()
+    public void SetWeaponInfo()
     {
         if (owner == 1)
         {
@@ -111,30 +116,41 @@ public abstract class WeaponController : MonoBehaviour
     {
         if (!hasOwner)
         {
-            if (Input.GetButtonDown("InteractP1") || Input.GetButtonDown("InteractP2"))
+            if (Input.GetButtonDown("InteractP1"))
             {
-                if (collision.gameObject.CompareTag("Player1") || collision.gameObject.CompareTag("Player2"))
+                if (collision.gameObject.CompareTag("Player1"))
                 {
-                    player = collision.gameObject.GetComponent<PlayerController>();
-                    player.DropWeapon();
-                    gameObject.transform.parent = collision.gameObject.transform.Find("Hand");
-                    player.SetMyWeapon(this);
-                    hasOwner = true;
-                    transform.localPosition = Vector3.zero;
-                    transform.localScale = new Vector3(Mathf.Abs(this.transform.localScale.x), Mathf.Abs(this.transform.localScale.y), Mathf.Abs(this.transform.localScale.z));
-                    transform.localEulerAngles = new Vector3(0f, 0f, -90f);
-                    owner = transform.root.CompareTag("Player1") ? 1 : 2;
-                    SetWeaponInfo();
-                    GameManager.gameManager.RemoveObjectToBeCleaned(gameObject.GetInstanceID());
+                    SwapWeapons(collision, 1);
+                }
+            }
+            else if (Input.GetButtonDown("InteractP2"))
+            {
+                if (collision.gameObject.CompareTag("Player2"))
+                {
+                    SwapWeapons(collision, 2);
                 }
             }
         }
-        
+    }
+
+    private void SwapWeapons(Collider2D collision, int owner)
+    {
+        this.owner = owner;
+        player = collision.gameObject.GetComponent<PlayerController>();
+        player.DropWeapon();
+        gameObject.transform.parent = collision.gameObject.transform.Find("Hand");
+        player.SetMyWeapon(this);
+        hasOwner = true;
+        transform.localPosition = Vector3.zero;
+        transform.localScale = new Vector3(Mathf.Abs(this.transform.localScale.x), Mathf.Abs(this.transform.localScale.y), Mathf.Abs(this.transform.localScale.z));
+        transform.localEulerAngles = defaultLocalRotation;
+        transform.localPosition = defaultLocalPosition;
+        SetWeaponInfo();
+        GameManager.gameManager.RemoveObjectToBeCleaned(gameObject.GetInstanceID());
     }
 
     protected virtual void Update()
     {
-        //Debug.Log("damage multiplier read is : " + player.GetDamageMultiplier());
         if (hasOwner && !isOnGlobalCoolDown && (isAttacking == -1))
         {
             if (Input.GetButtonDown(weakName))
@@ -165,9 +181,29 @@ public abstract class WeaponController : MonoBehaviour
         }
     }
 
-    public void SetOwner(bool hasOwner)
+    public void SetHasOwner(bool hasOwner)
     {
         this.hasOwner = hasOwner;
+    }
+
+    public void SetOwner(int owner)
+    {
+        this.owner = owner;
+    }
+
+    public void SetPlayer(PlayerController player)
+    {
+        this.player = player;
+    }
+
+    public Vector3 GetDefaultLocalPosition()
+    {
+        return defaultLocalPosition;
+    }
+
+    public Vector3 GetDefaultLocalRotation()
+    {
+        return defaultLocalRotation;
     }
 
     protected abstract IEnumerator WeakAttack();

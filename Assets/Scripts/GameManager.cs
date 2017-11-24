@@ -86,7 +86,6 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log("toBeCleanOnSceneChange.Count = " + toBeCleanOnSceneChange.Count);
         if (startedGame > -1)
         {
             if (!isSceneLoaded)
@@ -135,14 +134,51 @@ public class GameManager : MonoBehaviour
     {
         potionNumber = 0;
         player1 = Instantiate(Resources.Load("Prefabs/Players/Player1"), Vector3.zero, Quaternion.Euler(0, 0, 0)) as GameObject;
-        //Debug.Log("Instantiated player1 " + player1.GetComponent<PlayerController>().GetDirH() + " " + player1.GetComponent<PlayerController>().GetHealth() + " " + player1.GetComponent<PlayerController>().GetMaxSpeed());
+        GiveWeapon(0, player1);
         player2 = Instantiate(Resources.Load("Prefabs/Players/Player2"), Vector3.zero, Quaternion.Euler(0, 0, 0)) as GameObject;
-        //Debug.Log("Instantiated player2 " + player2.GetComponent<PlayerController>().GetDirH() + " " + player2.GetComponent<PlayerController>().GetHealth() + " " + player2.GetComponent<PlayerController>().GetMaxSpeed());
+        GiveWeapon(3, player2);
         DontDestroyOnLoad(player1);
         DontDestroyOnLoad(player2);
         CameraController mainCamera = Camera.main.GetComponent<CameraController>();
         mainCamera.SetCameraForGame();
         isGameInitialized = true;
+    }
+
+    private void GiveWeapon(int weaponType, GameObject player)
+    {
+        if(player.GetComponent<PlayerController>().GetMyWeapon() == null)
+        {
+            string weaponName = null;
+            switch (weaponType)
+            {
+                case 0:
+                    weaponName = "Spear";
+                    break;
+                case 1:
+                    weaponName = "Sword";
+                    break;
+                case 2:
+                    weaponName = "Daggers";
+                    break;
+                case 3:
+                    weaponName = "Bow";
+                    break;
+                default:
+                    break;
+            }
+            if(weaponName != null)
+            {
+                GameObject weapon = Instantiate(Resources.Load("Prefabs/Weapons/" + weaponName)) as GameObject;
+                weapon.transform.parent = player.transform.Find("Hand");
+                WeaponController weaponScript = weapon.GetComponent<WeaponController>();
+                weapon.transform.localPosition = weaponScript.GetDefaultLocalPosition();
+                weapon.transform.localEulerAngles = weaponScript.GetDefaultLocalRotation();
+                weaponScript.SetHasOwner(true);
+                weaponScript.SetOwner(player.CompareTag("Player1") ? 1 : 2);
+                weaponScript.SetPlayer(player.GetComponent<PlayerController>());
+                weaponScript.SetWeaponInfo();
+            }
+        } 
     }
 
     public void InitializeSavedGame()
@@ -219,11 +255,6 @@ public class GameManager : MonoBehaviour
             potionNumber = data.potionNumber;
             savedPosition = new Vector2(data.x, data.y);
             savedScene = data.savedScene;
-            //weaponTypeP1 = data.weaponTypeP1;
-            //weaponTypeP2 = data.weaponTypeP2;
-            //weaponTierP1 = data.weaponTierP1;
-            //weaponTierP2 = data.weaponTierP2;
-            //Debug.Log("Before Coroutine");
             //PostLoad();
         }
     }
@@ -233,7 +264,6 @@ public class GameManager : MonoBehaviour
         if (SceneManager.GetActiveScene().buildIndex != savedScene)
         {
             SceneManager.LoadScene(savedScene);
-            //Debug.Log("Scene loaded");
             //SetPlayers();
         }
         else
@@ -243,7 +273,6 @@ public class GameManager : MonoBehaviour
             Camera.main.transform.position = new Vector3(savedPosition.x, savedPosition.y, Camera.main.transform.position.z);
             player1.transform.position = savedPosition;
             player2.transform.position = savedPosition;
-            //Debug.Log(player1.transform.position.x);
         }
     }
 
