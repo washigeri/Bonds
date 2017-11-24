@@ -30,7 +30,8 @@ public abstract class EnemyController : MonoBehaviour
 
     protected bool isStunned;
     private bool stunned;
-    private float stunDuration;
+    private float defaultStunDuration;
+    private float stunTimeLeft;
 
     private bool isSlowDown;
     private bool slowDown;
@@ -56,7 +57,8 @@ public abstract class EnemyController : MonoBehaviour
         canAttack = false;
         isStunned = false;
         stunned = false;
-        stunDuration = 0.15f;
+        defaultStunDuration = 0.15f;
+        stunTimeLeft = 0f;
         isSlowDown = false;
         slowDown = false;
         isBleeding = false;
@@ -85,7 +87,10 @@ public abstract class EnemyController : MonoBehaviour
         {
             if (stunned)
             {
-                StartCoroutine(StunnedRoutine());
+                if (!isStunned)
+                {
+                    StartCoroutine(StunnedRoutine());
+                }
             }
             if (isBleeding)
             {
@@ -103,6 +108,13 @@ public abstract class EnemyController : MonoBehaviour
             if (speedMultiplierDuration > 0f)
             {
                 speedMultiplierDuration -= Time.deltaTime;
+            }
+            if (isStunned)
+            {
+                if(stunTimeLeft > 0f)
+                {
+                    stunTimeLeft -= Time.deltaTime;
+                }
             }
             if (slowDown)
             {
@@ -152,7 +164,8 @@ public abstract class EnemyController : MonoBehaviour
     private IEnumerator StunnedRoutine()
     {
         stunned = false;
-        yield return new WaitForSeconds(stunDuration);
+        isStunned = true;
+        yield return new WaitUntil(() => stunTimeLeft <= 0f);
         isStunned = false;
     }
 
@@ -161,9 +174,17 @@ public abstract class EnemyController : MonoBehaviour
         return stunned;
     }
 
-    public void SetStunned(bool stunned)
+    public void SetStunned(bool stunned, float stunDuration)
     {
         this.stunned = stunned;
+        if(stunDuration > 0f)
+        {
+            this.stunTimeLeft = Mathf.Max(stunTimeLeft, stunDuration);
+        }
+        else
+        {
+            this.stunTimeLeft = Mathf.Max(stunTimeLeft, defaultStunDuration);
+        }
     }
 
     protected void Flip()

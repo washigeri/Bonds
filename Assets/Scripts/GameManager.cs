@@ -63,8 +63,12 @@ public class GameManager : MonoBehaviour
     {
         Physics2D.IgnoreLayerCollision(8, 9, true);
         Physics2D.IgnoreLayerCollision(9, 10, true);
+        Physics2D.IgnoreLayerCollision(8, 10, false);
         Physics2D.IgnoreLayerCollision(4, 12, false);
         Physics2D.IgnoreLayerCollision(4, 10, true);
+        Physics2D.IgnoreLayerCollision(8, 15, true);
+        Physics2D.IgnoreLayerCollision(9, 15, true);
+        Physics2D.IgnoreLayerCollision(10, 15, true);
     }
 
     private void Start()
@@ -177,6 +181,7 @@ public class GameManager : MonoBehaviour
                 weaponScript.SetOwner(player.CompareTag("Player1") ? 1 : 2);
                 weaponScript.SetPlayer(player.GetComponent<PlayerController>());
                 weaponScript.SetWeaponInfo();
+                player.GetComponent<PlayerController>().SetMyWeapon(weaponScript);
             }
         } 
     }

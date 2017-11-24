@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 224818800841201234}
   - component: {fileID: 23614198621321638}
   - component: {fileID: 102742582637994104}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: TextDialog
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39,9 +39,9 @@ GameObject:
   - component: {fileID: 58201238129516090}
   - component: {fileID: 212412057982465328}
   - component: {fileID: 114944040606531152}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: NPC
-  m_TagString: Untagged
+  m_TagString: PNJ
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -141,7 +141,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 554243e7906b1974e9e0b42092aa13cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: Teub
+  pnjName: 
 --- !u!212 &212412057982465328
 SpriteRenderer:
   m_ObjectHideFlags: 1

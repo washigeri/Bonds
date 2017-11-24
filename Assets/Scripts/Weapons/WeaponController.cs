@@ -9,9 +9,9 @@ public abstract class WeaponController : MonoBehaviour
 
     protected Vector3 defaultLocalRotation;
     protected Vector3 defaultLocalPosition;
-    protected int damage;
-    protected int range;
-    protected int speed;
+    protected float damage;
+    protected float range;
+    protected float speed;
     protected float globalCD;
 
     protected PlayerController player;
@@ -53,7 +53,7 @@ public abstract class WeaponController : MonoBehaviour
         }
         isAttacking = -1;
         isOnGlobalCoolDown = false;
-        attacksDamage = new float[] { 10 * damage / 3, 10 * damage / 2, 10 * damage};
+        attacksDamage = new float[] { 10 * damage / 3, 10 * damage / 2, 10 * damage, 0f};
         defaultLocalPosition = new Vector3(1.3f, 0f, 0f);
         transform.localPosition = defaultLocalPosition;
         transform.localEulerAngles = defaultLocalRotation;
@@ -105,7 +105,14 @@ public abstract class WeaponController : MonoBehaviour
                         {
                             enemy.SetBleedingParameters(player.GetEnemyBleedPercentage() * attacksDamage[isAttacking] * player.GetDamageDoneMultiplier(), player.GetEnemyBleedDuration());
                         }
-                        enemy.SetStunned(true);
+                        if (player.GetStunEnemy())
+                        {
+                            enemy.SetStunned(true, player.GetStunEnemyDuration());
+                        }
+                        else
+                        {
+                            enemy.SetStunned(true, -1f);
+                        }
                     }
                 }
             }
@@ -194,6 +201,11 @@ public abstract class WeaponController : MonoBehaviour
     public void SetPlayer(PlayerController player)
     {
         this.player = player;
+    }
+
+    public void SetIsAttacking(int isAttacking)
+    {
+        this.isAttacking = isAttacking;
     }
 
     public Vector3 GetDefaultLocalPosition()

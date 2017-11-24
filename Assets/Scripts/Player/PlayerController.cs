@@ -31,6 +31,8 @@ public abstract class PlayerController : MonoBehaviour
     protected float enemySpeedMultiplierDuration;
     protected float enemyBleedPercentage;
     protected float enemyBleedDuration;
+    protected bool stunEnemy;
+    protected float stunEnemyDuration;
 
     protected float dirH;
     protected float dirV;
@@ -220,6 +222,10 @@ public abstract class PlayerController : MonoBehaviour
             GameManager.gameManager.AddObjectToBeCleaned(myWeapon.gameObject);
             myWeapon = null;
         }
+        else
+        {
+            Debug.Log("weapon null");
+        }
     }
 
     public void DropTrinket()
@@ -354,6 +360,26 @@ public abstract class PlayerController : MonoBehaviour
     public void SetEnemyBleedDuration(float enemyBleedDuration)
     {
         this.enemyBleedDuration = enemyBleedDuration;
+    }
+
+    public bool GetStunEnemy()
+    {
+        return stunEnemy;
+    }
+
+    public void SetStunEnemy(bool stunEnemy)
+    {
+        this.stunEnemy = stunEnemy;
+    }
+
+    public float GetStunEnemyDuration()
+    {
+        return stunEnemyDuration;
+    }
+
+    public void SetStunEnemyDuration(float stunEnemyDuration)
+    {
+        this.stunEnemyDuration = stunEnemyDuration;
     }
 
     public TrinketController GetMyTrinket()

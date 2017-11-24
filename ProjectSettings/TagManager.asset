@@ -17,6 +17,7 @@ TagManager:
   - Ground
   - PauseMenu
   - Trinket
+  - PNJ
   layers:
   - Default
   - TransparentFX
@@ -28,12 +29,12 @@ TagManager:
   - 
   - Player1
   - Player2
-  - Enemies
+  - SolidEntity
   - Pickups
   - Ground
   - Plateform
   - Weapon
-  - 
+  - Entity
   - 
   - 
   - 

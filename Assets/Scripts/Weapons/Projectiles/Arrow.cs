@@ -47,7 +47,14 @@ public class Arrow : MonoBehaviour {
                 {
                     enemy.SetBleedingParameters(shooter.GetEnemyBleedPercentage() * damage * shooter.GetDamageDoneMultiplier(), shooter.GetEnemyBleedDuration());
                 }
-                enemy.SetStunned(true);
+                if (shooter.GetStunEnemy())
+                {
+                    enemy.SetStunned(true, shooter.GetStunEnemyDuration());
+                }
+                else
+                {
+                    enemy.SetStunned(true, -1f);
+                }
                 Destroy(gameObject);
             }
         }

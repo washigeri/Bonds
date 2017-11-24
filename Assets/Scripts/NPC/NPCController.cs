@@ -20,8 +20,7 @@ public class NPCController : MonoBehaviour {
 
     // Use this for initialization
     void Awake () {
-        textMesh = gameObject.GetComponentInChildren<TextMesh>();
-		
+        textMesh = gameObject.GetComponentInChildren<TextMesh>();		
 	}
 
     // Update is called once per frame

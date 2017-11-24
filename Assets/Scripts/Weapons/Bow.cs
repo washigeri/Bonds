@@ -25,7 +25,7 @@ public class Bow : WeaponController
 
     protected override void Update()
     {
-        bCollider2D.enabled = !hasOwner;
+        bCollider2D.enabled = !hasOwner || isAttacking == 3;
         base.Update();
     }
 
