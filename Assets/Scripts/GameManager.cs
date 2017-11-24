@@ -80,7 +80,7 @@ public class GameManager : MonoBehaviour
         isSceneLoaded = false;
         loadedSavedGame = false;
         isPaused = false;
-        pauseMenu = Camera.main.transform.Find("InGamePanel").transform.Find("PauseMenu").gameObject;
+        //pauseMenu = Camera.main.transform.Find("InGamePanel").transform.Find("PauseMenu").gameObject;
         IgnoreCollision();
         InitializeGameVariables();
         Load();
@@ -130,7 +130,7 @@ public class GameManager : MonoBehaviour
         player2.transform.position = Vector3.zero;
         float maxHp = player1.GetComponent<PlayerController>().maxHp;
         player1.GetComponent<PlayerController>().SetHealth(maxHp);
-        player1.GetComponent<PlayerController>().SetHealth(maxHp);
+        player2.GetComponent<PlayerController>().SetHealth(maxHp);
         Camera.main.GetComponent<CameraController>().TargetPlayer1();
     }
 
@@ -143,9 +143,14 @@ public class GameManager : MonoBehaviour
         GiveWeapon(3, player2);
         DontDestroyOnLoad(player1);
         DontDestroyOnLoad(player2);
+     
         CameraController mainCamera = Camera.main.GetComponent<CameraController>();
         mainCamera.SetCameraForGame();
         isGameInitialized = true;
+        GameObject inGamePanel = Instantiate(Resources.Load("Prefabs/UI/InGamePanel"), Camera.main.transform) as GameObject;
+        DontDestroyOnLoad(inGamePanel);
+        inGamePanel.GetComponent<Canvas>().worldCamera = Camera.main;
+
     }
 
     private void GiveWeapon(int weaponType, GameObject player)
