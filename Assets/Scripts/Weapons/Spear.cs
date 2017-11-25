@@ -50,6 +50,7 @@ public class Spear : WeaponController
 
     protected override IEnumerator WeakAttack()
     {
+        PlayWeakSound();
         isAttacking = 0;
         //isOnGlobalCoolDown = true;
         yield return new WaitForSeconds(globalCD * speed);
@@ -59,6 +60,7 @@ public class Spear : WeaponController
 
     protected override IEnumerator StrongAttack()
     {
+        PlayStrongSound();
         isAttacking = 1;
         strongFaceRight = (player.faceRight ? 1 : -1);
         yield return new WaitUntil(() => strongRotationLeft <= 0f);
@@ -75,6 +77,7 @@ public class Spear : WeaponController
 
     protected override IEnumerator SkillP1()
     {
+        PlaySkillSound();
         isAttacking = 2;
         player.SetSpeedMultiplier(chargeAcceleration * player.GetSpeedMutiplier());
         player.rb2d.AddForce(365f * (player.faceRight ? Vector2.right : Vector2.left), ForceMode2D.Impulse);
@@ -94,6 +97,7 @@ public class Spear : WeaponController
     {
         if(GameManager.gameManager.player1 != null)
         {
+            PlaySkillSound();
             PlayerController player1 = GameManager.gameManager.player1.GetComponent<PlayerController>();
             player1.SetStunEnemy(true);
             player1.SetStunEnemyDuration(stunEnemyDuration);

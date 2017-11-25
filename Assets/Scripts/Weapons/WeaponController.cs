@@ -5,6 +5,11 @@ using UnityEngine.UI;
 
 public abstract class WeaponController : MonoBehaviour
 {
+    public AudioClip[] weakSounds;
+    public AudioClip[] strongSounds;
+    public AudioClip livingSkillSound;
+    public AudioClip deadSkillSound;
+
     [HideInInspector] public string weaponName;
 
     protected Vector3 defaultLocalRotation;
@@ -225,5 +230,23 @@ public abstract class WeaponController : MonoBehaviour
     protected abstract IEnumerator SkillP1();
 
     protected abstract IEnumerator SkillP2();
+
+    protected void PlayWeakSound()
+    {
+        SoundManager.instance.PlayRandomSFX(weakSounds);
+    }
+
+    protected void PlayStrongSound()
+    {
+        SoundManager.instance.PlayRandomSFX(strongSounds);
+    }
+
+    protected void PlaySkillSound()
+    {
+        if (owner == 1)
+            SoundManager.instance.PlaySFX(livingSkillSound);
+        else if (owner == 2)
+            SoundManager.instance.PlaySFX(deadSkillSound);
+    }
 
 }

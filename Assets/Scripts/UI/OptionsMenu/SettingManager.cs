@@ -16,8 +16,8 @@ public class SettingManager : MonoBehaviour {
     public Dropdown difficultyDropdwon;
     public Button applyButton;
 
-    public AudioSource musicSource;
-    public AudioSource sfxSource;
+    private AudioSource musicSource;
+    private AudioSource sfxSource;
 
     public Resolution[] resolutions;
     public GameSettings gameSettings;
@@ -33,6 +33,8 @@ public class SettingManager : MonoBehaviour {
     private void OnEnable()
     {
         gameSettings = new GameSettings();
+        musicSource = SoundManager.instance.musicSource;
+
         
 
         fullscreenToggle.onValueChanged.AddListener(delegate { OnFullscreenToggle(); });

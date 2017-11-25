@@ -78,6 +78,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c78a02423467efa43abd5981d70822f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weakSounds:
+  - {fileID: 8300000, guid: 926e0c1b0b27310459915a9cb532e885, type: 3}
+  strongSounds:
+  - {fileID: 8300000, guid: 66584a30b1d5e3c43ba807b1123a9fae, type: 3}
+  livingSkillSound: {fileID: 0}
+  deadSkillSound: {fileID: 0}
   weaponName: 
   weakName: 
   strongName: 

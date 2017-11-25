@@ -26,6 +26,7 @@ public class Daggers : WeaponController
 
     protected override IEnumerator WeakAttack()
     {
+        PlayWeakSound();
         isAttacking = 0;
         yield return new WaitForSeconds(0.25f);
         isAttacking = -1;
@@ -36,17 +37,20 @@ public class Daggers : WeaponController
 
     protected override IEnumerator StrongAttack()
     {
+        PlayStrongSound();
         yield return new WaitForSeconds(0f);
     }
 
 
     protected override IEnumerator SkillP1()
     {
+        PlaySkillSound();
         yield return new WaitForSeconds(0f);
     }
 
     protected override IEnumerator SkillP2()
     {
+        PlaySkillSound();
         yield return new WaitForSeconds(0f);
     }
 }

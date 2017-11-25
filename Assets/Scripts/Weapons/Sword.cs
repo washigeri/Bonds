@@ -50,6 +50,7 @@ public class Sword : WeaponController {
     protected override IEnumerator WeakAttack()
     {
         Debug.Log("Weak attack");
+        PlayWeakSound();
         isAttacking = 0;
         yield return new WaitForSeconds(0.25f);
         isAttacking = -1;
@@ -60,6 +61,7 @@ public class Sword : WeaponController {
 
     protected override IEnumerator StrongAttack()
     {
+        PlayStrongSound();
         isAttacking = 1;
         yield return new WaitUntil(() => strongRotationLeft <= 0f);
         isAttacking = -1;
@@ -75,6 +77,7 @@ public class Sword : WeaponController {
 
     protected override IEnumerator SkillP1()
     {
+        PlaySkillSound();
         player.SetIsGod(true);
         yield return new WaitForSeconds(parryDuration);
         player.SetIsGod(false);
@@ -87,6 +90,7 @@ public class Sword : WeaponController {
     {
         if(GameManager.gameManager.player1 != null)
         {
+            PlaySkillSound();
             GameManager.gameManager.player1.GetComponent<PlayerController>().SetIsGod(true);
             yield return new WaitForSeconds(shieldDuration);
             GameManager.gameManager.player1.GetComponent<PlayerController>().SetIsGod(false);

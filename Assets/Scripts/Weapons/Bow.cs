@@ -31,6 +31,7 @@ public class Bow : WeaponController
 
     protected override IEnumerator WeakAttack()
     {
+        PlayWeakSound();
         isAttacking = 0;
         Shoot(GetDirection());
         yield return new WaitForSeconds(0.25f);
@@ -60,6 +61,7 @@ public class Bow : WeaponController
 
     protected override IEnumerator StrongAttack()
     {
+        PlayStrongSound();
         isAttacking = 1;
         Vector3 direction = GetDirection();
         if(direction == Vector3.left)
@@ -91,6 +93,7 @@ public class Bow : WeaponController
 
     protected override IEnumerator SkillP1()
     {
+        PlaySkillSound();
         player.SetIsBlocked(true);
         player.SetMaxSpeed(disengageAcceleration * player.GetMaxSpeed());
         player.moveHability = true;
@@ -106,6 +109,7 @@ public class Bow : WeaponController
 
     protected override IEnumerator SkillP2()
     {
+        PlaySkillSound();
         GameObject arrow = Instantiate(Resources.Load("Prefabs/Weapons/Projectiles/EnhancedArrow"), gameObject.transform.position, Quaternion.Euler(0, 0, 0)) as GameObject;
         Vector3 direction = (player.GetDirV() > 0) ? Vector3.up : Vector3.down;
         arrow.GetComponent<EnhancedArrow>().SetParameters(1.5f, 5f, direction, gameObject.transform.position);
