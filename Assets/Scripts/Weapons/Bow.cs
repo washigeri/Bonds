@@ -10,6 +10,7 @@ public class Bow : WeaponController
 
     protected override void Awake()
     {
+        base.Awake();
         bCollider2D = GetComponent<BoxCollider2D>();
         defaultLocalRotation = Vector3.zero;
         damage = 5;
@@ -23,7 +24,10 @@ public class Bow : WeaponController
         isStrongOnCD = false;
         isSkillOnCD = false;
         weaponName = "Bow";
-        base.Awake();
+
+        attacksDamage[0] = 20f;
+        attacksDamage[1] = 25f;
+        attacksDamage[2] = 0f;
     }
 
     protected override void Update()

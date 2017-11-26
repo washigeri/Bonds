@@ -7,6 +7,10 @@ public class Daggers : WeaponController
 
     private BoxCollider2D bCollider2D;
 
+    private float weakTranslationLeft;
+    private float weakTranslationDuration;
+    private float weakTranslationSpeed;
+
     private float strongDuration;
     private float strongRange;
 
@@ -28,12 +32,17 @@ public class Daggers : WeaponController
 
     protected override void Awake()
     {
+        base.Awake();
         bCollider2D = GetComponent<BoxCollider2D>();
         defaultLocalRotation = new Vector3(0f, 0f, -90f);
         damage = 4;
-        range = 2;
         speed = 1f;
         localGlobalCD = speed * globalCD;
+
+        range = 0.5f;
+        weakTranslationLeft = range;
+        weakTranslationDuration = globalCD / 3f;
+        weakTranslationSpeed = range / weakTranslationDuration;
 
         strongCD = 5f;
         skillCD = 2f;
@@ -58,13 +67,22 @@ public class Daggers : WeaponController
         castedBuff = false;
 
         weaponName = "Daggers";
-        base.Awake();
+
+        attacksDamage[0] = 15f;
+        attacksDamage[1] = 5f;
+        attacksDamage[2] = 0f;
     }
 
     protected override void Update()
     {
         bCollider2D.enabled = (!isOnGlobalCoolDown && (isAttacking == 0 || isAttacking == 1)) || !hasOwner;
-        if(owner == 1 && startedRoulade)
+        if(isAttacking == 0)
+        {
+            float translationNorm = weakTranslationSpeed * Time.deltaTime;
+            transform.Translate(Vector3.up * translationNorm);
+            weakTranslationLeft -= translationNorm;
+        }
+        if (owner == 1 && startedRoulade)
         {
             float rotateAngle = rouladeRotationSpeed * Time.deltaTime;
             player.transform.Rotate(Vector3.forward, rouladeFaceRight * rotateAngle);
@@ -81,10 +99,12 @@ public class Daggers : WeaponController
     {
         //PlayWeakSound();
         isAttacking = 0;
-        yield return new WaitForSeconds(0.25f);
+        yield return new WaitUntil(() => weakTranslationLeft <= 0f);
         isAttacking = -1;
         isOnGlobalCoolDown = true;
-        yield return new WaitForSeconds(localGlobalCD * player.GetAttackSpeedMultipler());
+        weakTranslationLeft = range;
+        transform.localPosition = defaultLocalPosition;
+        yield return new WaitForSeconds(localGlobalCD * player.GetAttackSpeedMultipler() - weakTranslationDuration);
         isOnGlobalCoolDown = false;
     }
 

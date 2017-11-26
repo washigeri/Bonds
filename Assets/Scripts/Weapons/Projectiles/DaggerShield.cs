@@ -8,6 +8,8 @@ public class DaggerShield : MonoBehaviour {
     private PlayerController owner;
 
     private float damage;
+    private float enemySpeedMultiplier;
+    private float enemySpeedMultiplierDuration;
     private string enemyTag;
     private Vector3 startPosition;
     private float timeLeft;
@@ -20,6 +22,8 @@ public class DaggerShield : MonoBehaviour {
     {
         isSet = false;
         bCollider2D = GetComponent<BoxCollider2D>();
+        enemySpeedMultiplier = 0.5f;
+        enemySpeedMultiplierDuration = 5f;
         timeLeft = 0f;
         timeBetweenTwoHits = 0.5f;
         isReloading = false;
@@ -84,10 +88,7 @@ public class DaggerShield : MonoBehaviour {
                 {
                     EnemyController enemy = collision.gameObject.GetComponent<EnemyController>();
                     enemy.RemoveHealth(damage * owner.GetDamageDoneMultiplier(), false);
-                    if (owner.GetEnemySpeedMultiplierDuration() > 0f)
-                    {
-                        enemy.SetSpeedMultiplierParameters(owner.GetEnemySpeedMultiplier(), owner.GetEnemySpeedMultiplierDuration());
-                    }
+                    enemy.SetSpeedMultiplierParameters(enemySpeedMultiplier, enemySpeedMultiplierDuration);
                     if (owner.GetEnemyBleedDuration() > 0f)
                     {
                         enemy.SetBleedingParameters(owner.GetEnemyBleedPercentage() * damage * owner.GetDamageDoneMultiplier(), owner.GetEnemyBleedDuration());
