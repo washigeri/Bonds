@@ -113,7 +113,7 @@ public class Arrow : MonoBehaviour {
         }
         else if(direction == Vector3.right)
         {
-            myTransform.localScale = new Vector3(1, 1, 1);
+            myTransform.localScale = Vector3.one;
         }
         else if (direction == Vector3.down + Vector3.right)
         {

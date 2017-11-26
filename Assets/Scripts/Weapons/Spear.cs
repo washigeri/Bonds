@@ -21,7 +21,8 @@ public class Spear : WeaponController
         defaultLocalRotation = new Vector3(0f, 0f, -90f);
         damage = 7f;
         range = 7f;
-        speed = 2f;
+        speed = 1.5f;
+        localGlobalCD = speed * globalCD;
         strongCD = 3f;
         skillCD = 10f;
         chargeAcceleration = 5f;
@@ -52,8 +53,8 @@ public class Spear : WeaponController
     {
         PlayWeakSound();
         isAttacking = 0;
-        //isOnGlobalCoolDown = true;
-        yield return new WaitForSeconds(globalCD * speed);
+        isOnGlobalCoolDown = true;
+        yield return new WaitForSeconds(localGlobalCD * player.GetAttackSpeedMultipler());
         isAttacking = -1;
         isOnGlobalCoolDown = false;
     }
@@ -68,10 +69,11 @@ public class Spear : WeaponController
         transform.parent.eulerAngles = Vector3.zero;
         strongRotationLeft = strongFullRotation;
         isOnGlobalCoolDown = true;
-        yield return new WaitForSeconds(globalCD * speed);
+        float currentGCD = localGlobalCD * player.GetAttackSpeedMultipler();
+        yield return new WaitForSeconds(currentGCD);
         isOnGlobalCoolDown = false;
         isStrongOnCD = true;
-        yield return new WaitForSeconds(strongCD - globalCD * speed);
+        yield return new WaitForSeconds(strongCD - currentGCD);
         isStrongOnCD = false;
     }
 
@@ -80,15 +82,13 @@ public class Spear : WeaponController
         PlaySkillSound();
         isAttacking = 2;
         player.SetSpeedMultiplier(chargeAcceleration * player.GetSpeedMutiplier());
+        Physics2D.IgnoreLayerCollision(8, 10, true);
         player.rb2d.AddForce(365f * (player.faceRight ? Vector2.right : Vector2.left), ForceMode2D.Impulse);
         isSkillOnCD = true;
         yield return new WaitForSeconds(chargeDuration);
         isAttacking = -1;
         player.SetSpeedMultiplier(player.GetSpeedMutiplier() / chargeAcceleration);
-        //isOnGlobalCoolDown = true;
-        //yield return new WaitForSeconds(globalCD);
-        //isOnGlobalCoolDown = false;
-        //yield return new WaitForSeconds(skillCD - globalCD);
+        Physics2D.IgnoreLayerCollision(8, 10, false);
         yield return new WaitForSeconds(skillCD - chargeDuration);
         isSkillOnCD = false;
     }
@@ -103,6 +103,7 @@ public class Spear : WeaponController
             player1.SetStunEnemyDuration(stunEnemyDuration);
             player1.SetSpeedMultiplier(chargeAcceleration * player1.GetSpeedMutiplier());
             player1.GetMyWeapon().SetIsAttacking(3);
+            Physics2D.IgnoreLayerCollision(8, 10, true);
             player1.rb2d.AddForce(365f * (player1.faceRight ? Vector2.right : Vector2.left), ForceMode2D.Impulse);
             isSkillOnCD = true;
             yield return new WaitForSeconds(chargeDuration);
@@ -110,6 +111,7 @@ public class Spear : WeaponController
             player1.SetStunEnemy(false);
             player1.SetStunEnemyDuration(0f);
             player1.SetSpeedMultiplier(player1.GetSpeedMutiplier() / chargeAcceleration);
+            Physics2D.IgnoreLayerCollision(8, 10, false);
             yield return new WaitForSeconds(skillCD - chargeDuration);
             isSkillOnCD = false;
 

@@ -6,6 +6,7 @@ public class Bow : WeaponController
 {
     private BoxCollider2D bCollider2D;
     private float disengageAcceleration;
+    private float disengageDuration;
 
     protected override void Awake()
     {
@@ -13,10 +14,12 @@ public class Bow : WeaponController
         defaultLocalRotation = Vector3.zero;
         damage = 5;
         range = 10;
-        speed = 5;
+        speed = 1.5f;
+        localGlobalCD = globalCD * speed;
         strongCD = 6f;
         skillCD = 4f;
         disengageAcceleration = 5f;
+        disengageDuration = 0.2f;
         isStrongOnCD = false;
         isSkillOnCD = false;
         weaponName = "Bow";
@@ -37,7 +40,7 @@ public class Bow : WeaponController
         yield return new WaitForSeconds(0.25f);
         isAttacking = -1;
         isOnGlobalCoolDown = true;
-        yield return new WaitForSeconds(globalCD);
+        yield return new WaitForSeconds(localGlobalCD * player.GetAttackSpeedMultipler());
         isOnGlobalCoolDown = false;
     }
 
@@ -55,7 +58,7 @@ public class Bow : WeaponController
 
     private void Shoot(Vector3 direction)
     {
-        GameObject arrow = Instantiate(Resources.Load("Prefabs/Weapons/Projectiles/Arrow"), gameObject.transform.position, Quaternion.Euler(0, 0, 0)) as GameObject;
+        GameObject arrow = Instantiate(Resources.Load("Prefabs/Weapons/Projectiles/Arrow"), transform.position, Quaternion.Euler(0, 0, 0)) as GameObject;
         arrow.GetComponent<Arrow>().SetParameters(owner, attacksDamage[isAttacking], enemyTag, direction, gameObject.transform.position);
     }
 
@@ -85,9 +88,10 @@ public class Bow : WeaponController
         isAttacking = -1;
         isStrongOnCD = true;
         isOnGlobalCoolDown = true;
-        yield return new WaitForSeconds(globalCD);
+        float currentGCD = localGlobalCD * player.GetAttackSpeedMultipler();
+        yield return new WaitForSeconds(currentGCD);
         isOnGlobalCoolDown = false;
-        yield return new WaitForSeconds(strongCD - globalCD);
+        yield return new WaitForSeconds(strongCD - currentGCD);
         isStrongOnCD = false;
     }
 
@@ -96,14 +100,16 @@ public class Bow : WeaponController
         PlaySkillSound();
         player.SetIsBlocked(true);
         player.SetMaxSpeed(disengageAcceleration * player.GetMaxSpeed());
+        Physics2D.IgnoreLayerCollision(8, 10, true);
         player.moveHability = true;
         yield return new WaitForSeconds(0.1f);
         player.rb2d.AddForce(365f * (player.faceRight ? Vector2.left : Vector2.right), ForceMode2D.Impulse);
         isSkillOnCD = true;
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(disengageDuration);
         player.SetIsBlocked(false);
         player.SetMaxSpeed(player.GetMaxSpeed() / disengageAcceleration);
-        yield return new WaitForSeconds(skillCD);
+        Physics2D.IgnoreLayerCollision(8, 10, false);
+        yield return new WaitForSeconds(skillCD - disengageDuration);
         isSkillOnCD = false;
     }
 
@@ -115,9 +121,10 @@ public class Bow : WeaponController
         arrow.GetComponent<EnhancedArrow>().SetParameters(1.5f, 5f, direction, gameObject.transform.position);
         isSkillOnCD = true;
         isOnGlobalCoolDown = true;
-        yield return new WaitForSeconds(globalCD);
+        float currentGCD = localGlobalCD * player.GetAttackSpeedMultipler();
+        yield return new WaitForSeconds(currentGCD);
         isOnGlobalCoolDown = false;
-        yield return new WaitForSeconds(12f - globalCD);
+        yield return new WaitForSeconds(skillCD - currentGCD);
         isSkillOnCD = false;
     }
 }

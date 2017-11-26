@@ -11,6 +11,7 @@ public abstract class AliveEnemy : EnemyController {
     {
         base.Awake();
         player = GameObject.FindGameObjectWithTag("Player1");
+        isSpirit = false;
     }
 
     protected override void Action()

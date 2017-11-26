@@ -18,6 +18,7 @@ public abstract class WeaponController : MonoBehaviour
     protected float range;
     protected float speed;
     protected float globalCD;
+    protected float localGlobalCD;
 
     protected PlayerController player;
     protected bool hasOwner;
@@ -118,6 +119,7 @@ public abstract class WeaponController : MonoBehaviour
                         {
                             enemy.SetStunned(true, -1f);
                         }
+                        player.SetIsFighting(true);
                     }
                 }
             }

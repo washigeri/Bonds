@@ -195,6 +195,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92fdb701ab3eb7246a586babde8594d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  musicSource: {fileID: 0}
+  sfxSources: []
 --- !u!82 &1076593027
 AudioSource:
   m_ObjectHideFlags: 0
@@ -605,12 +607,12 @@ Prefab:
     - target: {fileID: 224435395211667008, guid: da8072d0781af634eb53aa9c683bd0e9,
         type: 2}
       propertyPath: m_LocalPosition.x
-      value: 290
+      value: 371.5
       objectReference: {fileID: 0}
     - target: {fileID: 224435395211667008, guid: da8072d0781af634eb53aa9c683bd0e9,
         type: 2}
       propertyPath: m_LocalPosition.y
-      value: 163
+      value: 209
       objectReference: {fileID: 0}
     - target: {fileID: 224435395211667008, guid: da8072d0781af634eb53aa9c683bd0e9,
         type: 2}

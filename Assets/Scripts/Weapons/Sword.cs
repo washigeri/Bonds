@@ -9,6 +9,7 @@ public class Sword : WeaponController {
     private float strongFullRotation;
     private float strongRotationLeft;
     private float strongRotationSpeed;
+    private float strongDuration;
     private float shieldDuration;
 
     protected override void Awake()
@@ -18,7 +19,8 @@ public class Sword : WeaponController {
         defaultLocalRotation = new Vector3(0f, 0f, -90f);
         damage = 10;
         range = 5;
-        speed = 3;
+        speed = 2f;
+        localGlobalCD = globalCD * speed;
         strongCD = 5f;
         skillCD = 2f;
         isStrongOnCD = false;
@@ -26,7 +28,8 @@ public class Sword : WeaponController {
         parryDuration = 0.25f;
         strongFullRotation = 1080f;
         strongRotationLeft = strongFullRotation;
-        strongRotationSpeed = strongFullRotation / 2f;
+        strongDuration = 2f;
+        strongRotationSpeed = strongFullRotation / strongDuration;
         shieldDuration = 0.25f;
         weaponName = "Sword";
         attacksDamage[0] = 34f;
@@ -55,7 +58,7 @@ public class Sword : WeaponController {
         yield return new WaitForSeconds(0.25f);
         isAttacking = -1;
         isOnGlobalCoolDown = true;
-        yield return new WaitForSeconds(globalCD);
+        yield return new WaitForSeconds(localGlobalCD * player.GetAttackSpeedMultipler());
         isOnGlobalCoolDown = false;
     }
 
@@ -68,10 +71,11 @@ public class Sword : WeaponController {
         player.transform.rotation = Quaternion.Euler(0f,0f,0f);
         strongRotationLeft = strongFullRotation;
         isOnGlobalCoolDown = true;
-        yield return new WaitForSeconds(globalCD);
+        float currentGCD = localGlobalCD * player.GetAttackSpeedMultipler();
+        yield return new WaitForSeconds(currentGCD);
         isOnGlobalCoolDown = false;
         isStrongOnCD = true;
-        yield return new WaitForSeconds(strongCD - globalCD);
+        yield return new WaitForSeconds(strongCD - currentGCD);
         isStrongOnCD = false;
     }
 

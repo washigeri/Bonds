@@ -24,9 +24,15 @@ public abstract class PlayerController : MonoBehaviour
     protected int strengh;
     protected int stamina;
 
+    private bool isFighting;
+    private bool isAlreadyTryingToLeaveFight;
+    private float timeToQuitFight;
+    private float timeToQuitFightLeft;
+
     protected float damageDoneMultiplier;
     protected float damageReceivedMultiplier;
     protected float speedMultiplier;
+    protected float attackSpeedMultiplier;
     protected float enemySpeedMultiplier;
     protected float enemySpeedMultiplierDuration;
     protected float enemyBleedPercentage;
@@ -57,11 +63,17 @@ public abstract class PlayerController : MonoBehaviour
         damageDoneMultiplier = 1f;
         damageReceivedMultiplier = 1f;
         speedMultiplier = 1f;
+        attackSpeedMultiplier = 1;
         enemySpeedMultiplier = 1f;
         enemySpeedMultiplierDuration = 0f;
         enemyBleedPercentage = 0f;
         enemyBleedDuration = 0f;
+        isFighting = false;
+        isAlreadyTryingToLeaveFight = false;
+        timeToQuitFight = 5f;
+        timeToQuitFightLeft = timeToQuitFight;
         isGod = false;
+        isBlocked = false;
         myTrinket = null;
         myWeapon = GetWeaponScript();
     }
@@ -73,8 +85,20 @@ public abstract class PlayerController : MonoBehaviour
 
     protected virtual void Update()
     {
+        Debug.Log("is fighting = " + isFighting);
         isDead = (hp <= 0f);
         CheckForInputs();
+        if (isFighting)
+        {
+            if (!isAlreadyTryingToLeaveFight)
+            {
+                StartCoroutine(OnQuittingFight());
+            }
+            else
+            {
+                timeToQuitFightLeft -= Time.deltaTime;
+            }
+        }
     }
 
     protected abstract void FixedUpdate();
@@ -241,6 +265,27 @@ public abstract class PlayerController : MonoBehaviour
         }
     }
 
+    public void EnterFight()
+    {
+        if (isFighting)
+        {
+            timeToQuitFightLeft = timeToQuitFight;
+        }
+        else
+        {
+            isFighting = true;
+        }
+    }
+
+    private IEnumerator OnQuittingFight()
+    {
+        isAlreadyTryingToLeaveFight = true;
+        yield return new WaitUntil(() => timeToQuitFightLeft <= 0f);
+        isFighting = false;
+        isAlreadyTryingToLeaveFight = false;
+        timeToQuitFightLeft = timeToQuitFight;
+    }
+
     private void RestaureHealth(float health)
     {
         hp = Mathf.Min(hp + health, maxHp);
@@ -252,6 +297,7 @@ public abstract class PlayerController : MonoBehaviour
         {
             hp -= health * damageReceivedMultiplier;
         }
+        EnterFight();
     }
 
     public void SetHealth(float health)
@@ -310,6 +356,16 @@ public abstract class PlayerController : MonoBehaviour
     public void SetDamageReceivedMultiplier(float damageReceivedMultiplier)
     {
         this.damageReceivedMultiplier = damageReceivedMultiplier;
+    }
+
+    public float GetAttackSpeedMultipler()
+    {
+        return attackSpeedMultiplier;
+    }
+
+    public void SetAttackSpeedMultiplier(float attackSpeedMultiplier)
+    {
+        this.attackSpeedMultiplier = attackSpeedMultiplier;
     }
 
     public float GetSpeedMutiplier()
@@ -421,6 +477,15 @@ public abstract class PlayerController : MonoBehaviour
     {
         this.isBlocked = isBlocked;
     }
- 
 
+    public bool GetIsFighting()
+    {
+        return isFighting;
+    }
+
+    public void SetIsFighting(bool isFighting)
+    {
+        this.isFighting = isFighting;
+    }
+ 
 }

@@ -11,7 +11,7 @@ public class Orc : AliveEnemy {
         health = 100f;
         speed = 5f;
         damage = 2;
-        attackRange = 1f;
+        attackRange = 1.5f;
         detectionRange = 10f;
     }
 
