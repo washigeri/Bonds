@@ -41,7 +41,7 @@ public abstract class EnemyController : MonoBehaviour
     private float bleedingDamage;
     private float bleedingDuration;
 
-    private bool canDrop;
+    protected bool canDrop;
     private float potionDropRate;
     private float weaponDropRate;
     private float trinketDropRate;
@@ -74,7 +74,7 @@ public abstract class EnemyController : MonoBehaviour
     // Update is called once per frame
     protected virtual void Update()
     {
-        Debug.Log("Ennemy health " + health);
+        //Debug.Log("Ennemy health " + health);
         if (this.health <= 0)
         {
             if (canDrop)
@@ -248,7 +248,6 @@ public abstract class EnemyController : MonoBehaviour
 
     private IEnumerator StartBleeding()
     {
-        Debug.Log("starts bleeding");
         startedBleeding = true;
         yield return new WaitUntil(() => bleedingDuration <= 0f);
         bleedingDamage = 0f;

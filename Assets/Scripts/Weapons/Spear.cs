@@ -39,6 +39,7 @@ public class Spear : WeaponController
         skillCD = 8f;
         chargeAcceleration = 5f;
         chargeDuration = 0.3f;
+
         strongFullRotation = 200f;
         strongRotationLeft = strongFullRotation;
         strongRotationSpeed = strongFullRotation / 0.2f;

@@ -138,7 +138,7 @@ public class GameManager : MonoBehaviour
     {
         potionNumber = 0;
         player1 = Instantiate(Resources.Load("Prefabs/Players/Player1"), Vector3.zero, Quaternion.Euler(0, 0, 0)) as GameObject;
-        GiveWeapon(1, player1);
+        GiveWeapon(0, player1);
         player2 = Instantiate(Resources.Load("Prefabs/Players/Player2"), Vector3.zero, Quaternion.Euler(0, 0, 0)) as GameObject;
         GiveWeapon(2, player2);
         DontDestroyOnLoad(player1);

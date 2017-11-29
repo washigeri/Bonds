@@ -85,7 +85,6 @@ public abstract class PlayerController : MonoBehaviour
 
     protected virtual void Update()
     {
-        Debug.Log("is fighting = " + isFighting);
         isDead = (hp <= 0f);
         CheckForInputs();
         if (isFighting)
@@ -245,10 +244,6 @@ public abstract class PlayerController : MonoBehaviour
             //myWeapon.transform.localRotation = new Quaternion(myWeapon.transform.localRotation.x, myWeapon.transform.localRotation.y, myWeapon.transform.localRotation.z * (faceRight ? 1 : -1), myWeapon.transform.localRotation.w);
             GameManager.gameManager.AddObjectToBeCleaned(myWeapon.gameObject);
             myWeapon = null;
-        }
-        else
-        {
-            Debug.Log("weapon null");
         }
     }
 

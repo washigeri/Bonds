@@ -90,7 +90,6 @@ public abstract class SkillsHUDController : MonoBehaviour {
     private void DisplayWeaponSprites(List<Sprite> sprites)
     {
         
-        Debug.Log("Sprite count =" + sprites.Count + playerController.name);
         if(sprites.Count == 3)
         {
             weakImageSpot.sprite = sprites[0];
