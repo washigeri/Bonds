@@ -7,6 +7,8 @@ public abstract class EnemyController : MonoBehaviour
 {
     [HideInInspector] public bool faceRight = false;
 
+    public AudioClip damageSound;
+
     public Transform enemyTransform;
     public LayerMask layerMask;
 

@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class SettingManager : MonoBehaviour {
 
+    //TODO : Lier son avec ça
+
     public Toggle fullscreenToggle;
     public Dropdown resolutionDropdown;
     public Dropdown qualityDropdown;

@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class Player1Controller : PlayerController
 {
+    //TODO : son saut
+
     private float jumpForce = 650f;
     public Transform groundCheck;
 
@@ -35,6 +37,7 @@ public class Player1Controller : PlayerController
         CameraController.isLanding = (rb2d.velocity.y < 0f);
         if (Input.GetButtonDown("Jump") && grounded)
         {
+
             moveHability = true;
             dirV = 1f;
         }

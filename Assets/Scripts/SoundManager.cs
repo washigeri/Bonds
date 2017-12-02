@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class SoundManager : MonoBehaviour {
+
+    //TODO : Check null
+
     [HideInInspector]
     public AudioSource musicSource;
     [HideInInspector]

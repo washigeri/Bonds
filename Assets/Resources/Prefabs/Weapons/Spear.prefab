@@ -84,7 +84,7 @@ TrailRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: 5f402d1520e5fa74fa21e08f85b71370, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -112,14 +112,14 @@ TrailRenderer:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 2
-        time: 0
-        value: 1
+        time: 0.4334755
+        value: 0.6794872
         inSlope: 0
         outSlope: 0
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
-      m_RotationOrder: 4
+      m_RotationOrder: 0
     colorGradient:
       serializedVersion: 2
       key0: {r: 1, g: 1, b: 1, a: 1}

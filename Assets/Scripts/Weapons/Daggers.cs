@@ -97,7 +97,7 @@ public class Daggers : WeaponController
 
     protected override IEnumerator WeakAttack()
     {
-        //PlayWeakSound();
+        PlayWeakSound();
         isAttacking = 0;
         yield return new WaitUntil(() => weakTranslationLeft <= 0f);
         isAttacking = -1;
@@ -117,7 +117,7 @@ public class Daggers : WeaponController
 
     protected override IEnumerator StrongAttack()
     {
-        //PlayStrongSound();
+        PlayStrongSound();
         InitDagger(Vector3.right, 5f);
         InitDagger(Vector3.left, 5f);
         InitDagger(Vector3.up, 5f);
@@ -134,7 +134,7 @@ public class Daggers : WeaponController
 
     protected override IEnumerator SkillP1()
     {
-        //PlaySkillSound();
+        PlaySkillSound();
         startedRoulade = true;
         player.SetSpeedMultiplier(player.GetSpeedMutiplier() * rouladeAcceleration);
         Physics2D.IgnoreLayerCollision(8, 10, true);
@@ -159,7 +159,7 @@ public class Daggers : WeaponController
 
     protected override IEnumerator SkillP2()
     {
-        //PlaySkillSound();
+        PlaySkillSound();
         castedBuff = true;
         PlayerController player1 = GameManager.gameManager.player1.GetComponent<PlayerController>();
         player1.SetSpeedMultiplier(player1.GetSpeedMutiplier() * skillSpeedMultiplier);

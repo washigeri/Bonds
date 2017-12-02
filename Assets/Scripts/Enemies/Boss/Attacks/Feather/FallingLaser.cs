@@ -9,6 +9,8 @@ public class FallingLaser : MonoBehaviour
     private float laserAddedLength;
     private float laserWidth;
     private float laserMaxLength;
+    private float timeToHitGround;
+    private float laserSpeed;
     private BoxCollider2D bCollider2D;
     private bool isColliderSet;
     private Vector3 startPosition;
@@ -31,7 +33,9 @@ public class FallingLaser : MonoBehaviour
         bCollider2D = null;
         laserMaxLength = (float)CameraController.cameraHeight * 1.1f;
         laserLength = 0f;
-        laserAddedLength = 0.1f;
+        laserAddedLength = 0f;
+        timeToHitGround = 0.25f;
+        laserSpeed = laserMaxLength / timeToHitGround;
         direction = Vector3.down;
         timeBeforeDestruction = 0.25f;
         isAboutToBeDestroyed = false;
@@ -88,6 +92,7 @@ public class FallingLaser : MonoBehaviour
 
     void ShootLaserFromTheSky()
     {
+        laserAddedLength = laserSpeed * Time.fixedDeltaTime;
         endPosition += (laserAddedLength * direction);
         laserLength += laserAddedLength;
         laserLineRenderer.SetPosition(1, endPosition);
