@@ -168,11 +168,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weakSounds:
-  - {fileID: 8300000, guid: 926e0c1b0b27310459915a9cb532e885, type: 3}
+  - {fileID: 8300000, guid: 8c88a66c835417e47a636fc9284eb033, type: 3}
   strongSounds:
-  - {fileID: 8300000, guid: 66584a30b1d5e3c43ba807b1123a9fae, type: 3}
-  livingSkillSound: {fileID: 0}
-  deadSkillSound: {fileID: 0}
+  - {fileID: 8300000, guid: 8c88a66c835417e47a636fc9284eb033, type: 3}
+  livingSkillSound: {fileID: 8300000, guid: b7d21bc474cec0d499be0c2d8e1de855, type: 3}
+  deadSkillSound: {fileID: 8300000, guid: b7d21bc474cec0d499be0c2d8e1de855, type: 3}
   weaponName: 
   weakName: 
   strongName: 

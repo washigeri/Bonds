@@ -45,6 +45,7 @@ public class GameManager : MonoBehaviour
     private List<GameObject> toBeCleanOnSceneChange;
 
     private GameObject pauseMenu;
+    private GameObject inGamePanel;
 
     void Awake()
     {
@@ -147,9 +148,9 @@ public class GameManager : MonoBehaviour
         CameraController mainCamera = Camera.main.GetComponent<CameraController>();
         mainCamera.SetCameraForGame();
         isGameInitialized = true;
-        GameObject inGamePanel = Instantiate(Resources.Load("Prefabs/UI/InGamePanel"), Camera.main.transform) as GameObject;
-        DontDestroyOnLoad(inGamePanel);
-        inGamePanel.GetComponent<Canvas>().worldCamera = Camera.main;
+        this.inGamePanel = Instantiate(Resources.Load("Prefabs/UI/InGamePanel"), Camera.main.transform) as GameObject;
+        DontDestroyOnLoad(this.inGamePanel);
+        this.inGamePanel.GetComponent<Canvas>().worldCamera = Camera.main;
 
     }
 
@@ -295,7 +296,9 @@ public class GameManager : MonoBehaviour
             Time.timeScale = 0;
             if (pauseMenu == null)
             {
-                pauseMenu = Camera.main.transform.Find("InGamePanel").transform.Find("PauseMenu").gameObject;
+                pauseMenu = inGamePanel.transform.Find("PauseMenu").gameObject;
+                pauseMenu.transform.position += new Vector3(0, 0, -1f);
+                
             }
             pauseMenu.SetActive(true);
         }

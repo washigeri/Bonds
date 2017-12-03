@@ -1407,6 +1407,7 @@ GameObject:
   - component: {fileID: 223459629331438062}
   - component: {fileID: 114392483817827708}
   - component: {fileID: 114398384788542406}
+  - component: {fileID: 114490908562228490}
   m_Layer: 5
   m_Name: MainMenu
   m_TagString: Untagged
@@ -2151,8 +2152,6 @@ MonoBehaviour:
   sfxVolumeSlider: {fileID: 114141532146631708}
   difficultyDropdwon: {fileID: 114606748060758838}
   applyButton: {fileID: 114716663149961362}
-  musicSource: {fileID: 0}
-  sfxSource: {fileID: 0}
 --- !u!114 &114049775107013974
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3891,6 +3890,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ShowMaskGraphic: 0
+--- !u!114 &114490908562228490
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1753176590367266}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52067390218ffc84c8505f563522e826, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverSound: {fileID: 8300000, guid: c2196095099ee8644ac76f9fcc9a36c7, type: 3}
+  validateSound: {fileID: 8300000, guid: 31024289a17c5ec42b8004dda00fab80, type: 3}
 --- !u!114 &114499082527399854
 MonoBehaviour:
   m_ObjectHideFlags: 1

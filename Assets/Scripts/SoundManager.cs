@@ -5,10 +5,17 @@ using UnityEngine;
 public class SoundManager : MonoBehaviour {
 
 
+    public AudioClip titleMusic;
+    public AudioClip bossMusic;
+    public AudioClip theme1Music;
+
     [HideInInspector]
     public AudioSource musicSource;
     [HideInInspector]
     public List<AudioSource> sfxSources = new List<AudioSource>();
+
+    public float lowPitchRange = 0.95f;
+    public float highPitchRange = 1.05f;
 
     [HideInInspector]
     public static SoundManager instance = null;
@@ -25,13 +32,16 @@ public class SoundManager : MonoBehaviour {
             sfxSources.Add(audioSources[i]);
         DontDestroyOnLoad(this);
     }
-    
+
     public void PlayMusic(AudioClip music)
     {
-        if (musicSource.isPlaying)
-            musicSource.Stop();
-        musicSource.clip = music;
-        musicSource.Play();
+        if (music != null)
+        {
+            if (musicSource.isPlaying)
+                musicSource.Stop();
+            musicSource.clip = music;
+            musicSource.Play();
+        }
     }
 
     public void PlayMusic(AudioClip music, bool playOnLoop)
@@ -45,8 +55,11 @@ public class SoundManager : MonoBehaviour {
         if (sfx != null)
         {
             AudioSource source = FindFirstSFXSourceEmpty();
-            source.clip = sfx;
-            source.Play();
+            if (source != null)
+            {
+                source.clip = sfx;
+                source.Play();
+            }
         }
     }
 
@@ -55,9 +68,14 @@ public class SoundManager : MonoBehaviour {
         if (clips != null && clips.Length > 0)
         {
             int randomIndex = Random.Range(0, clips.Length);
+            float randomPitch = Random.Range(lowPitchRange, highPitchRange);
             AudioSource source = FindFirstSFXSourceEmpty();
-            source.clip = clips[randomIndex];
-            source.Play();
+            if (source != null)
+            {
+                source.pitch = randomPitch;
+                source.clip = clips[randomIndex];
+                source.Play(); 
+            }
         }
     }
 

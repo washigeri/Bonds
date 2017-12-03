@@ -208,6 +208,7 @@ MonoBehaviour:
   playerTransform: {fileID: 4269103825375228}
   maxHp: 0
   rb2d: {fileID: 50720943759969018}
+  jumpSound: {fileID: 8300000, guid: ac3006468cb50694c96871139417a5d7, type: 3}
   groundCheck: {fileID: 4253692522292896}
   grounded: 0
 --- !u!212 &212949390114956228

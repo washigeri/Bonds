@@ -195,8 +195,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92fdb701ab3eb7246a586babde8594d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  titleMusic: {fileID: 8300000, guid: 46bcedba36cff954ca5ed94c6c2ca60a, type: 3}
+  bossMusic: {fileID: 8300000, guid: 67d7047eab894464f96502a10f0bb207, type: 3}
+  theme1Music: {fileID: 8300000, guid: ace2286a082fa664b9e382c7d8d0d483, type: 3}
   musicSource: {fileID: 0}
   sfxSources: []
+  lowPitchRange: 0.95
+  highPitchRange: 1.05
 --- !u!82 &1076593027
 AudioSource:
   m_ObjectHideFlags: 0
@@ -288,7 +293,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.131
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -604,15 +609,20 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 114869349802369052, guid: da8072d0781af634eb53aa9c683bd0e9,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 224435395211667008, guid: da8072d0781af634eb53aa9c683bd0e9,
         type: 2}
       propertyPath: m_LocalPosition.x
-      value: 363.5
+      value: 286
       objectReference: {fileID: 0}
     - target: {fileID: 224435395211667008, guid: da8072d0781af634eb53aa9c683bd0e9,
         type: 2}
       propertyPath: m_LocalPosition.y
-      value: 204.5
+      value: 161
       objectReference: {fileID: 0}
     - target: {fileID: 224435395211667008, guid: da8072d0781af634eb53aa9c683bd0e9,
         type: 2}
@@ -702,17 +712,17 @@ Prefab:
     - target: {fileID: 224588095368065168, guid: da8072d0781af634eb53aa9c683bd0e9,
         type: 2}
       propertyPath: m_LocalPosition.y
-      value: -144.7
+      value: -142.7
       objectReference: {fileID: 0}
     - target: {fileID: 224216163690322398, guid: da8072d0781af634eb53aa9c683bd0e9,
         type: 2}
       propertyPath: m_LocalPosition.y
-      value: 155
+      value: 153
       objectReference: {fileID: 0}
     - target: {fileID: 224168358586385302, guid: da8072d0781af634eb53aa9c683bd0e9,
         type: 2}
       propertyPath: m_LocalPosition.y
-      value: 155
+      value: 153
       objectReference: {fileID: 0}
     - target: {fileID: 114212272669935274, guid: da8072d0781af634eb53aa9c683bd0e9,
         type: 2}
@@ -754,6 +764,21 @@ Prefab:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_BoolArgument
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114869349802369052, guid: da8072d0781af634eb53aa9c683bd0e9,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114869349802369052, guid: da8072d0781af634eb53aa9c683bd0e9,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114490908562228490, guid: da8072d0781af634eb53aa9c683bd0e9,
+        type: 2}
+      propertyPath: titleMusic
+      value: 
+      objectReference: {fileID: 8300000, guid: 46bcedba36cff954ca5ed94c6c2ca60a, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: da8072d0781af634eb53aa9c683bd0e9, type: 2}
   m_IsPrefabParent: 0
