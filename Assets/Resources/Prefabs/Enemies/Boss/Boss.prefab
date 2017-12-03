@@ -236,6 +236,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   faceRight: 0
+  damageSound: {fileID: 0}
   enemyTransform: {fileID: 0}
   layerMask:
     serializedVersion: 2

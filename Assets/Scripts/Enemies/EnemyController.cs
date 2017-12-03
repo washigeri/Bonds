@@ -52,7 +52,6 @@ public abstract class EnemyController : MonoBehaviour
 
     protected virtual void Awake()
     {
-        
         damageMultiplier = 1f;
         speedMultiplier = 1f;
         speedMultiplierDuration = 0f;

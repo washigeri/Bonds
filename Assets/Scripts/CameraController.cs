@@ -7,8 +7,6 @@ public class CameraController : MonoBehaviour
 
     public Transform camTransform;
 
-    //private GameObject player1;
-    //private GameObject player2;
     public float zOffset;
     public float yOffset;
     public float cameraSpeed;
@@ -20,19 +18,17 @@ public class CameraController : MonoBehaviour
 
     private double xMaxDist;
     private double yMaxDist;
-    //private float distToCenterP1X;
     private float distToCenterP2X;
-    //private float distToCenterP1Y;
     private float distToCenterP2Y;
     private bool isXAligned;
     private float yCamera;
 
     private bool isCameraReadyForGame;
+    private bool isCameraSetForBoss;
 
 
     public void SetCameraForGame()
     {
-
         cameraSpeed = 5;
         Vector2 player1Pos = GameManager.gameManager.player1.transform.position;
         camTransform.position = new Vector3(player1Pos.x, player1Pos.y + yOffset, zOffset);
@@ -68,8 +64,7 @@ public class CameraController : MonoBehaviour
         return Mathf.Abs(player2Pos.y - player1Pos.y) >= yMaxDist;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void UpdateForLevel()
     {
         if ((GameManager.gameManager.startedGame > -1) && GameManager.gameManager.isGameInitialized)
         {
@@ -136,6 +131,17 @@ public class CameraController : MonoBehaviour
             distToCenterP2Y = distToCenterUpdatedP2Y;
             camTransform.position = newCameraPosition;
         }
+    }
+
+    private void UpdateForBoss()
+    {
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        UpdateForLevel();
     }
 
     private bool OnSameSideOfCamera()
