@@ -33,21 +33,35 @@ public class SoundManager : MonoBehaviour {
         DontDestroyOnLoad(this);
     }
 
-    public void PlayMusic(AudioClip music)
+    public void PlayMusic(AudioClip music, float fadeDuration = 0)
     {
         if (music != null)
         {
-            if (musicSource.isPlaying)
-                musicSource.Stop();
-            musicSource.clip = music;
-            musicSource.Play();
+            if (!musicSource.isPlaying)
+            {
+                musicSource.clip = music;
+                musicSource.Play();
+            }
+            else
+            {
+                if(fadeDuration == 0)
+                {
+                    musicSource.Stop();
+                    musicSource.clip = music;
+                    musicSource.Play();
+                }
+                else
+                {
+                    StartCoroutine(this.MusicTransition(musicSource, music, fadeDuration));
+                }
+            }
         }
     }
 
-    public void PlayMusic(AudioClip music, bool playOnLoop)
+    public void PlayMusic(AudioClip music, bool playOnLoop, float fadeDuration = 0)
     {   
         musicSource.loop = playOnLoop;
-        PlayMusic(music);
+        PlayMusic(music, fadeDuration);
     }
 
     public void PlaySFX(AudioClip sfx)
@@ -88,6 +102,24 @@ public class SoundManager : MonoBehaviour {
                 return source;
         }
         return null;
+    }
+
+    private IEnumerator MusicTransition(AudioSource source, AudioClip newMusic, float fadeTime)
+    {
+        float initialVolume = source.volume;
+        while (source.volume > 0)
+        {
+            source.volume -= initialVolume * Time.deltaTime / (fadeTime / 2f);
+            yield return null;
+        }
+        musicSource.Stop();
+        musicSource.clip = newMusic;
+        musicSource.Play();
+        while(source.volume < initialVolume)
+        {
+            source.volume += Time.deltaTime / (fadeTime / 2f);
+            yield return null;
+        }
     }
 
 }

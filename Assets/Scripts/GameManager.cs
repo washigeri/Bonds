@@ -5,6 +5,7 @@ using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -107,6 +108,7 @@ public class GameManager : MonoBehaviour
                 {
                     InitializeNewGame();
                 }
+                SoundManager.instance.PlayMusic(SoundManager.instance.theme1Music, playOnLoop: true, fadeDuration: 2);
             }
             if (Input.GetButtonDown("Cancel"))
             {
@@ -151,6 +153,7 @@ public class GameManager : MonoBehaviour
         this.inGamePanel = Instantiate(Resources.Load("Prefabs/UI/InGamePanel"), Camera.main.transform) as GameObject;
         DontDestroyOnLoad(this.inGamePanel);
         this.inGamePanel.GetComponent<Canvas>().worldCamera = Camera.main;
+        inGamePanel.GetComponent<Canvas>().sortingLayerName = "UI";
 
     }
 
@@ -297,7 +300,8 @@ public class GameManager : MonoBehaviour
             if (pauseMenu == null)
             {
                 pauseMenu = inGamePanel.transform.Find("PauseMenu").gameObject;
-                pauseMenu.transform.position += new Vector3(0, 0, -1f);
+                Button quit = pauseMenu.transform.Find("Quitter").gameObject.GetComponent<Button>();
+                quit.onClick.AddListener(delegate { this.Quit(); });
                 
             }
             pauseMenu.SetActive(true);
