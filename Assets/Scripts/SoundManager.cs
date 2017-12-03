@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class SoundManager : MonoBehaviour {
 
-    //TODO : Check null
 
     [HideInInspector]
     public AudioSource musicSource;
@@ -43,17 +42,23 @@ public class SoundManager : MonoBehaviour {
 
     public void PlaySFX(AudioClip sfx)
     {
-        AudioSource source = FindFirstSFXSourceEmpty();
-        source.clip = sfx;
-        source.Play();
+        if (sfx != null)
+        {
+            AudioSource source = FindFirstSFXSourceEmpty();
+            source.clip = sfx;
+            source.Play();
+        }
     }
 
     public void PlayRandomSFX(params AudioClip[] clips)
     {
-        int randomIndex = Random.Range(0, clips.Length);
-        AudioSource source = FindFirstSFXSourceEmpty();
-        source.clip = clips[randomIndex];
-        source.Play();
+        if (clips != null && clips.Length > 0)
+        {
+            int randomIndex = Random.Range(0, clips.Length);
+            AudioSource source = FindFirstSFXSourceEmpty();
+            source.clip = clips[randomIndex];
+            source.Play();
+        }
     }
 
     private AudioSource FindFirstSFXSourceEmpty()

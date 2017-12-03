@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class SettingManager : MonoBehaviour {
 
-    //TODO : Lier son avec ça
+  
 
     public Toggle fullscreenToggle;
     public Dropdown resolutionDropdown;
@@ -19,7 +19,6 @@ public class SettingManager : MonoBehaviour {
     public Button applyButton;
 
     private AudioSource musicSource;
-    private AudioSource sfxSource;
 
     public Resolution[] resolutions;
     public GameSettings gameSettings;
@@ -30,6 +29,7 @@ public class SettingManager : MonoBehaviour {
     private void Awake()
     {
         settingsPath = Application.persistentDataPath + "/gamesettings.json";
+        musicSource = SoundManager.instance.musicSource;
     }
 
     private void OnEnable()
@@ -92,7 +92,11 @@ public class SettingManager : MonoBehaviour {
 
     public void OnSfxVolumeChange()
     {
-        sfxSource.volume = gameSettings.sfxVolume = sfxVolumeSlider.value;
+        gameSettings.sfxVolume = sfxVolumeSlider.value;
+        foreach(AudioSource source in SoundManager.instance.sfxSources)
+        {
+            source.volume = gameSettings.sfxVolume;
+        }
     }
 
     public void OnDifficultyChange()
