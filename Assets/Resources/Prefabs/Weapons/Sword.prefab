@@ -179,22 +179,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weakSounds:
-  - {fileID: 8300000, guid: ba4619a6c5fd50d4982e2f599e5f71bd, type: 3}
-  - {fileID: 8300000, guid: 99e10bbcdc6c2db4d9da8f3d97933d56, type: 3}
-  - {fileID: 8300000, guid: 49c53c09aef4a07408f0d9c892b3ae63, type: 3}
-  - {fileID: 8300000, guid: 22ee33da50758c04caf3fa9dfe548b13, type: 3}
-  - {fileID: 8300000, guid: 5c34d9b175f91354e81c24af90c67e1e, type: 3}
-  - {fileID: 8300000, guid: aa1290a7fc3ea4546bbac34fe0095f1d, type: 3}
-  - {fileID: 8300000, guid: 78680de323670af4584f536b3aed6e0e, type: 3}
-  - {fileID: 8300000, guid: 60c906b5b465c3948b458d2b96788e61, type: 3}
-  - {fileID: 8300000, guid: f419a54b2fd09534ca6485339efe3d54, type: 3}
-  - {fileID: 8300000, guid: 6686496227017014db26e03a98846015, type: 3}
-  - {fileID: 8300000, guid: 87a5978c07defd246aa684b02c51793e, type: 3}
-  - {fileID: 8300000, guid: 141baf95baf54dc4b967c2b4390bed9b, type: 3}
-  - {fileID: 8300000, guid: 177e05836e5e9234cadcdb957ecde055, type: 3}
+  - {fileID: 8300000, guid: d650ea4cb383b0a4b94d238f0d318893, type: 3}
   strongSounds:
-  - {fileID: 8300000, guid: 24a1d6ba1545fb04fb7a7aac28c24794, type: 3}
-  livingSkillSound: {fileID: 8300000, guid: ce4104955e8460f4cbecb5b7a19717f4, type: 3}
+  - {fileID: 8300000, guid: a4b60212cd69a5946bc2b22e90b94f4d, type: 3}
+  livingSkillSound: {fileID: 8300000, guid: 750e3b2367f5933488e8d1d93f82a5d8, type: 3}
   deadSkillSound: {fileID: 0}
   weaponName: Sword
   weakName: 

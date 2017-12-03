@@ -178,9 +178,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c3f629730a6ed949bd878b8fa8ff9ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weakSounds: []
+  weakSounds:
+  - {fileID: 8300000, guid: b5801222ab55ada449e041424357cc34, type: 3}
   strongSounds: []
-  livingSkillSound: {fileID: 0}
+  livingSkillSound: {fileID: 8300000, guid: b31d6f6c0f598324aae2eda3250766a2, type: 3}
   deadSkillSound: {fileID: 0}
   weaponName: 
   weakName: 

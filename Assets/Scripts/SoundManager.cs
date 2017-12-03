@@ -5,10 +5,17 @@ using UnityEngine;
 public class SoundManager : MonoBehaviour {
 
 
+    public AudioClip titleMusic;
+    public AudioClip bossMusic;
+    public AudioClip theme1Music;
+
     [HideInInspector]
     public AudioSource musicSource;
     [HideInInspector]
     public List<AudioSource> sfxSources = new List<AudioSource>();
+
+    public float lowPitchRange = 0.95f;
+    public float highPitchRange = 1.05f;
 
     [HideInInspector]
     public static SoundManager instance = null;
@@ -25,19 +32,36 @@ public class SoundManager : MonoBehaviour {
             sfxSources.Add(audioSources[i]);
         DontDestroyOnLoad(this);
     }
-    
-    public void PlayMusic(AudioClip music)
+
+    public void PlayMusic(AudioClip music, float fadeDuration = 0)
     {
-        if (musicSource.isPlaying)
-            musicSource.Stop();
-        musicSource.clip = music;
-        musicSource.Play();
+        if (music != null)
+        {
+            if (!musicSource.isPlaying)
+            {
+                musicSource.clip = music;
+                musicSource.Play();
+            }
+            else
+            {
+                if(fadeDuration == 0)
+                {
+                    musicSource.Stop();
+                    musicSource.clip = music;
+                    musicSource.Play();
+                }
+                else
+                {
+                    StartCoroutine(this.MusicTransition(musicSource, music, fadeDuration));
+                }
+            }
+        }
     }
 
-    public void PlayMusic(AudioClip music, bool playOnLoop)
+    public void PlayMusic(AudioClip music, bool playOnLoop, float fadeDuration = 0)
     {   
         musicSource.loop = playOnLoop;
-        PlayMusic(music);
+        PlayMusic(music, fadeDuration);
     }
 
     public void PlaySFX(AudioClip sfx)
@@ -45,8 +69,11 @@ public class SoundManager : MonoBehaviour {
         if (sfx != null)
         {
             AudioSource source = FindFirstSFXSourceEmpty();
-            source.clip = sfx;
-            source.Play();
+            if (source != null)
+            {
+                source.clip = sfx;
+                source.Play();
+            }
         }
     }
 
@@ -55,9 +82,14 @@ public class SoundManager : MonoBehaviour {
         if (clips != null && clips.Length > 0)
         {
             int randomIndex = Random.Range(0, clips.Length);
+            float randomPitch = Random.Range(lowPitchRange, highPitchRange);
             AudioSource source = FindFirstSFXSourceEmpty();
-            source.clip = clips[randomIndex];
-            source.Play();
+            if (source != null)
+            {
+                source.pitch = randomPitch;
+                source.clip = clips[randomIndex];
+                source.Play(); 
+            }
         }
     }
 
@@ -70,6 +102,24 @@ public class SoundManager : MonoBehaviour {
                 return source;
         }
         return null;
+    }
+
+    private IEnumerator MusicTransition(AudioSource source, AudioClip newMusic, float fadeTime)
+    {
+        float initialVolume = source.volume;
+        while (source.volume > 0)
+        {
+            source.volume -= initialVolume * Time.deltaTime / (fadeTime / 2f);
+            yield return null;
+        }
+        musicSource.Stop();
+        musicSource.clip = newMusic;
+        musicSource.Play();
+        while(source.volume < initialVolume)
+        {
+            source.volume += Time.deltaTime / (fadeTime / 2f);
+            yield return null;
+        }
     }
 
 }

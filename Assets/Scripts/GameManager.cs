@@ -5,6 +5,7 @@ using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -45,6 +46,7 @@ public class GameManager : MonoBehaviour
     private List<GameObject> toBeCleanOnSceneChange;
 
     private GameObject pauseMenu;
+    private GameObject inGamePanel;
 
     void Awake()
     {
@@ -106,6 +108,7 @@ public class GameManager : MonoBehaviour
                 {
                     InitializeNewGame();
                 }
+                SoundManager.instance.PlayMusic(SoundManager.instance.theme1Music, playOnLoop: true, fadeDuration: 2);
             }
             if (Input.GetButtonDown("Cancel"))
             {
@@ -147,9 +150,10 @@ public class GameManager : MonoBehaviour
         CameraController mainCamera = Camera.main.GetComponent<CameraController>();
         mainCamera.SetCameraForGame();
         isGameInitialized = true;
-        GameObject inGamePanel = Instantiate(Resources.Load("Prefabs/UI/InGamePanel"), Camera.main.transform) as GameObject;
-        DontDestroyOnLoad(inGamePanel);
-        inGamePanel.GetComponent<Canvas>().worldCamera = Camera.main;
+        this.inGamePanel = Instantiate(Resources.Load("Prefabs/UI/InGamePanel"), Camera.main.transform) as GameObject;
+        DontDestroyOnLoad(this.inGamePanel);
+        this.inGamePanel.GetComponent<Canvas>().worldCamera = Camera.main;
+        inGamePanel.GetComponent<Canvas>().sortingLayerName = "UI";
 
     }
 
@@ -295,7 +299,10 @@ public class GameManager : MonoBehaviour
             Time.timeScale = 0;
             if (pauseMenu == null)
             {
-                pauseMenu = Camera.main.transform.Find("InGamePanel").transform.Find("PauseMenu").gameObject;
+                pauseMenu = inGamePanel.transform.Find("PauseMenu").gameObject;
+                Button quit = pauseMenu.transform.Find("Quitter").gameObject.GetComponent<Button>();
+                quit.onClick.AddListener(delegate { this.Quit(); });
+                
             }
             pauseMenu.SetActive(true);
         }

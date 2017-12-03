@@ -30,15 +30,7 @@ public class SettingManager : MonoBehaviour {
     {
         settingsPath = Application.persistentDataPath + "/gamesettings.json";
         musicSource = SoundManager.instance.musicSource;
-    }
-
-    private void OnEnable()
-    {
         gameSettings = new GameSettings();
-        musicSource = SoundManager.instance.musicSource;
-
-        
-
         fullscreenToggle.onValueChanged.AddListener(delegate { OnFullscreenToggle(); });
         resolutionDropdown.onValueChanged.AddListener(delegate { OnResolutionChange(); });
         qualityDropdown.onValueChanged.AddListener(delegate { OnTextureQualityChange(); });
@@ -49,12 +41,21 @@ public class SettingManager : MonoBehaviour {
         sfxVolumeSlider.onValueChanged.AddListener(delegate { OnSfxVolumeChange(); });
         difficultyDropdwon.onValueChanged.AddListener(delegate { OnDifficultyChange(); });
         resolutions = Screen.resolutions;
-        foreach(Resolution resolution in resolutions)
+        foreach (Resolution resolution in resolutions)
         {
             resolutionDropdown.options.Add(new Dropdown.OptionData(resolution.ToString()));
         }
-        if(File.Exists(settingsPath))
+        if (File.Exists(settingsPath))
+        {
             LoadSettings();
+            Debug.Log("Settings exists");
+        }
+    }
+
+    private void OnEnable()
+    {
+       
+       
     }
 
 
