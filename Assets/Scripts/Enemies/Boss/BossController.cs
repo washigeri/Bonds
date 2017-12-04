@@ -40,10 +40,13 @@ public class BossController : EnemyController
 
     private int numberOfFeathers;
 
+    private float meleeCD;
+    private bool isMeleOnCD;
     private bool startQuickAttack;
     private bool startSlowAttack;
 
     private float distanceToPlayer1;
+
 
     protected override void Awake()
     {
@@ -81,22 +84,31 @@ public class BossController : EnemyController
         startQuickAttack = false;
         startSlowAttack = false;
         distanceToPlayer1 = 0f;
+        isMeleOnCD = false;
+        meleeCD = 6f;
     }
 
     private IEnumerator WaitForInput()
     {
-        yield return null;
+        yield return new WaitUntil(() => phase == 1);
     }
 
     protected override void Update()
     {
-        Debug.Log("boss hp = " + health);
+        Debug.Log("boss hp = " + startSlowAttack);
         if (health <= 0f)
         {
             Destroy(gameObject);
         }
         else
         {
+            if (GameManager.gameManager.player1 != null && GameManager.gameManager.player2 != null)
+            {
+                if (Input.GetButtonDown("WeakP1") || Input.GetButtonDown("WeakP2") || Input.GetButtonDown("StrongP1") || Input.GetButtonDown("StrongP2") || Input.GetButtonDown("SkillP1") || Input.GetButtonDown("SkillP2"))
+                {
+                    phase = 1;
+                }
+            }
             #region phase
             if (health < 0.15f * maxHp)
             {
@@ -178,6 +190,11 @@ public class BossController : EnemyController
                 {
                     MoveTo(GameManager.gameManager.player1.transform.position);
                 }
+            }
+            if (startQuickAttack)
+            {
+                Target();
+                weapon.SetStartQuickAttack(true);
             }
             if (Input.GetButtonDown("HealP1"))
             {
@@ -354,6 +371,19 @@ public class BossController : EnemyController
     protected override IEnumerator Attack()
     {
         yield return null;
+    }
+
+    private void Phase1()
+    {
+        if (!isMeleOnCD)
+        {
+            s
+        }
+    }
+
+    private void MeleeAttack()
+    {
+
     }
 
     public void SetIsBusy(bool isBusy)

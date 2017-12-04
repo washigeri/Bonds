@@ -22,6 +22,8 @@ public class MagicBall : MonoBehaviour
     private bool isActivated;
     private bool startedActivation;
 
+    private CircleCollider2D cCollider2D;
+
     private void Awake()
     {
         boss = null;
@@ -39,6 +41,7 @@ public class MagicBall : MonoBehaviour
         isActivated = false;
         startedActivation = false;
         timeBeforeActivation = 2f;
+        cCollider2D = GetComponent<CircleCollider2D>();
     }
 
     private IEnumerator OnActivation()
@@ -71,6 +74,7 @@ public class MagicBall : MonoBehaviour
 
     private void Update()
     {
+        cCollider2D.enabled = isActivated;
         if (isSet)
         {
             if (isActivated)
@@ -107,8 +111,6 @@ public class MagicBall : MonoBehaviour
                     StartCoroutine(OnActivation());
                 }
             }
-            
-            
         }
     }
 

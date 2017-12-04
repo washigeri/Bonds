@@ -43,6 +43,8 @@ public class BossWeaponController : MonoBehaviour
     private Vector3 defaultLocalRotation;
     private BoxCollider2D bCollider2D;
 
+    private float timeBetweenBothAttacks;
+
     private void Awake()
     {
         boss = null;
@@ -55,8 +57,9 @@ public class BossWeaponController : MonoBehaviour
         quickAttackTranslationLeft = quickAttackFullTranslation;
         quickAttackTranslationDuration = 0.1f;
         quickAttackTranslationSpeed = quickAttackFullTranslation / quickAttackTranslationDuration;
-        quickAttackTimeBetweenHits = 0.25f;
+        quickAttackTimeBetweenHits = 0.15f;
         quickAttackWarningDuration = 0.5f;
+
 
         alreadyStartedSlowAttack = false;
         startSlowAttack = false;
@@ -79,6 +82,7 @@ public class BossWeaponController : MonoBehaviour
         defaultLocalPosition = new Vector3(-0.33f, 0f, 0f);
         defaultLocalRotation = new Vector3(0, 0, 90);
         bCollider2D = GetComponent<BoxCollider2D>();
+        timeBetweenBothAttacks = 0.5f;
     }
 
     private void Start()
@@ -139,6 +143,8 @@ public class BossWeaponController : MonoBehaviour
         boss.SetStartQuickAttack(false);
         boss.SetIsBusy(true);
         alreadyStartedQuickAttack = true;
+        yield return new WaitForSeconds(timeBetweenBothAttacks);
+        boss.Target();
         isAttacking = 0;
         yield return new WaitUntil(() => quickAttackTranslationLeft <= 0f);
         quickAttackTranslationLeft = quickAttackFullTranslation;
@@ -197,6 +203,7 @@ public class BossWeaponController : MonoBehaviour
         alreadyStartedSlowAttack = false;
         startSlowAttack = false;
         boss.SetIsBusy(false);
+        boss.SetStartQuickAttack(true);
     }
 
     public void SetStartQuickAttack(bool startQuickAttack)
