@@ -22,6 +22,10 @@ public class LevelEnd : MonoBehaviour
         {
             case 1:
                 SceneManager.LoadScene(2);
+                GameManager.gameManager.player1.transform.position = new Vector3(-5f, -5f, 0f);
+                GameManager.gameManager.player2.transform.position = new Vector3(-6f, -5f, 0f);
+                Camera.main.GetComponent<CameraController>().TargetPlayer1();
+                //GameManager.gameManager.currentScene = 2;
                 break;
             case 2:
                 SceneManager.LoadScene(3);

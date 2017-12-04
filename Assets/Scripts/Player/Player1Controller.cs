@@ -9,6 +9,7 @@ public class Player1Controller : PlayerController
 
     public AudioClip jumpSound;
 
+    public LayerMask groundLayerMask;
     private float jumpForce = 650f;
     public Transform groundCheck;
 
@@ -23,13 +24,13 @@ public class Player1Controller : PlayerController
         interactBindName = "InteractP1";
         base.Awake();
     }
-
+    //1 << LayerMask.NameToLayer("Ground")
     //Update is called once per frame
     protected override void Update()
     {
         //Debug.Log(dirH);
         base.Update();
-        grounded = Physics2D.Linecast(transform.position, groundCheck.position, 1 << LayerMask.NameToLayer("Ground"));
+        grounded = Physics2D.Linecast(transform.position, groundCheck.position, groundLayerMask);
         if (grounded || rb2d.velocity.y < 0f)
         {
             dirV = 0f;

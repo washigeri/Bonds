@@ -16,8 +16,24 @@ public abstract class DeadEnemy : EnemyController
 
     private int GetTarget()
     {
-        float dP1 = Vector2.Distance(GameManager.gameManager.player1.transform.position, enemyTransform.position);
-        float dP2 = Vector2.Distance(GameManager.gameManager.player2.transform.position, enemyTransform.position);
+        float dP1;
+        if (GameManager.gameManager.player1 != null)
+        {
+            dP1 = Vector2.Distance(GameManager.gameManager.player1.transform.position, enemyTransform.position);
+        }
+        else
+        {
+            dP1 = 0;
+        }
+        float dP2;
+        if(GameManager.gameManager.player2 != null)
+        {
+            dP2 = Vector2.Distance(GameManager.gameManager.player2.transform.position, enemyTransform.position);
+        }
+        else
+        {
+            dP2 = 0;
+        }
         if (dP1 <= dP2)
         {
             player = GameManager.gameManager.player1;
@@ -64,24 +80,9 @@ public abstract class DeadEnemy : EnemyController
     protected override void Action()
     {
         rb2d.AddForce(Vector2.zero);
-        int playerID = GetTarget();
-        if (IsVisible(playerID))
+        if(player != null)
         {
-            hasATarget = playerID;
-            player = hasATarget == 1 ? GameManager.gameManager.player1 : GameManager.gameManager.player2;
-            TryToAttackOrMove();
-        }
-        else
-        {
-            if (playerID == 1)
-            {
-                player = GameManager.gameManager.player2;
-            }
-            else
-            {
-                player = GameManager.gameManager.player1;
-            }
-            playerID = playerID == 1 ? 2 : 1;
+            int playerID = GetTarget();
             if (IsVisible(playerID))
             {
                 hasATarget = playerID;
@@ -90,7 +91,25 @@ public abstract class DeadEnemy : EnemyController
             }
             else
             {
-                hasATarget = 0;
+                if (playerID == 1)
+                {
+                    player = GameManager.gameManager.player2;
+                }
+                else
+                {
+                    player = GameManager.gameManager.player1;
+                }
+                playerID = playerID == 1 ? 2 : 1;
+                if (IsVisible(playerID))
+                {
+                    hasATarget = playerID;
+                    player = hasATarget == 1 ? GameManager.gameManager.player1 : GameManager.gameManager.player2;
+                    TryToAttackOrMove();
+                }
+                else
+                {
+                    hasATarget = 0;
+                }
             }
         }
     }

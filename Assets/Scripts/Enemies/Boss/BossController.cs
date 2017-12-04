@@ -68,18 +68,24 @@ public class BossController : EnemyController
         raysCount = 2;
         raysLeft = raysCount;
         numberOfFeathers = 1;
-        roomMinX = 0f;
-        roomMaxX = (float)CameraController.cameraWidth;
-        roomMiny = 0f;
-        roomMaxY = (float)CameraController.cameraHeight;
+        roomMinX = -(float)CameraController.cameraWidth / 2f;
+        roomMaxX = (float)CameraController.cameraWidth / 2f;
+        roomMiny = -(float)CameraController.cameraHeight / 2f;
+        roomMaxY = (float)CameraController.cameraHeight / 2f;
         defaultPosition = new Vector3((roomMaxX - roomMinX) / 2f, roomMiny, 0f);
         rb2d = GetComponent<Rigidbody2D>();
         isMovingTowardRayCastPosition = false;
         canCastRays = false;
-        rayCastPosition = new Vector3(2f * roomMaxY / 3f, roomMaxX / 2f, 0f);
+        rayCastPosition = new Vector3((roomMaxX + roomMinX) / 2f, 2f * roomMaxY / 3f, 0f);
+        Debug.Log(rayCastPosition + " = raycastpos");
         startQuickAttack = false;
         startSlowAttack = false;
         distanceToPlayer1 = 0f;
+    }
+
+    private IEnumerator WaitForInput()
+    {
+
     }
 
     protected override void Update()
@@ -309,7 +315,7 @@ public class BossController : EnemyController
 
     private void PopFeather()
     {
-        Vector3 startPos = new Vector3(Random.Range(roomMinX + 1f, roomMaxX - 1f), roomMaxY, 0f);
+        Vector3 startPos = new Vector3(Random.Range(roomMinX + 1f, roomMaxX - 1f), roomMaxY - 1, 0f);
         Debug.Log("start pos according to boss = " + startPos);
         Instantiate(Resources.Load("Prefabs/Enemies/Boss/Attacks/Feather"), startPos, Quaternion.Euler(0f, 0f, 0f));
     }

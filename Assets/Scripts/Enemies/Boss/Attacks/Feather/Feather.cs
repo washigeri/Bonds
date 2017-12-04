@@ -26,7 +26,7 @@ public class Feather : MonoBehaviour
         hasExploded = false;
         isAboutToBeDestroyed = false;
         canBeDestroyed = false;
-        roomMaxY = (float)CameraController.cameraHeight;
+        roomMaxY = (float)CameraController.cameraHeight / 2f;
     }
 
     // Update is called once per frame

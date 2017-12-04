@@ -26,6 +26,17 @@ public class CameraController : MonoBehaviour
     private bool isCameraReadyForGame;
     private bool isCameraSetForBoss;
 
+    private void IsInBossRoom()
+    {
+        if(GameManager.gameManager.currentScene == GameManager.gameManager.bossSceneIndex)
+        {
+            if (!isCameraSetForBoss)
+            {
+                SetCameraForBoss();
+            }
+        }
+    }
+
     public void SetCameraForBoss()
     {
         cameraSpeed = 0;
@@ -149,6 +160,7 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        IsInBossRoom();
         if (!isCameraSetForBoss)
         {
             UpdateForLevel();

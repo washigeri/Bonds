@@ -48,6 +48,8 @@ public class GameManager : MonoBehaviour
     private GameObject pauseMenu;
     private GameObject inGamePanel;
 
+    public int bossSceneIndex;
+
     void Awake()
     {
         if (gameManager == null)
@@ -71,6 +73,10 @@ public class GameManager : MonoBehaviour
         Physics2D.IgnoreLayerCollision(8, 15, true);
         Physics2D.IgnoreLayerCollision(9, 15, true);
         Physics2D.IgnoreLayerCollision(10, 15, true);
+        Physics2D.IgnoreLayerCollision(16, 13, true);
+        Physics2D.IgnoreLayerCollision(8, 16, true);
+        Physics2D.IgnoreLayerCollision(9, 16, true);
+        Physics2D.IgnoreLayerCollision(4, 16, true);
     }
 
     private void Start()
@@ -88,10 +94,13 @@ public class GameManager : MonoBehaviour
         Load();
         toBeCleanOnSceneChange = new List<GameObject>();
         SceneManager.sceneLoaded += OnSceneLoaded;
+        bossSceneIndex = 1;
     }
 
     private void Update()
     {
+        Debug.Log("bosstoomindex = " + bossSceneIndex);
+        Debug.Log(currentScene + " = currentScene");
         if (startedGame > -1)
         {
             if (!isSceneLoaded)
@@ -100,8 +109,6 @@ public class GameManager : MonoBehaviour
             }
             if (!isGameInitialized)
             {
-                if(isSceneLoaded)
-                    Debug.Log(currentScene + " = currentscnene");
                 if (loadedSavedGame)
                 {
                     InitializeSavedGame();
@@ -125,13 +132,8 @@ public class GameManager : MonoBehaviour
         {
             isSceneLoaded = true;
             currentScene = scene.buildIndex;
-            ResetPlayers();
+            //ResetPlayers();
         }
-    }
-
-    private void ResetGameForMenu()
-    {
-
     }
 
     private void ResetPlayers()
@@ -142,6 +144,7 @@ public class GameManager : MonoBehaviour
         player1.GetComponent<PlayerController>().SetHealth(maxHp);
         player2.GetComponent<PlayerController>().SetHealth(maxHp);
         Camera.main.GetComponent<CameraController>().TargetPlayer1();
+        isGameInitialized = true;
     }
 
     public void InitializeNewGame()
@@ -157,11 +160,10 @@ public class GameManager : MonoBehaviour
      
         CameraController mainCamera = Camera.main.GetComponent<CameraController>();
         mainCamera.SetCameraForGame();
-        isGameInitialized = true;
         this.inGamePanel = Instantiate(Resources.Load("Prefabs/UI/InGamePanel"), Camera.main.transform) as GameObject;
         this.inGamePanel.GetComponent<Canvas>().worldCamera = Camera.main;
         inGamePanel.GetComponent<Canvas>().sortingLayerName = "UI";
-
+        isGameInitialized = true;
     }
 
     private void GiveWeapon(int weaponType, GameObject player)

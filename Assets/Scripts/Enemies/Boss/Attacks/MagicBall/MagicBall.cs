@@ -18,6 +18,10 @@ public class MagicBall : MonoBehaviour
     private bool hasExplosionTimerStarted;
     private bool hasExploded;
 
+    private float timeBeforeActivation;
+    private bool isActivated;
+    private bool startedActivation;
+
     private void Awake()
     {
         boss = null;
@@ -32,6 +36,17 @@ public class MagicBall : MonoBehaviour
         explosionDamage = 30f;
         hasExplosionTimerStarted = false;
         hasExploded = false;
+        isActivated = false;
+        startedActivation = false;
+        timeBeforeActivation = 2f;
+    }
+
+    private IEnumerator OnActivation()
+    {
+        startedActivation = true;
+        yield return new WaitForSeconds(timeBeforeActivation);
+        startedActivation = false;
+        isActivated = true;
     }
 
     private IEnumerator OnExplosion()
@@ -58,29 +73,42 @@ public class MagicBall : MonoBehaviour
     {
         if (isSet)
         {
-            if (hasExploded)
+            if (isActivated)
             {
-                if (Vector2.Distance(GameManager.gameManager.player1.transform.position, transform.position) <= explosionRange)
+                if (hitSomething)
                 {
-                    GameManager.gameManager.player1.GetComponent<PlayerController>().RemoveHealth(explosionDamage);
+                    if (!hasExplosionTimerStarted)
+                    {
+                        StartCoroutine(OnExplosion());
+                    }
                 }
-                if (Vector2.Distance(GameManager.gameManager.player2.transform.position, transform.position) <= explosionRange)
+                else
                 {
-                    GameManager.gameManager.player2.GetComponent<PlayerController>().RemoveHealth(explosionDamage);
+                    Move();
                 }
-                Destroy(gameObject);
-            }
-            if (hitSomething)
-            {
-                if (!hasExplosionTimerStarted)
+
+                if (hasExploded)
                 {
-                    StartCoroutine(OnExplosion());
+                    if (Vector2.Distance(GameManager.gameManager.player1.transform.position, transform.position) <= explosionRange)
+                    {
+                        GameManager.gameManager.player1.GetComponent<PlayerController>().RemoveHealth(explosionDamage);
+                    }
+                    if (Vector2.Distance(GameManager.gameManager.player2.transform.position, transform.position) <= explosionRange)
+                    {
+                        GameManager.gameManager.player2.GetComponent<PlayerController>().RemoveHealth(explosionDamage);
+                    }
+                    Destroy(gameObject);
                 }
             }
             else
             {
-                Move();
+                if (!startedActivation)
+                {
+                    StartCoroutine(OnActivation());
+                }
             }
+            
+            
         }
     }
 
@@ -88,18 +116,21 @@ public class MagicBall : MonoBehaviour
     {
         if (isSet)
         {
-            if (!hitSomething)
+            if (isActivated)
             {
-                if (collision.gameObject.CompareTag("Ground"))
+                if (!hitSomething)
                 {
-                    hitSomething = true;
+                    if (collision.gameObject.CompareTag("Ground"))
+                    {
+                        hitSomething = true;
+                    }
+                    else if (collision.gameObject.CompareTag("Player1") || collision.gameObject.CompareTag("Player2"))
+                    {
+                        collision.gameObject.GetComponent<PlayerController>().RemoveHealth(hitDamage);
+                        hitSomething = true;
+                    }
                 }
-                else if (collision.gameObject.CompareTag("Player1") || collision.gameObject.CompareTag("Player2"))
-                {
-                    collision.gameObject.GetComponent<PlayerController>().RemoveHealth(hitDamage);
-                    hitSomething = true;
-                }
-            }
+            } 
         }
     }
 
