@@ -74,8 +74,8 @@ public class GameManager : MonoBehaviour
         Physics2D.IgnoreLayerCollision(9, 15, true);
         Physics2D.IgnoreLayerCollision(10, 15, true);
         Physics2D.IgnoreLayerCollision(16, 13, true);
-        Physics2D.IgnoreLayerCollision(8, 16, true);
-        Physics2D.IgnoreLayerCollision(9, 16, true);
+        //Physics2D.IgnoreLayerCollision(8, 16, true);
+        //Physics2D.IgnoreLayerCollision(9, 16, true);
         Physics2D.IgnoreLayerCollision(4, 16, true);
     }
 
@@ -94,7 +94,7 @@ public class GameManager : MonoBehaviour
         Load();
         toBeCleanOnSceneChange = new List<GameObject>();
         SceneManager.sceneLoaded += OnSceneLoaded;
-        bossSceneIndex = 1;
+        bossSceneIndex = 2;
     }
 
     private void Update()

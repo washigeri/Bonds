@@ -40,8 +40,9 @@ public class BossController : EnemyController
 
     private int numberOfFeathers;
 
+    private bool startedMeleeCD;
     private float meleeCD;
-    private bool isMeleOnCD;
+    private bool isMeleeOnCD;
     private bool startQuickAttack;
     private bool startSlowAttack;
 
@@ -84,8 +85,9 @@ public class BossController : EnemyController
         startQuickAttack = false;
         startSlowAttack = false;
         distanceToPlayer1 = 0f;
-        isMeleOnCD = false;
+        isMeleeOnCD = false;
         meleeCD = 6f;
+        startedMeleeCD = false;
     }
 
     private IEnumerator WaitForInput()
@@ -106,6 +108,7 @@ public class BossController : EnemyController
             {
                 if (Input.GetButtonDown("WeakP1") || Input.GetButtonDown("WeakP2") || Input.GetButtonDown("StrongP1") || Input.GetButtonDown("StrongP2") || Input.GetButtonDown("SkillP1") || Input.GetButtonDown("SkillP2"))
                 {
+                    Debug.Log("did something");
                     phase = 1;
                 }
             }
@@ -122,6 +125,10 @@ public class BossController : EnemyController
             {
                 phase = 1;
             }
+            //if (phase == 1)
+            //{
+            //    Phase1();
+            //}
             #endregion
             #region Move To Default Position
             if (isMovingTowardDefaultPosition)
@@ -181,14 +188,17 @@ public class BossController : EnemyController
             }
             if (startSlowAttack)
             {
-                distanceToPlayer1 = Vector3.Distance(transform.position, GameManager.gameManager.player1.transform.position);
-                if (distanceToPlayer1 <= attackRange)
+                if(GameManager.gameManager.player1 != null)
                 {
-                    weapon.SetStartSlowAttack(true);
-                }
-                else
-                {
-                    MoveTo(GameManager.gameManager.player1.transform.position);
+                    distanceToPlayer1 = Vector3.Distance(transform.position, GameManager.gameManager.player1.transform.position);
+                    if (distanceToPlayer1 <= attackRange)
+                    {
+                        weapon.SetStartSlowAttack(true);
+                    }
+                    else
+                    {
+                        MoveTo(GameManager.gameManager.player1.transform.position);
+                    }
                 }
             }
             if (startQuickAttack)
@@ -373,11 +383,18 @@ public class BossController : EnemyController
         yield return null;
     }
 
+    private IEnumerator WaitForMeleeCD()
+    {
+        yield return new WaitForSeconds(meleeCD);
+        isMeleeOnCD = false;
+        startedMeleeCD = false;
+    }
+
     private void Phase1()
     {
-        if (!isMeleOnCD)
+        if (!isMeleeOnCD)
         {
-            s
+            SlowAttack();
         }
     }
 
@@ -399,5 +416,10 @@ public class BossController : EnemyController
     public void SetStartQuickAttack(bool startQuickAttack)
     {
         this.startQuickAttack = startQuickAttack;
+    }
+
+    public void SetStartedMeleeCD(bool startedMeleeCD)
+    {
+        this.startedMeleeCD = startedMeleeCD;
     }
 }

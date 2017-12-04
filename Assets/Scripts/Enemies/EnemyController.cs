@@ -50,6 +50,9 @@ public abstract class EnemyController : MonoBehaviour
 
     protected Rigidbody2D rb2d;
 
+    protected bool canBeKnockedBack;
+    protected float knockBackForce;
+
     protected virtual void Awake()
     {
         damageMultiplier = 1f;
@@ -70,6 +73,8 @@ public abstract class EnemyController : MonoBehaviour
         weaponDropRate = 0.15f;
         trinketDropRate = 0.15f;
         rb2d = GetComponent<Rigidbody2D>();
+        canBeKnockedBack = true;
+        knockBackForce = 5;
     }
 
     protected virtual void Update()
@@ -153,6 +158,17 @@ public abstract class EnemyController : MonoBehaviour
         }
         else
         {
+            if (canBeKnockedBack)
+            {
+                if (faceRight)
+                {
+                    rb2d.AddForce(new Vector2(-1, 0.25f) * knockBackForce, ForceMode2D.Impulse);
+                }
+                else
+                {
+                    rb2d.AddForce(new Vector2(1, 0.25f) * knockBackForce, ForceMode2D.Impulse);
+                }
+            }
             if (!isStunned)
             {
                 health -= loss;

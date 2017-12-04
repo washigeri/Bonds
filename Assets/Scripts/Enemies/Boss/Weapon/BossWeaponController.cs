@@ -129,6 +129,7 @@ public class BossWeaponController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        Debug.Log("col = " + collision.gameObject.tag);
         if (isAttacking >= 0)
         {
             if (collision.gameObject.CompareTag("Player1") || collision.gameObject.CompareTag("Player2"))
@@ -165,6 +166,7 @@ public class BossWeaponController : MonoBehaviour
         alreadyStartedQuickAttack = false;
         startQuickAttack = false;
         boss.SetIsBusy(false);
+        boss.SetStartedMeleeCD(true);
     }
 
 
