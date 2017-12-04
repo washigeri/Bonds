@@ -151,7 +151,6 @@ public class GameManager : MonoBehaviour
         mainCamera.SetCameraForGame();
         isGameInitialized = true;
         this.inGamePanel = Instantiate(Resources.Load("Prefabs/UI/InGamePanel"), Camera.main.transform) as GameObject;
-        DontDestroyOnLoad(this.inGamePanel);
         this.inGamePanel.GetComponent<Canvas>().worldCamera = Camera.main;
         inGamePanel.GetComponent<Canvas>().sortingLayerName = "UI";
 
@@ -302,7 +301,8 @@ public class GameManager : MonoBehaviour
                 pauseMenu = inGamePanel.transform.Find("PauseMenu").gameObject;
                 Button quit = pauseMenu.transform.Find("Quitter").gameObject.GetComponent<Button>();
                 quit.onClick.AddListener(delegate { this.Quit(); });
-                
+                Button resume = pauseMenu.transform.Find("Reprendre").gameObject.GetComponent<Button>();
+                resume.onClick.AddListener(delegate { this.TogglePause(); });
             }
             pauseMenu.SetActive(true);
         }

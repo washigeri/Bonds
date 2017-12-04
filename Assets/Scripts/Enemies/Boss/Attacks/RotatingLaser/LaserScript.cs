@@ -34,8 +34,6 @@ public class LaserScript : MonoBehaviour
         laserLineRenderer.SetPositions(initLaserPositions);
         laserLineRenderer.startWidth = laserWidth;
         laserLineRenderer.endWidth = laserWidth;
-        laserLineRenderer.startColor = Color.red;
-        laserLineRenderer.endColor = Color.red;
         bCollider2D = null;
         currentDirection = new Vector3(-0.25f, 1f, 0f);
         turnRight = -1;

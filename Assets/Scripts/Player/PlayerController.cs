@@ -230,6 +230,8 @@ public abstract class PlayerController : MonoBehaviour
         if (Input.GetButtonDown(potionBindName))
         {
             UsePotion();
+            //a retirer
+            hp = maxHp;
         }
     }
 
@@ -288,6 +290,7 @@ public abstract class PlayerController : MonoBehaviour
 
     public void RemoveHealth(float health)
     {
+        Debug.Log("health removed");
         if (!isGod)
         {
             hp -= health * damageReceivedMultiplier;

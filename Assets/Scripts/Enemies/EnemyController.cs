@@ -72,10 +72,8 @@ public abstract class EnemyController : MonoBehaviour
         rb2d = GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
     protected virtual void Update()
     {
-        //Debug.Log("Ennemy health " + health);
         if (this.health <= 0)
         {
             if (canDrop)

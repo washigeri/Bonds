@@ -28,8 +28,6 @@ public class FallingLaser : MonoBehaviour
         laserLineRenderer = GetComponent<LineRenderer>();
         laserLineRenderer.startWidth = laserWidth;
         laserLineRenderer.endWidth = laserWidth;
-        laserLineRenderer.startColor = Color.yellow;
-        laserLineRenderer.endColor = Color.yellow;
         bCollider2D = null;
         laserMaxLength = (float)CameraController.cameraHeight * 1.1f;
         laserLength = 0f;

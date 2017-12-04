@@ -20,7 +20,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4334107959926734}
   - component: {fileID: 212788994903129226}
-  m_Layer: 0
+  - component: {fileID: 58518635683816508}
+  m_Layer: 9
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -52,7 +53,6 @@ GameObject:
   - component: {fileID: 4725581463043014}
   - component: {fileID: 61437275261832282}
   - component: {fileID: 50581736029093830}
-  - component: {fileID: 58943972505783584}
   - component: {fileID: 114537589225492342}
   m_Layer: 9
   m_Name: Player2
@@ -94,7 +94,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1957164417685946}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.9, y: 6.1, z: 0}
+  m_LocalPosition: {x: -7.67, y: 3.64, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4334107959926734}
@@ -122,21 +122,21 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!58 &58943972505783584
+--- !u!58 &58518635683816508
 CircleCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1957164417685946}
+  m_GameObject: {fileID: 1287993642970448}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.45}
+  m_Offset: {x: 0.05, y: -0.25}
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.1127432
 --- !u!61 &61437275261832282
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -149,7 +149,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.15}
+  m_Offset: {x: 0.18, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -160,7 +160,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.9, y: 1.5}
+  m_Size: {x: 0.7818251, y: 1.40908}
   m_EdgeRadius: 0
 --- !u!114 &114537589225492342
 MonoBehaviour:

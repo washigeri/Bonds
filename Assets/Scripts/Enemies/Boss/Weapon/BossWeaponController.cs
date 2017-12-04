@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class BossWeaponController : MonoBehaviour
 {
+    private BossController boss;
 
+    private float quickAttackCD;
+    private bool isQuickAttackOnCD;
     private bool alreadyStartedQuickAttack;
     private bool startQuickAttack;
     private float quickAttackDamage;
@@ -13,7 +16,10 @@ public class BossWeaponController : MonoBehaviour
     private float quickAttackTranslationDuration;
     private float quickAttackTranslationSpeed;
     private float quickAttackTimeBetweenHits;
+    private float quickAttackWarningDuration;
 
+    private float slowAttackCD;
+    private float isSlowAttackOnCD;
     private bool alreadyStartedSlowAttack;
     private bool startSlowAttack;
     private float slowAttackDamage;
@@ -21,19 +27,25 @@ public class BossWeaponController : MonoBehaviour
     private float slowAttackRotationLeft;
     private float slowAttackRotationDuration;
     private float slowAttackRotationSpeed;
-    private int slowAttackDirection;
     private float slowAttackTimeBetweenHits;
     private Vector3 slowDefaultRotation;
+    private int slowFaceRight;
+    private float slowAttackWarningDuration;
+    private float slowAttackWarningFullRotation;
+    private float slowAttackWarningRotationLeft;
+    private float slowAttackWarningRotationSpeed;
+    private bool slowAttackWarningStarted;
 
     private float[] attacksDamage;
     private int isAttacking;
 
     private Vector3 defaultLocalPosition;
-    private Vector3 defaultRotation;
+    private Vector3 defaultLocalRotation;
     private BoxCollider2D bCollider2D;
 
     private void Awake()
     {
+        boss = null;
         isAttacking = -1;
 
         alreadyStartedQuickAttack = false;
@@ -44,29 +56,39 @@ public class BossWeaponController : MonoBehaviour
         quickAttackTranslationDuration = 0.1f;
         quickAttackTranslationSpeed = quickAttackFullTranslation / quickAttackTranslationDuration;
         quickAttackTimeBetweenHits = 0.25f;
+        quickAttackWarningDuration = 0.5f;
 
         alreadyStartedSlowAttack = false;
         startSlowAttack = false;
-        slowAttackDamage = 25f;
-        slowAttackFullRotation = 50f;
+        slowAttackDamage = 15f;
+        slowAttackFullRotation = 75f;
         slowAttackRotationLeft = slowAttackFullRotation;
-        slowAttackRotationDuration = 0.5f;
-        slowAttackRotationSpeed = slowAttackFullRotation / slowAttackRotationSpeed;
-        slowAttackDirection = 1;
+        slowAttackRotationDuration = 0.1f;
+        slowAttackRotationSpeed = slowAttackFullRotation / slowAttackRotationDuration;
         slowAttackTimeBetweenHits = 0.5f;
-        slowDefaultRotation = new Vector3(0, 0, 45);
+        slowDefaultRotation = new Vector3(0, 0, 0);
+        slowFaceRight = 1;
+        slowAttackWarningStarted = false;
+        slowAttackWarningDuration = 1f;
+        slowAttackWarningFullRotation = 45f;
+        slowAttackWarningRotationLeft = slowAttackWarningFullRotation;
+        slowAttackWarningRotationSpeed = slowAttackWarningFullRotation / slowAttackWarningDuration;
 
         attacksDamage = new float[] { quickAttackDamage, slowAttackDamage, 0f };
 
-        defaultLocalPosition = new Vector3(-0.3f, 0f, 0f);
-        defaultRotation = new Vector3(0, 0, 90);
+        defaultLocalPosition = new Vector3(-0.33f, 0f, 0f);
+        defaultLocalRotation = new Vector3(0, 0, 90);
         bCollider2D = GetComponent<BoxCollider2D>();
+    }
+
+    private void Start()
+    {
+        boss = GetComponentInParent<BossController>();
     }
 
     private void Update()
     {
         bCollider2D.enabled = (isAttacking >= 0);
-        Debug.Log("alreadystartedquickattack = " + alreadyStartedQuickAttack);
         if (!alreadyStartedQuickAttack)
         {
             if (startQuickAttack)
@@ -74,12 +96,18 @@ public class BossWeaponController : MonoBehaviour
                 StartCoroutine(QuickAttack());
             }
         }
-        if (startSlowAttack)
+        if (!alreadyStartedSlowAttack)
         {
-            if (!alreadyStartedSlowAttack)
+            if (startSlowAttack)
             {
                 StartCoroutine(SlowAttack());
             }
+        }
+        if (slowAttackWarningStarted)
+        {
+            float rotateAngle = slowAttackWarningRotationSpeed * Time.deltaTime;
+            transform.parent.Rotate(Vector3.forward, rotateAngle * slowFaceRight);
+            slowAttackWarningRotationLeft -= rotateAngle;
         }
         if (isAttacking == 0)
         {
@@ -90,7 +118,7 @@ public class BossWeaponController : MonoBehaviour
         if (isAttacking == 1)
         {
             float rotateAngle = slowAttackRotationSpeed * Time.deltaTime;
-            transform.Rotate(Vector3.forward, rotateAngle * slowAttackDirection);
+            transform.parent.Rotate(Vector3.forward, rotateAngle * -slowFaceRight);
             slowAttackRotationLeft -= rotateAngle;
         }
     }
@@ -107,10 +135,9 @@ public class BossWeaponController : MonoBehaviour
         }
     }
 
-
-
     private IEnumerator QuickAttack()
     {
+        boss.SetIsBusy(true);
         alreadyStartedQuickAttack = true;
         isAttacking = 0;
         yield return new WaitUntil(() => quickAttackTranslationLeft <= 0f);
@@ -131,35 +158,44 @@ public class BossWeaponController : MonoBehaviour
         isAttacking = -1;
         alreadyStartedQuickAttack = false;
         startQuickAttack = false;
+        boss.SetIsBusy(false);
     }
 
 
     private IEnumerator SlowAttack()
     {
+        boss.SetIsBusy(true);
         alreadyStartedSlowAttack = true;
-        startSlowAttack = false;
-        transform.localEulerAngles = slowDefaultRotation;
+        boss.Target();
+        slowFaceRight = (boss.faceRight ? 1 : -1);
+        slowAttackWarningStarted = true;
+        yield return new WaitUntil(() => slowAttackWarningRotationLeft <= 0f);
+        slowAttackWarningRotationLeft = slowAttackWarningFullRotation;
+        slowAttackWarningStarted = false;
         isAttacking = 1;
-        slowAttackDirection = 1;
         yield return new WaitUntil(() => slowAttackRotationLeft <= 0f);
         isAttacking = -1;
         slowAttackRotationLeft = slowAttackFullRotation;
-        transform.localEulerAngles = slowDefaultRotation;
+        transform.parent.eulerAngles = slowFaceRight * defaultLocalRotation / 2;
+        boss.Target();
         yield return new WaitForSeconds(slowAttackTimeBetweenHits);
+        slowFaceRight = (boss.faceRight ? 1 : -1);
         isAttacking = 1;
-        slowAttackDirection = 1;
         yield return new WaitUntil(() => slowAttackRotationLeft <= 0f);
         isAttacking = -1;
         slowAttackRotationLeft = slowAttackFullRotation;
-        transform.localEulerAngles = slowDefaultRotation;
+        transform.parent.eulerAngles = slowFaceRight * defaultLocalRotation / 2;
+        boss.Target();
         yield return new WaitForSeconds(slowAttackTimeBetweenHits);
+        slowFaceRight = (boss.faceRight ? 1 : -1);
         isAttacking = 1;
-        slowAttackDirection = 1;
         yield return new WaitUntil(() => slowAttackRotationLeft <= 0f);
         isAttacking = -1;
         slowAttackRotationLeft = slowAttackFullRotation;
-        transform.localEulerAngles = slowDefaultRotation;
+        transform.parent.eulerAngles = slowDefaultRotation;
         alreadyStartedSlowAttack = false;
+        startSlowAttack = false;
+        boss.SetIsBusy(false);
     }
 
     public void SetStartQuickAttack(bool startQuickAttack)
