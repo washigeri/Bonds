@@ -39,13 +39,17 @@ public class BossController : EnemyController
 
     private int numberOfFeathers;
 
-    private int target;
+    private bool startQuickAttack;
+    private bool startSlowAttack;
+
+    private float distanceToPlayer1;
 
     protected override void Awake()
     {
         phase = 0;
         weapon = GetComponentInChildren<BossWeaponController>();
         maxHp = 2000f;
+        attackRange = 2.5f;
         health = maxHp;
         speed = 5;
         speedMutliplier = 1f;
@@ -55,7 +59,7 @@ public class BossController : EnemyController
         canDrop = true;
         startedMagicBalls = false;
         timeBetweenMagicBalls = 1f;
-        ballSpanws = new Vector3[] {Vector3.zero, Vector3.zero, Vector3.zero};
+        ballSpanws = new Vector3[] { Vector3.zero, Vector3.zero, Vector3.zero };
         ballsCount = 4;
         ballsLeft = ballsCount;
         canCastBalls = false;
@@ -72,7 +76,9 @@ public class BossController : EnemyController
         isMovingTowardRayCastPosition = false;
         canCastRays = false;
         rayCastPosition = new Vector3(2f * roomMaxY / 3f, roomMaxX / 2f, 0f);
-        target = 1;
+        startQuickAttack = false;
+        startSlowAttack = false;
+        distanceToPlayer1 = 0f;
     }
 
     protected override void Update()
@@ -84,11 +90,11 @@ public class BossController : EnemyController
         else
         {
             #region phase
-            if(health < 0.15f * maxHp)
+            if (health < 0.15f * maxHp)
             {
                 phase = 3;
             }
-            else if(health < 0.65f * maxHp)
+            else if (health < 0.65f * maxHp)
             {
                 phase = 2;
             }
@@ -100,7 +106,7 @@ public class BossController : EnemyController
             #region Move To Default Position
             if (isMovingTowardDefaultPosition)
             {
-                MoveTo(defaultPosition, speed * 2f);
+                GoTo(defaultPosition, speed * 2f);
                 if (transform.position == defaultPosition)
                 {
                     isMovingTowardDefaultPosition = false;
@@ -111,12 +117,21 @@ public class BossController : EnemyController
             #region Rays
             if (Input.GetButtonDown("SkillP1") && !startedMagicRay)
             {
+                isBusy = true;
                 isMovingTowardRayCastPosition = true;
                 rb2d.gravityScale = 0f;
             }
             if (isMovingTowardRayCastPosition)
             {
-                MoveTo(rayCastPosition, speed * 2f);
+                if (startSlowAttack)
+                {
+                    startSlowAttack = false;
+                }
+                if (startQuickAttack)
+                {
+                    startQuickAttack = false;
+                }
+                GoTo(rayCastPosition, speed * 2f);
                 if (transform.position == rayCastPosition)
                 {
                     isMovingTowardRayCastPosition = false;
@@ -142,14 +157,25 @@ public class BossController : EnemyController
             #endregion
             if (Input.GetButtonDown("WeakP1"))
             {
-                MoveTo(GameManager.gameManager.player1.transform.position, speed);
-                weapon.SetStartSlowAttack(true);
+                SlowAttack();
+            }
+            if (startSlowAttack)
+            {
+                distanceToPlayer1 = Vector3.Distance(transform.position, GameManager.gameManager.player1.transform.position);
+                if (distanceToPlayer1 <= attackRange)
+                {
+                    weapon.SetStartSlowAttack(true);
+                }
+                else
+                {
+                    MoveTo(GameManager.gameManager.player1.transform.position);
+                }
             }
             if (Input.GetButtonDown("HealP1"))
             {
                 DropFeathers();
             }
-            if(Input.GetButtonDown("InteractP1"))
+            if (Input.GetButtonDown("InteractP1"))
             {
                 Target();
             }
@@ -157,14 +183,20 @@ public class BossController : EnemyController
     }
 
 
-    private IEnumerator QuickAttack()
+    private void QuickAttack()
     {
-        yield return null;
+        if (!isBusy)
+        {
+            startQuickAttack = true;
+        }
     }
 
-    private IEnumerator SlowAttack()
+    private void SlowAttack()
     {
-        yield return null;
+        if (!isBusy)
+        {
+            startSlowAttack = true;
+        }
     }
 
     private void PopMagicBall()
@@ -196,15 +228,8 @@ public class BossController : EnemyController
     public void Target()
     {
         Vector3 targetPosition;
-        if(target == 1)
-        {
-            targetPosition = GameManager.gameManager.player1.transform.position;
-        }
-        else
-        {
-            targetPosition = GameManager.gameManager.player2.transform.position;
-        }
-        if(targetPosition.x - transform.position.x > 0)
+        targetPosition = GameManager.gameManager.player1.transform.position;
+        if (targetPosition.x - transform.position.x > 0)
         {
             if (!faceRight)
             {
@@ -220,17 +245,17 @@ public class BossController : EnemyController
         }
     }
 
-    public void MoveTo(Vector3 target, float speed)
+    public void GoTo(Vector3 target, float speed)
     {
         Vector3 nextPosition = Vector3.MoveTowards(transform.position, target, speed * Time.deltaTime);
-        if(nextPosition.x - transform.position.x > 0)
+        if (nextPosition.x - transform.position.x > 0)
         {
             if (!faceRight)
             {
                 Flip();
             }
         }
-        else if (nextPosition.x -transform.position.x < 0)
+        else if (nextPosition.x - transform.position.x < 0)
         {
             if (faceRight)
             {
@@ -238,6 +263,25 @@ public class BossController : EnemyController
             }
         }
         transform.position = nextPosition;
+    }
+
+    public void MoveTo(Vector3 target)
+    {
+        if (target.x - transform.position.x > 0)
+        {
+            if (!faceRight)
+            {
+                Flip();
+            }
+        }
+        else
+        {
+            if (faceRight)
+            {
+                Flip();
+            }
+        }
+        rb2d.velocity = new Vector3(speed * (faceRight ? 1 : -1), rb2d.velocity.y, 0f);
     }
 
     private void PopMagicRay(int direction)
@@ -299,25 +343,6 @@ public class BossController : EnemyController
 
     }
 
-    private void Phase1Action()
-    {
-        if (!isBusy)
-        {
-            Target();
-
-        }
-    }
-
-    private void Phase2Action()
-    {
-
-    }
-
-    private void Phase3Action()
-    {
-
-    }
-
     protected override IEnumerator Attack()
     {
         yield return null;
@@ -326,5 +351,15 @@ public class BossController : EnemyController
     public void SetIsBusy(bool isBusy)
     {
         this.isBusy = isBusy;
+    }
+
+    public void SetStartSlowAttack(bool startSlowAttack)
+    {
+        this.startSlowAttack = startSlowAttack;
+    }
+
+    public void SetStartQuickAttack(bool startQuickAttack)
+    {
+        this.startQuickAttack = startQuickAttack;
     }
 }

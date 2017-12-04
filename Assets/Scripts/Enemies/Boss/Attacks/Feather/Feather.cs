@@ -27,7 +27,6 @@ public class Feather : MonoBehaviour
         isAboutToBeDestroyed = false;
         canBeDestroyed = false;
         roomMaxY = (float)CameraController.cameraHeight;
-        Debug.Log("roommaxy = " + roomMaxY);
     }
 
     // Update is called once per frame

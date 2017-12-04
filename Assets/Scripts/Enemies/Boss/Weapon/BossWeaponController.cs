@@ -137,6 +137,7 @@ public class BossWeaponController : MonoBehaviour
 
     private IEnumerator QuickAttack()
     {
+        boss.SetStartQuickAttack(false);
         boss.SetIsBusy(true);
         alreadyStartedQuickAttack = true;
         isAttacking = 0;
@@ -164,6 +165,7 @@ public class BossWeaponController : MonoBehaviour
 
     private IEnumerator SlowAttack()
     {
+        boss.SetStartSlowAttack(false);
         boss.SetIsBusy(true);
         alreadyStartedSlowAttack = true;
         boss.Target();

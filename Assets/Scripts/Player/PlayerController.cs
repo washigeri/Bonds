@@ -290,7 +290,6 @@ public abstract class PlayerController : MonoBehaviour
 
     public void RemoveHealth(float health)
     {
-        Debug.Log("health removed");
         if (!isGod)
         {
             hp -= health * damageReceivedMultiplier;
