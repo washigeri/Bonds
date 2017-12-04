@@ -30,7 +30,6 @@ public class SoundManager : MonoBehaviour {
         musicSource = audioSources[0];
         for (int i = 1; i < audioSources.Length; i++)
             sfxSources.Add(audioSources[i]);
-        DontDestroyOnLoad(this);
     }
 
     public void PlayMusic(AudioClip music, float fadeDuration = 0)

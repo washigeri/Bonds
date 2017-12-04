@@ -9,18 +9,18 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1191478286202466}
+  m_RootGameObject: {fileID: 1135818656825376}
   m_IsPrefabParent: 1
---- !u!1 &1191478286202466
+--- !u!1 &1135818656825376
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 4478704701101358}
-  - component: {fileID: 23527331697252080}
-  - component: {fileID: 102081006920274354}
+  - component: {fileID: 4444611625531500}
+  - component: {fileID: 23873121000417218}
+  - component: {fileID: 102459950742674158}
   m_Layer: 0
   m_Name: JumpInfo
   m_TagString: Untagged
@@ -28,25 +28,25 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4478704701101358
+--- !u!4 &4444611625531500
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1191478286202466}
+  m_GameObject: {fileID: 1135818656825376}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.99, y: -5, z: -1}
+  m_LocalPosition: {x: 15.59, y: -12.149956, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!23 &23527331697252080
+--- !u!23 &23873121000417218
 MeshRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1191478286202466}
+  m_GameObject: {fileID: 1135818656825376}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -75,14 +75,16 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!102 &102081006920274354
+--- !u!102 &102459950742674158
 TextMesh:
   serializedVersion: 3
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1191478286202466}
-  m_Text: "To Jump use\tTo Dash use\n [space]\t\t      (A)"
+  m_GameObject: {fileID: 1135818656825376}
+  m_Text: 'Pour sauter
+
+    [espace]'
   m_OffsetZ: 0
   m_CharacterSize: 0.5
   m_LineSpacing: 1

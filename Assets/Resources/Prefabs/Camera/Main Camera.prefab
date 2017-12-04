@@ -4134,8 +4134,6 @@ MonoBehaviour:
   sfxVolumeSlider: {fileID: 114842886359075022}
   difficultyDropdwon: {fileID: 114852321850520438}
   applyButton: {fileID: 114316217927028322}
-  musicSource: {fileID: 0}
-  sfxSource: {fileID: 0}
 --- !u!114 &114342431673501462
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5409,7 +5407,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   camTransform: {fileID: 4611368908009622}
   zOffset: -5
-  yOffset: 5
+  yOffset: 2
   cameraSpeed: 0
 --- !u!114 &114629232817675844
 MonoBehaviour:

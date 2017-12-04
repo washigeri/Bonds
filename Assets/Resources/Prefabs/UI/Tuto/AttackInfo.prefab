@@ -9,18 +9,18 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1659883145355504}
+  m_RootGameObject: {fileID: 1764478052527694}
   m_IsPrefabParent: 1
---- !u!1 &1659883145355504
+--- !u!1 &1764478052527694
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 4914500856588824}
-  - component: {fileID: 23834418593077336}
-  - component: {fileID: 102190865965094780}
+  - component: {fileID: 4239343750292488}
+  - component: {fileID: 23270970993175800}
+  - component: {fileID: 102345384100690306}
   m_Layer: 0
   m_Name: AttackInfo
   m_TagString: Untagged
@@ -28,25 +28,25 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4914500856588824
+--- !u!4 &4239343750292488
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1659883145355504}
+  m_GameObject: {fileID: 1764478052527694}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 27.07, y: -5, z: -1}
+  m_LocalPosition: {x: 32.41, y: -12.23, z: -1.06}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!23 &23834418593077336
+--- !u!23 &23270970993175800
 MeshRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1659883145355504}
+  m_GameObject: {fileID: 1764478052527694}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -75,14 +75,14 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!102 &102190865965094780
+--- !u!102 &102345384100690306
 TextMesh:
   serializedVersion: 3
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1659883145355504}
-  m_Text: "To Attack use\tTo Attack use\n [q][w][e]\t\t      (X)(Y)(B)"
+  m_GameObject: {fileID: 1764478052527694}
+  m_Text: "Pour attaquer\n[q][w][e]\t\t(X)(Y)(B)"
   m_OffsetZ: 0
   m_CharacterSize: 0.5
   m_LineSpacing: 1
