@@ -85,7 +85,7 @@ public class BossController : EnemyController
 
     private IEnumerator WaitForInput()
     {
-
+        yield return null;
     }
 
     protected override void Update()
