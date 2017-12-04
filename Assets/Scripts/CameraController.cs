@@ -26,6 +26,19 @@ public class CameraController : MonoBehaviour
     private bool isCameraReadyForGame;
     private bool isCameraSetForBoss;
 
+    public void SetCameraForBoss()
+    {
+        cameraSpeed = 0;
+        yOffset = 0;
+        camTransform.position = new Vector3(0, 0, zOffset);
+        cameraHeight = Camera.main.orthographicSize * 2f;
+        cameraWidth = cameraHeight * Camera.main.aspect;
+        xMaxDist = cameraWidth / 2 - 0.5;
+        yMaxDist = cameraHeight / 2 - 0.5;
+        distToCenterP2X = GameManager.gameManager.player2.transform.position.x - camTransform.position.x;
+        distToCenterP2Y = GameManager.gameManager.player2.transform.position.y - camTransform.position.y;
+        isCameraSetForBoss = true;
+    }
 
     public void SetCameraForGame()
     {
@@ -133,15 +146,13 @@ public class CameraController : MonoBehaviour
         }
     }
 
-    private void UpdateForBoss()
-    {
-
-    }
-
     // Update is called once per frame
     void Update()
     {
-        UpdateForLevel();
+        if (!isCameraSetForBoss)
+        {
+            UpdateForLevel();
+        }
     }
 
     private bool OnSameSideOfCamera()

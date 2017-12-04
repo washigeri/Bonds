@@ -57,6 +57,20 @@ public class Arrow : MonoBehaviour {
                 }
                 Destroy(gameObject);
             }
+            else if (collision.gameObject.CompareTag("Boss"))
+            {
+                EnemyController enemy = collision.gameObject.GetComponent<EnemyController>();
+                enemy.RemoveHealth(damage * shooter.GetDamageDoneMultiplier(), false);
+                if (shooter.GetEnemySpeedMultiplierDuration() > 0f)
+                {
+                    enemy.SetSpeedMultiplierParameters(shooter.GetEnemySpeedMultiplier(), shooter.GetEnemySpeedMultiplierDuration());
+                }
+                if (shooter.GetEnemyBleedDuration() > 0f)
+                {
+                    enemy.SetBleedingParameters(shooter.GetEnemyBleedPercentage() * damage * shooter.GetDamageDoneMultiplier(), shooter.GetEnemyBleedDuration());
+                }
+                Destroy(gameObject);
+            }
         }
     }
 

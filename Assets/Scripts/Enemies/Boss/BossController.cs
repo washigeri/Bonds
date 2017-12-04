@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BossController : EnemyController
 {
+
     public float roomMinX;
     public float roomMaxX;
     public float roomMiny;
@@ -83,6 +84,7 @@ public class BossController : EnemyController
 
     protected override void Update()
     {
+        Debug.Log("boss hp = " + health);
         if (health <= 0f)
         {
             Destroy(gameObject);

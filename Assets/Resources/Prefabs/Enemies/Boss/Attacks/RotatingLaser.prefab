@@ -52,6 +52,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6afa19da1a291a14d878834a86453705, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  soundClip: {fileID: 8300000, guid: eb57e2690ce4fc04ebaca350d25ed797, type: 3}
   layerMask:
     serializedVersion: 2
     m_Bits: 4294963199

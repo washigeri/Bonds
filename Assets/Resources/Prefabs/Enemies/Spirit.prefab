@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 212588802366950442}
   - component: {fileID: 61145760484299976}
   - component: {fileID: 114899093023374994}
-  m_Layer: 10
+  m_Layer: 15
   m_Name: Spirit
   m_TagString: Spirit
   m_Icon: {fileID: 0}
@@ -100,6 +100,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   faceRight: 0
+  damageSound: {fileID: 0}
   enemyTransform: {fileID: 4741162692865080}
   layerMask:
     serializedVersion: 2

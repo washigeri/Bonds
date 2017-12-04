@@ -52,6 +52,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e843835f50301443b2e076058b6abb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  soundClip:
+  - {fileID: 8300000, guid: 55f19ed707636334792db6e8cdd5263d, type: 3}
+  - {fileID: 8300000, guid: 12020ab6b2280694e8255d533f95b134, type: 3}
 --- !u!120 &120830913303707688
 LineRenderer:
   m_ObjectHideFlags: 1

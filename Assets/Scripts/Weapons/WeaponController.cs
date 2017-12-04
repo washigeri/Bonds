@@ -121,6 +121,20 @@ public abstract class WeaponController : MonoBehaviour
                         }
                         player.SetIsFighting(true);
                     }
+                    else if(collision.gameObject.CompareTag("Boss"))
+                    {
+                        EnemyController enemy = collision.gameObject.GetComponent<EnemyController>();
+                        enemy.RemoveHealth(player.GetDamageDoneMultiplier() * attacksDamage[isAttacking], false);
+                        if (player.GetEnemySpeedMultiplierDuration() > 0f)
+                        {
+                            enemy.SetSpeedMultiplierParameters(player.GetEnemySpeedMultiplier(), player.GetEnemySpeedMultiplierDuration());
+                        }
+                        if (player.GetEnemyBleedDuration() > 0f)
+                        {
+                            enemy.SetBleedingParameters(player.GetEnemyBleedPercentage() * attacksDamage[isAttacking] * player.GetDamageDoneMultiplier(), player.GetEnemyBleedDuration());
+                        }
+                        player.SetIsFighting(true);
+                    }
                 }
             }
         }

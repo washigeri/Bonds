@@ -123,7 +123,6 @@ public class BossWeaponController : MonoBehaviour
         }
     }
 
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (isAttacking >= 0)

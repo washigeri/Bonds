@@ -18,6 +18,7 @@ TagManager:
   - PauseMenu
   - Trinket
   - PNJ
+  - Boss
   layers:
   - Default
   - TransparentFX

@@ -3,6 +3,8 @@ using System.Collections;
 
 public class LaserScript : MonoBehaviour
 {
+    public AudioClip soundClip;
+
     public LayerMask layerMask;
 
     private BossController boss;
@@ -42,7 +44,11 @@ public class LaserScript : MonoBehaviour
         rotationLeft = fullRotation;
         rotationDuration = 5f;
         rotationSpeed = fullRotation / rotationDuration;
+    }
 
+    private void Start()
+    {
+        SoundManager.instance.PlaySFX(soundClip);
     }
 
 

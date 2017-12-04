@@ -100,6 +100,8 @@ public class GameManager : MonoBehaviour
             }
             if (!isGameInitialized)
             {
+                if(isSceneLoaded)
+                    Debug.Log(currentScene + " = currentscnene");
                 if (loadedSavedGame)
                 {
                     InitializeSavedGame();
@@ -127,6 +129,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void ResetGameForMenu()
+    {
+
+    }
+
     private void ResetPlayers()
     {
         player1.transform.position = Vector3.zero;
@@ -139,6 +146,7 @@ public class GameManager : MonoBehaviour
 
     public void InitializeNewGame()
     {
+        Debug.Log("initialize new game");
         potionNumber = 0;
         player1 = Instantiate(Resources.Load("Prefabs/Players/Player1"), Vector3.zero, Quaternion.Euler(0, 0, 0)) as GameObject;
         GiveWeapon(1, player1);

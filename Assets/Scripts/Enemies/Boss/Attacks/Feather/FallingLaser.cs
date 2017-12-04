@@ -3,6 +3,8 @@ using System.Collections;
 
 public class FallingLaser : MonoBehaviour
 {
+    public AudioClip[] soundClip;
+
     private bool isSet;
     private LineRenderer laserLineRenderer;
     private float laserLength;
@@ -42,6 +44,7 @@ public class FallingLaser : MonoBehaviour
 
     private void Start()
     {
+        SoundManager.instance.PlayRandomSFX(soundClip);
         startPosition = transform.position;
         endPosition = startPosition;
         Vector3[] initLaserPositions = new Vector3[2] { startPosition, endPosition };

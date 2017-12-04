@@ -104,6 +104,16 @@ public class DaggerShield : MonoBehaviour {
                     isReloading = true;
                     StartCoroutine(OnReload());
                 }
+                else if (collision.gameObject.CompareTag("Boss"))
+                {
+                    EnemyController enemy = collision.gameObject.GetComponent<EnemyController>();
+                    enemy.RemoveHealth(damage * owner.GetDamageDoneMultiplier(), false);
+                    enemy.SetSpeedMultiplierParameters(enemySpeedMultiplier, enemySpeedMultiplierDuration);
+                    if (owner.GetEnemyBleedDuration() > 0f)
+                    {
+                        enemy.SetBleedingParameters(owner.GetEnemyBleedPercentage() * damage * owner.GetDamageDoneMultiplier(), owner.GetEnemyBleedDuration());
+                    }
+                }
             }
             else
             {
