@@ -51,8 +51,6 @@ public class Feather : MonoBehaviour
         {
             if (!isAboutToBeDestroyed)
             {
-                Debug.Log("feather pos = " + transform.position);
-                Debug.Log("rayon pos should be = " + new Vector3(transform.position.x, roomMaxY, 0f));
                 Instantiate(Resources.Load("Prefabs/Enemies/Boss/Attacks/FallingLaser"), new Vector3(transform.position.x, roomMaxY, 0f), Quaternion.Euler(0f, 0f, 0f));
                 StartCoroutine(OnToBeDestroy());
             }

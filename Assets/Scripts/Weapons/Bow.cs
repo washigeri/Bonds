@@ -24,6 +24,7 @@ public class Bow : WeaponController
         isStrongOnCD = false;
         isSkillOnCD = false;
         weaponName = "Bow";
+        weaponID = 3;
 
         attacksDamage[0] = 20f;
         attacksDamage[1] = 25f;

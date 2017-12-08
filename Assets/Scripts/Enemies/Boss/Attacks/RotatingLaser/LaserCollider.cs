@@ -53,7 +53,6 @@ public class LaserCollider : MonoBehaviour {
     {
         if (collision.gameObject.CompareTag("Player1") || collision.gameObject.CompareTag("Player2"))
         {
-            Debug.Log("triggerenter");
             collision.gameObject.GetComponent<PlayerController>().RemoveHealth(stayDamage);
         }
     }

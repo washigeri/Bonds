@@ -61,7 +61,7 @@ public abstract class EnemyController : MonoBehaviour
         canAttack = false;
         isStunned = false;
         stunned = false;
-        defaultStunDuration = 0.15f;
+        defaultStunDuration = 0.2f;
         stunTimeLeft = 0f;
         isSlowDown = false;
         slowDown = false;
@@ -103,7 +103,7 @@ public abstract class EnemyController : MonoBehaviour
                     StartCoroutine(StartBleeding());
                 }
             }
-            if(bleedingDuration > 0f)
+            if (bleedingDuration > 0f)
             {
                 RemoveHealth(Time.deltaTime * bleedingDamage / bleedingDuration, true);
                 bleedingDamage -= Time.deltaTime * bleedingDamage / bleedingDuration;
@@ -115,7 +115,7 @@ public abstract class EnemyController : MonoBehaviour
             }
             if (isStunned)
             {
-                if(stunTimeLeft > 0f)
+                if (stunTimeLeft > 0f)
                 {
                     stunTimeLeft -= Time.deltaTime;
                 }
@@ -130,50 +130,47 @@ public abstract class EnemyController : MonoBehaviour
 
     protected abstract void Action();
 
-    protected void MoveTowards(Vector2 target)
+
+    //protected void MoveTowards(Vector2 target)
+    //{
+    //    Vector2 nextPosition = Vector2.MoveTowards(enemyTransform.position, target, speedMultiplier * speed * Time.deltaTime);
+    //    if (nextPosition.x - enemyTransform.position.x > 0)
+    //    {
+    //        if (!faceRight)
+    //        {
+    //            Flip();
+    //        }
+    //    }
+    //    else if (nextPosition.x - enemyTransform.position.x < 0)
+    //    {
+    //        if (faceRight)
+    //        {
+    //            Flip();
+    //        }
+    //    }
+    //    enemyTransform.position = nextPosition;
+    //}
+
+    protected virtual void MoveToward(Vector2 target)
     {
-        Vector2 nextPosition = Vector2.MoveTowards(enemyTransform.position, target, speedMultiplier * speed * Time.deltaTime);
-        if (nextPosition.x - enemyTransform.position.x > 0)
-        {
-            if (!faceRight)
-            {
-                Flip();
-            }
-        }
-        else if (nextPosition.x - enemyTransform.position.x < 0)
-        {
-            if (faceRight)
-            {
-                Flip();
-            }
-        }
-        enemyTransform.position = nextPosition;
+
+    }
+
+    protected void Stop()
+    {
+        rb2d.velocity = Vector2.zero;
     }
 
     public void RemoveHealth(float loss, bool isBleedingDamage)
     {
-        if (isBleedingDamage)
-        {
-            health -= loss;
-        }
-        else
+        if (!isBleedingDamage)
         {
             if (canBeKnockedBack)
             {
-                if (faceRight)
-                {
-                    rb2d.AddForce(new Vector2(-1, 0.25f) * knockBackForce, ForceMode2D.Impulse);
-                }
-                else
-                {
-                    rb2d.AddForce(new Vector2(1, 0.25f) * knockBackForce, ForceMode2D.Impulse);
-                }
-            }
-            if (!isStunned)
-            {
-                health -= loss;
+                rb2d.AddForce(new Vector2(faceRight ? -1 : 1, 0.25f) * knockBackForce, ForceMode2D.Impulse);
             }
         }
+        health -= loss;
     }
 
     private IEnumerator StunnedRoutine()
@@ -192,7 +189,7 @@ public abstract class EnemyController : MonoBehaviour
     public void SetStunned(bool stunned, float stunDuration)
     {
         this.stunned = stunned;
-        if(stunDuration > 0f)
+        if (stunDuration > 0f)
         {
             this.stunTimeLeft = Mathf.Max(stunTimeLeft, stunDuration);
         }
@@ -284,7 +281,7 @@ public abstract class EnemyController : MonoBehaviour
     {
         canDrop = false;
         float dice = Random.Range(0f, 1f);
-        if(dice <= weaponDropRate)
+        if (dice <= weaponDropRate)
         {
             int weaponType = Random.Range(0, 4);
             string weaponName;
@@ -304,9 +301,9 @@ public abstract class EnemyController : MonoBehaviour
             {
                 weaponName = "Bow";
             }
-            Instantiate(Resources.Load("Prefabs/Weapons/" + weaponName), enemyTransform.position + new Vector3(Random.Range(0f,1f), Random.Range(0f,1f), 0f), Quaternion.Euler(0,0,-90));
+            Instantiate(Resources.Load("Prefabs/Weapons/" + weaponName), enemyTransform.position + new Vector3(Random.Range(0f, 1f), Random.Range(0f, 1f), 0f), Quaternion.Euler(0, 0, -90));
         }
-        else if(dice <= weaponDropRate + trinketDropRate)
+        else if (dice <= weaponDropRate + trinketDropRate)
         {
             int trinketNumber = Random.Range(1, 5);
             string trinketName = "Trinket" + trinketNumber;

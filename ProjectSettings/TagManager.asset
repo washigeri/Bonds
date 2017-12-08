@@ -9,7 +9,6 @@ TagManager:
   - Obstacle
   - Player1
   - Player2
-  - RealEnemy
   - Weapon
   - Spirit
   - Plateform
@@ -31,7 +30,7 @@ TagManager:
   - Player1
   - Player2
   - SolidEntity
-  - Pickups
+  - 
   - Ground
   - Plateform
   - Weapon

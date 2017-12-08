@@ -42,6 +42,7 @@ public class Sword : WeaponController {
         strongRotationSpeed = strongFullRotation / strongDuration;
         shieldDuration = 0.25f;
         weaponName = "Sword";
+        weaponID = 1;
         attacksDamage[0] = 34f;
         attacksDamage[1] = 15f;
         attacksDamage[2] = 0f;

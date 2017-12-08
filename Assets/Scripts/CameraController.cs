@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
+    private static CameraController mainCamera;
 
     public Transform camTransform;
 
@@ -23,22 +24,18 @@ public class CameraController : MonoBehaviour
     private bool isXAligned;
     private float yCamera;
 
-    private bool isCameraReadyForGame;
-    private bool isCameraSetForBoss;
+    private bool isCameraStatic;
 
-    private void IsInBossRoom()
+    private bool isCameraSet;
+
+    public CameraController GetInstance()
     {
-        if(GameManager.gameManager.currentScene == GameManager.gameManager.bossSceneIndex)
-        {
-            if (!isCameraSetForBoss)
-            {
-                SetCameraForBoss();
-            }
-        }
+        return mainCamera;
     }
 
     public void SetCameraForBoss()
     {
+        Debug.Log("st cam boss");
         cameraSpeed = 0;
         yOffset = 0;
         camTransform.position = new Vector3(0, 0, zOffset);
@@ -48,7 +45,7 @@ public class CameraController : MonoBehaviour
         yMaxDist = cameraHeight / 2 - 0.5;
         distToCenterP2X = GameManager.gameManager.player2.transform.position.x - camTransform.position.x;
         distToCenterP2Y = GameManager.gameManager.player2.transform.position.y - camTransform.position.y;
-        isCameraSetForBoss = true;
+        isCameraStatic = true;
     }
 
     public void SetCameraForGame()
@@ -62,15 +59,18 @@ public class CameraController : MonoBehaviour
         yMaxDist = cameraHeight / 2 - 0.5;
         distToCenterP2X = GameManager.gameManager.player2.transform.position.x - camTransform.position.x;
         distToCenterP2Y = GameManager.gameManager.player2.transform.position.y - camTransform.position.y;
+        TargetPlayer1();
+        isCameraStatic = false;
     }
 
     private void SetCameraForMenu()
     {
-        isCameraReadyForGame = false;
+        isCameraStatic = true;
     }
 
     void Start()
     {
+        SetupCamera(0);
         SetCameraForMenu();
     }
 
@@ -90,80 +90,79 @@ public class CameraController : MonoBehaviour
 
     private void UpdateForLevel()
     {
-        if ((GameManager.gameManager.startedGame > -1) && GameManager.gameManager.isGameInitialized)
+        Vector3 newCameraPosition = camTransform.position;
+        isXAligned = (Mathf.Abs(GameManager.gameManager.player1.transform.position.x - newCameraPosition.x) < 0.5f);
+        float distToCenterUpdatedP2X = GameManager.gameManager.player2.transform.position.x - camTransform.position.x;
+        float distToCenterUpdatedP2Y = GameManager.gameManager.player2.transform.position.y - camTransform.position.y;
+        if (!IsXLocked())
         {
-            Vector3 newCameraPosition = camTransform.position;
-            isXAligned = (Mathf.Abs(GameManager.gameManager.player1.transform.position.x - newCameraPosition.x) < 0.5f);
-            float distToCenterUpdatedP2X = GameManager.gameManager.player2.transform.position.x - camTransform.position.x;
-            float distToCenterUpdatedP2Y = GameManager.gameManager.player2.transform.position.y - camTransform.position.y;
-            if (!IsXLocked())
-            {
 
-                if (isXAligned)
-                {
-                    newCameraPosition.x = GameManager.gameManager.player1.transform.position.x;
-                }
-                else
-                {
-                    if (OnSameSideOfCamera())
-                    {
-                        newCameraPosition = Vector3.MoveTowards(newCameraPosition, new Vector3(GameManager.gameManager.player1.transform.position.x, newCameraPosition.y + yOffset, zOffset), Time.deltaTime * cameraSpeed);
-                    }
-                    else
-                    {
-                        if (Mathf.Abs(distToCenterUpdatedP2X) < Mathf.Abs(distToCenterP2X))
-                        {
-                            newCameraPosition = Vector3.MoveTowards(newCameraPosition, new Vector3(GameManager.gameManager.player1.transform.position.x, newCameraPosition.y + yOffset, zOffset), Time.deltaTime * cameraSpeed);
-                        }
-                    }
-                }
+            if (isXAligned)
+            {
+                newCameraPosition.x = GameManager.gameManager.player1.transform.position.x;
             }
             else
             {
-                if (Mathf.Abs(distToCenterUpdatedP2X) < Mathf.Abs(distToCenterP2X))
+                if (OnSameSideOfCamera())
                 {
                     newCameraPosition = Vector3.MoveTowards(newCameraPosition, new Vector3(GameManager.gameManager.player1.transform.position.x, newCameraPosition.y + yOffset, zOffset), Time.deltaTime * cameraSpeed);
                 }
-            }
-
-            if (!IsYLocked())
-            {
-                if (isGrounded)
+                else
                 {
-                    float playerY = GameManager.gameManager.player1.transform.position.y;
-                    if (playerY != yCamera - yOffset)
+                    if (Mathf.Abs(distToCenterUpdatedP2X) < Mathf.Abs(distToCenterP2X))
                     {
-                        newCameraPosition = Vector3.MoveTowards(newCameraPosition, new Vector3(newCameraPosition.x, playerY + yOffset, zOffset), Time.deltaTime * cameraSpeed);
-                        yCamera = newCameraPosition.y;
+                        newCameraPosition = Vector3.MoveTowards(newCameraPosition, new Vector3(GameManager.gameManager.player1.transform.position.x, newCameraPosition.y + yOffset, zOffset), Time.deltaTime * cameraSpeed);
                     }
                 }
-                else if (isLanding && newCameraPosition.y > GameManager.gameManager.player1.transform.position.y + yOffset)
-                {
-                    newCameraPosition.y = GameManager.gameManager.player1.transform.position.y + yOffset;
-                }
             }
-            else
+        }
+        else
+        {
+            if (Mathf.Abs(distToCenterUpdatedP2X) < Mathf.Abs(distToCenterP2X))
             {
-                if (Mathf.Abs(distToCenterUpdatedP2Y) < Mathf.Abs(distToCenterP2Y))
+                newCameraPosition = Vector3.MoveTowards(newCameraPosition, new Vector3(GameManager.gameManager.player1.transform.position.x, newCameraPosition.y + yOffset, zOffset), Time.deltaTime * cameraSpeed);
+            }
+        }
+
+        if (!IsYLocked())
+        {
+            if (isGrounded)
+            {
+                float playerY = GameManager.gameManager.player1.transform.position.y;
+                if (playerY != yCamera - yOffset)
                 {
-                    newCameraPosition = Vector3.MoveTowards(newCameraPosition, new Vector3(newCameraPosition.x, GameManager.gameManager.player1.transform.position.y + yOffset, zOffset), Time.deltaTime * cameraSpeed);
+                    newCameraPosition = Vector3.MoveTowards(newCameraPosition, new Vector3(newCameraPosition.x, playerY + yOffset, zOffset), Time.deltaTime * cameraSpeed);
                     yCamera = newCameraPosition.y;
                 }
             }
-
-            distToCenterP2X = distToCenterUpdatedP2X;
-            distToCenterP2Y = distToCenterUpdatedP2Y;
-            camTransform.position = newCameraPosition;
+            else if (isLanding && newCameraPosition.y > GameManager.gameManager.player1.transform.position.y + yOffset)
+            {
+                newCameraPosition.y = GameManager.gameManager.player1.transform.position.y + yOffset;
+            }
         }
+        else
+        {
+            if (Mathf.Abs(distToCenterUpdatedP2Y) < Mathf.Abs(distToCenterP2Y))
+            {
+                newCameraPosition = Vector3.MoveTowards(newCameraPosition, new Vector3(newCameraPosition.x, GameManager.gameManager.player1.transform.position.y + yOffset, zOffset), Time.deltaTime * cameraSpeed);
+                yCamera = newCameraPosition.y;
+            }
+        }
+
+        distToCenterP2X = distToCenterUpdatedP2X;
+        distToCenterP2Y = distToCenterUpdatedP2Y;
+        camTransform.position = newCameraPosition;
     }
 
     // Update is called once per frame
     void Update()
     {
-        IsInBossRoom();
-        if (!isCameraSetForBoss)
+        if (isCameraSet)
         {
-            UpdateForLevel();
+            if (!isCameraStatic)
+            {
+                UpdateForLevel();
+            }
         }
     }
 
@@ -176,5 +175,40 @@ public class CameraController : MonoBehaviour
     public void TargetPlayer1()
     {
         camTransform.position = new Vector3(GameManager.gameManager.player1.transform.position.x, GameManager.gameManager.player1.transform.position.y + yOffset, zOffset);
+    }
+
+    public void SetupCamera(int sceneType)
+    {
+        switch (sceneType)
+        {
+            case 0:
+                Debug.Log("case 0");
+                SetCameraForMenu();
+                isCameraSet = true;
+                break;
+            case 1:
+                Debug.Log("case 1");
+                SetCameraForGame();
+                isCameraSet = true;
+                break;
+            case 2:
+                Debug.Log("case 2");
+                SetCameraForGame();
+                isCameraSet = true;
+                break;
+            case 3:
+                Debug.Log("case 3");
+                SetCameraForBoss();
+                isCameraSet = true;
+                break;
+            default:
+                Debug.Log("case default");
+                break;
+        }
+    }
+
+    public void SetIsCameraSet(bool isCameraSet)
+    {
+        this.isCameraSet = isCameraSet;
     }
 }

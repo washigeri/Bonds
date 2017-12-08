@@ -76,12 +76,11 @@ public class BossController : EnemyController
         roomMaxX = (float)CameraController.cameraWidth / 2f;
         roomMiny = -(float)CameraController.cameraHeight / 2f;
         roomMaxY = (float)CameraController.cameraHeight / 2f;
-        defaultPosition = new Vector3((roomMaxX - roomMinX) / 2f, roomMiny, 0f);
+        defaultPosition = new Vector3((roomMaxX + roomMinX) / 2f, roomMiny, 0f);
         rb2d = GetComponent<Rigidbody2D>();
         isMovingTowardRayCastPosition = false;
         canCastRays = false;
         rayCastPosition = new Vector3((roomMaxX + roomMinX) / 2f, 2f * roomMaxY / 3f, 0f);
-        Debug.Log(rayCastPosition + " = raycastpos");
         startQuickAttack = false;
         startSlowAttack = false;
         distanceToPlayer1 = 0f;
@@ -97,7 +96,6 @@ public class BossController : EnemyController
 
     protected override void Update()
     {
-        Debug.Log("boss hp = " + startSlowAttack);
         if (health <= 0f)
         {
             Destroy(gameObject);
@@ -108,7 +106,6 @@ public class BossController : EnemyController
             {
                 if (Input.GetButtonDown("WeakP1") || Input.GetButtonDown("WeakP2") || Input.GetButtonDown("StrongP1") || Input.GetButtonDown("StrongP2") || Input.GetButtonDown("SkillP1") || Input.GetButtonDown("SkillP2"))
                 {
-                    Debug.Log("did something");
                     phase = 1;
                 }
             }
@@ -343,7 +340,6 @@ public class BossController : EnemyController
     private void PopFeather()
     {
         Vector3 startPos = new Vector3(Random.Range(roomMinX + 1f, roomMaxX - 1f), roomMaxY - 1, 0f);
-        Debug.Log("start pos according to boss = " + startPos);
         Instantiate(Resources.Load("Prefabs/Enemies/Boss/Attacks/Feather"), startPos, Quaternion.Euler(0f, 0f, 0f));
     }
 

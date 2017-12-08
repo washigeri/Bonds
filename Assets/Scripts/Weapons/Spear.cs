@@ -48,6 +48,7 @@ public class Spear : WeaponController
 
         isSkillOnCD = false;
         weaponName = "Spear";
+        weaponID = 0;
 
         attacksDamage[0] = 25f;
         attacksDamage[1] = 40f;

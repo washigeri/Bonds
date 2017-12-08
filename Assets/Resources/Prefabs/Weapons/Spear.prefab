@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 61229172203773948}
   - component: {fileID: 96172985762655624}
   - component: {fileID: 114366612712700224}
-  m_Layer: 14
+  m_Layer: 0
   m_Name: Spear
   m_TagString: Weapon
   m_Icon: {fileID: 0}
@@ -220,7 +220,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1024582385
-  m_SortingLayer: 4
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300086, guid: 676b4ef33f0c04343abff5f0314104e3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

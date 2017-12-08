@@ -9,8 +9,8 @@ public class SliderController : MonoBehaviour {
     public int player; 
 
 	private void Update () {
-        if (GameManager.gameManager.isGameInitialized)
-        {
+        //if (GameManager.gameManager.isGameInitialized)
+        //{
             if (player == 1)
             {
                 slider.value = GameManager.gameManager.player1.GetComponent<PlayerController>().GetHealth();
@@ -19,7 +19,7 @@ public class SliderController : MonoBehaviour {
             {
                 slider.value = GameManager.gameManager.player2.GetComponent<PlayerController>().GetHealth();
             }
-        }
+        //}
         
     }
 }

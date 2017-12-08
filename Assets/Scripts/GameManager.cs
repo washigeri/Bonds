@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -9,6 +8,7 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager gameManager;
 
     [HideInInspector] public GameObject player1;
     [HideInInspector] public GameObject player2;
@@ -18,39 +18,24 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public int maxPotion;
     [HideInInspector] public float potionHeal;
 
-    public static GameManager gameManager;
-
-    public Vector2 savedPosition;
-    public int savedScene;
-    public int strength;
-    public int agility;
-    public int stamina;
-    [Range(1, 4)]
-    public int weaponTypeP1;
-    [Range(1, 4)]
-    public int weaponTypeP2;
-    [Range(1, 4)]
-    public int weaponTierP1;
-    [Range(1, 4)]
-    public int weaponTierP2;
-
-    public bool isOnMenu;
-    public int startedGame;
-    public bool loadedSavedGame;
-    public bool isGameInitialized;
-    public bool isSceneLoaded;
     public bool isPaused;
-
-    public int currentScene;
-
-    private List<GameObject> toBeCleanOnSceneChange;
-
     private GameObject pauseMenu;
     private GameObject inGamePanel;
 
-    public int bossSceneIndex;
+    private bool isGameInitialized;
 
-    void Awake()
+    private int bossSceneBuildIndex;
+    private int currentScene;
+    private bool sceneChanged;
+    private bool isSceneLoaded;
+
+    private bool isOnMenu;
+    private bool isPlaying;
+    private bool isGameReady;
+
+    private List<GameObject> toBeCleanOnSceneChange;
+
+    private void Awake()
     {
         if (gameManager == null)
         {
@@ -63,112 +48,198 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        toBeCleanOnSceneChange = new List<GameObject>();
+        isPaused = false;
+        bossSceneBuildIndex = 3;
+        currentScene = 0;
+        sceneChanged = false;
+        isGameInitialized = false;
+        isOnMenu = true;
+        isPlaying = false;
+        isGameReady = false;
+        isSceneLoaded = false;
+        InitializeGameVariables();
+        IgnoreCollision();
+    }
+
     private void IgnoreCollision()
     {
         Physics2D.IgnoreLayerCollision(8, 9, true);
         Physics2D.IgnoreLayerCollision(9, 10, true);
         Physics2D.IgnoreLayerCollision(8, 10, false);
-        Physics2D.IgnoreLayerCollision(4, 12, false);
-        Physics2D.IgnoreLayerCollision(4, 10, true);
+        //Physics2D.IgnoreLayerCollision(4, 12, false);
+        //Physics2D.IgnoreLayerCollision(4, 10, true);
         Physics2D.IgnoreLayerCollision(8, 15, true);
-        Physics2D.IgnoreLayerCollision(9, 15, true);
+        //Physics2D.IgnoreLayerCollision(9, 15, true);
         Physics2D.IgnoreLayerCollision(10, 15, true);
         Physics2D.IgnoreLayerCollision(16, 13, true);
+        Physics2D.IgnoreLayerCollision(15, 13, true);
         //Physics2D.IgnoreLayerCollision(8, 16, true);
         //Physics2D.IgnoreLayerCollision(9, 16, true);
-        Physics2D.IgnoreLayerCollision(4, 16, true);
+        //Physics2D.IgnoreLayerCollision(4, 16, true);
     }
 
-    private void Start()
+    private void InitializeGameVariables()
     {
-        isOnMenu = true;
-        currentScene = 0;
-        startedGame = -1;
-        isGameInitialized = false;
-        isSceneLoaded = false;
-        loadedSavedGame = false;
-        isPaused = false;
-        //pauseMenu = Camera.main.transform.Find("InGamePanel").transform.Find("PauseMenu").gameObject;
-        IgnoreCollision();
-        InitializeGameVariables();
-        Load();
-        toBeCleanOnSceneChange = new List<GameObject>();
-        SceneManager.sceneLoaded += OnSceneLoaded;
-        bossSceneIndex = 2;
+        maxPotion = 5;
+        potionHeal = 0.5f;
     }
 
-    private void Update()
-    {
-        Debug.Log("bosstoomindex = " + bossSceneIndex);
-        Debug.Log(currentScene + " = currentScene");
-        if (startedGame > -1)
-        {
-            if (!isSceneLoaded)
-            {
-                SceneManager.LoadScene(startedGame);
-            }
-            if (!isGameInitialized)
-            {
-                if (loadedSavedGame)
-                {
-                    InitializeSavedGame();
-                }
-                else
-                {
-                    InitializeNewGame();
-                }
-                SoundManager.instance.PlayMusic(SoundManager.instance.theme1Music, playOnLoop: true, fadeDuration: 2);
-            }
-            if (Input.GetButtonDown("Cancel"))
-            {
-                TogglePause();
-            }
-        }
-    }
+    //private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    //{
+    //    Debug.Log("load " + currentScene);
+    //    if (mode == LoadSceneMode.Single)
+    //    {
+    //        currentScene = scene.buildIndex;
+    //        sceneChanged = true;
+    //        toBeCleanOnSceneChange = new List<GameObject>();
+    //    }
+    //    if (scene.buildIndex == 0)
+    //    {
+    //        CleanPlayers();
+    //        isGameInitialized = false;
+    //        sceneChanged = false;
+    //    }
+    //    SceneManager.sceneLoaded -= OnSceneLoaded;
+    //}
 
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    //private void OnSceneUnloaded(Scene scene)
+    //{
+    //    Debug.Log("unload " + currentScene);
+    //    CleanSceneOnChange();
+    //    Camera.main.GetComponent<CameraController>().SetIsCameraSet(false);
+    //    SceneManager.sceneUnloaded -= OnSceneUnloaded;
+    //}
+
+    private void CleanPlayers()
     {
-        if (scene.buildIndex != currentScene)
-        {
-            isSceneLoaded = true;
-            currentScene = scene.buildIndex;
-            //ResetPlayers();
-        }
+        Destroy(inGamePanel);
+        Destroy(player1);
+        Destroy(player2);
     }
 
     private void ResetPlayers()
     {
         player1.transform.position = Vector3.zero;
         player2.transform.position = Vector3.zero;
-        float maxHp = player1.GetComponent<PlayerController>().maxHp;
-        player1.GetComponent<PlayerController>().SetHealth(maxHp);
-        player2.GetComponent<PlayerController>().SetHealth(maxHp);
-        Camera.main.GetComponent<CameraController>().TargetPlayer1();
-        isGameInitialized = true;
     }
 
-    public void InitializeNewGame()
+    private void Update()
     {
-        Debug.Log("initialize new game");
-        potionNumber = 0;
-        player1 = Instantiate(Resources.Load("Prefabs/Players/Player1"), Vector3.zero, Quaternion.Euler(0, 0, 0)) as GameObject;
-        GiveWeapon(1, player1);
-        player2 = Instantiate(Resources.Load("Prefabs/Players/Player2"), Vector3.zero, Quaternion.Euler(0, 0, 0)) as GameObject;
-        GiveWeapon(3, player2);
+        if (isPlaying)
+        {
+            if (isGameReady)
+            {
+                if (!isSceneLoaded)
+                {
+                    LoadByIndex(currentScene);
+                    ResetPlayers();
+                    Camera.main.GetComponent<CameraController>().SetupCamera(currentScene);
+                }
+                else
+                {
+                    if (Input.GetButtonDown("Cancel"))
+                    {
+                        TogglePause();
+                    }
+                }
+                
+            }
+            else
+            {
+                InstantiatePlayersWithItems();
+                isGameReady = true;
+            }  
+        }
+        else
+        {
+            if (isGameReady)
+            {
+                if (!isSceneLoaded)
+                {
+                    LoadByIndex(0);
+                }
+            }
+            else
+            {
+                Camera.main.GetComponent<CameraController>().SetupCamera(0);
+                CleanPlayers();
+                isGameReady = true;
+            }
+        }
+        
+    }
+
+    public void LoadByIndex(int index)
+    {
+        SceneManager.LoadScene(index);
+        currentScene = index;
+        isSceneLoaded = true;
+    }
+
+    private void InstantiatePlayersWithItems()
+    {
+        if (loadedSavedGame)
+        {
+            player1 = Instantiate(Resources.Load("Prefabs/Players/Player1"), savedPosition, Quaternion.Euler(0, 0, 0)) as GameObject;
+            GiveWeapon(p1Weapon, player1);
+            GiveTrinket(-1, player1);
+            player2 = Instantiate(Resources.Load("Prefabs/Players/Player2"), savedPosition, Quaternion.Euler(0, 0, 0)) as GameObject;
+            GiveWeapon(p2Weapon, player2);
+            GiveTrinket(-1, player2);
+        }
+        else
+        {
+            player1 = Instantiate(Resources.Load("Prefabs/Players/Player1"), Vector3.zero, Quaternion.Euler(0, 0, 0)) as GameObject;
+            GiveWeapon(1, player1);
+            GiveTrinket(-1, player1);
+            player2 = Instantiate(Resources.Load("Prefabs/Players/Player2"), Vector3.zero, Quaternion.Euler(0, 0, 0)) as GameObject;
+            GiveWeapon(3, player2);
+            GiveTrinket(-1, player2);
+        }
         DontDestroyOnLoad(player1);
         DontDestroyOnLoad(player2);
-     
-        CameraController mainCamera = Camera.main.GetComponent<CameraController>();
-        mainCamera.SetCameraForGame();
         this.inGamePanel = Instantiate(Resources.Load("Prefabs/UI/InGamePanel"), Camera.main.transform) as GameObject;
         this.inGamePanel.GetComponent<Canvas>().worldCamera = Camera.main;
-        inGamePanel.GetComponent<Canvas>().sortingLayerName = "UI";
-        isGameInitialized = true;
+    }
+
+    private void InstantiatePlayersWithItems(int p1WeaponID, int p1TrinketID, Vector3 p1Position, int p2WeaponID, int p2TrinketID, Vector3 p2Position)
+    {
+        player1 = Instantiate(Resources.Load("Prefabs/Players/Player1"), p1Position, Quaternion.Euler(0, 0, 0)) as GameObject;
+        GiveWeapon(p1WeaponID, player1);
+        GiveTrinket(p1TrinketID, player1);
+        player2 = Instantiate(Resources.Load("Prefabs/Players/Player2"), p2Position, Quaternion.Euler(0, 0, 0)) as GameObject;
+        GiveWeapon(p2WeaponID, player2);
+        GiveTrinket(p2TrinketID, player2);
+    }
+
+    public void StartNewGame()
+    {
+        isPlaying = true;
+        isGameReady = false;
+        isSceneLoaded = false;
+        currentScene = 1;
+    }
+
+    public void GoToNextLevel()
+    {
+        isSceneLoaded = false;
+        currentScene++;
+    }
+
+    public void GoBackToMenu()
+    {
+        isPlaying = false;
+        isGameReady = false;
+        isSceneLoaded = false;
+        currentScene = 0;
     }
 
     private void GiveWeapon(int weaponType, GameObject player)
     {
-        if(player.GetComponent<PlayerController>().GetMyWeapon() == null)
+        if (player.GetComponent<PlayerController>().GetMyWeapon() == null)
         {
             string weaponName = null;
             switch (weaponType)
@@ -188,7 +259,7 @@ public class GameManager : MonoBehaviour
                 default:
                     break;
             }
-            if(weaponName != null)
+            if (weaponName != null)
             {
                 GameObject weapon = Instantiate(Resources.Load("Prefabs/Weapons/" + weaponName)) as GameObject;
                 weapon.transform.parent = player.transform.Find("Hand");
@@ -201,35 +272,12 @@ public class GameManager : MonoBehaviour
                 weaponScript.SetWeaponInfo();
                 player.GetComponent<PlayerController>().SetMyWeapon(weaponScript);
             }
-        } 
+        }
     }
 
-    public void InitializeSavedGame()
+    private void GiveTrinket(int trinketType, GameObject player)
     {
-        player1 = Instantiate(Resources.Load("Prefabs/Players/Player1"), savedPosition, Quaternion.Euler(0, 0, 0)) as GameObject;
-        player2 = Instantiate(Resources.Load("Prefabs/Players/Player2"), savedPosition, Quaternion.Euler(0, 0, 0)) as GameObject;
-        DontDestroyOnLoad(player1);
-        DontDestroyOnLoad(player2);
-        CameraController mainCamera = Camera.main.GetComponent<CameraController>();
-        mainCamera.SetCameraForGame();
-        isGameInitialized = true;
-    }
 
-    private void InitializeGameVariables()
-    {
-        maxPotion = 5;
-        potionHeal = 0.5f;
-    }
-
-    public void LoadByIndex(int sceneIndex)
-    {
-        startedGame = sceneIndex;
-    }
-
-    public void LoadSavedGame()
-    {
-        startedGame = savedScene;
-        loadedSavedGame = true;
     }
 
     public void Quit()
@@ -241,78 +289,17 @@ public class GameManager : MonoBehaviour
 #endif
     }
 
-    public void Save()
-    {
-        savedPosition = player1.transform.position;
-        savedScene = SceneManager.GetActiveScene().buildIndex;
-
-        BinaryFormatter bf = new BinaryFormatter();
-        FileStream file = File.Create(Application.persistentDataPath + "Save.dat");
-
-        SavedData data = new SavedData
-        {
-            potionNumber = potionNumber,
-            y = savedPosition[1],
-            x = savedPosition[0],
-            savedScene = savedScene
-            //weaponTypeP1 = weaponTypeP1,
-            //weaponTypeP2 = weaponTypeP2,
-            //weaponTierP1 = weaponTierP1,
-            //weaponTierP2 = weaponTierP2
-        };
-
-        bf.Serialize(file, data);
-        file.Close();
-    }
-
-    public void Load()
-    {
-        if (File.Exists(Application.persistentDataPath + "Save.dat"))
-        {
-            BinaryFormatter bf = new BinaryFormatter();
-            FileStream file = File.Open(Application.persistentDataPath + "Save.dat", FileMode.Open);
-
-            SavedData data = (SavedData)bf.Deserialize(file);
-            file.Close();
-
-            potionNumber = data.potionNumber;
-            savedPosition = new Vector2(data.x, data.y);
-            savedScene = data.savedScene;
-            //PostLoad();
-        }
-    }
-
-    public void PostLoad()
-    {
-        if (SceneManager.GetActiveScene().buildIndex != savedScene)
-        {
-            SceneManager.LoadScene(savedScene);
-            //SetPlayers();
-        }
-        else
-        {
-            player1 = GameObject.FindGameObjectWithTag("Player1");
-            player2 = GameObject.FindGameObjectWithTag("Player2");
-            Camera.main.transform.position = new Vector3(savedPosition.x, savedPosition.y, Camera.main.transform.position.z);
-            player1.transform.position = savedPosition;
-            player2.transform.position = savedPosition;
-        }
-    }
-
     public void TogglePause()
     {
         isPaused = !isPaused;
-
         if (isPaused)
         {
             Time.timeScale = 0;
             if (pauseMenu == null)
             {
                 pauseMenu = inGamePanel.transform.Find("PauseMenu").gameObject;
-                Button quit = pauseMenu.transform.Find("Quitter").gameObject.GetComponent<Button>();
-                quit.onClick.AddListener(delegate { this.Quit(); });
-                Button resume = pauseMenu.transform.Find("Reprendre").gameObject.GetComponent<Button>();
-                resume.onClick.AddListener(delegate { this.TogglePause(); });
+                pauseMenu.transform.Find("Quitter").gameObject.GetComponent<Button>().onClick.AddListener(delegate { this.GoBackToMenu(); this.TogglePause(); });
+                pauseMenu.transform.Find("Reprendre").gameObject.GetComponent<Button>().onClick.AddListener(delegate { this.TogglePause(); });
             }
             pauseMenu.SetActive(true);
         }
@@ -324,9 +311,9 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void CleanSceneOnChange()
+    private void CleanSceneOnChange()
     {
-        foreach(GameObject go in toBeCleanOnSceneChange)
+        foreach (GameObject go in toBeCleanOnSceneChange)
         {
             Destroy(go);
         }
@@ -344,7 +331,7 @@ public class GameManager : MonoBehaviour
         int i = 0;
         while (i < length && !isRemoved)
         {
-            if(toBeCleanOnSceneChange[i].GetInstanceID() == goID)
+            if (toBeCleanOnSceneChange[i].GetInstanceID() == goID)
             {
                 toBeCleanOnSceneChange.RemoveAt(i);
                 isRemoved = true;
@@ -353,25 +340,90 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public int GetBossSceneBuildIndex()
+    {
+        return bossSceneBuildIndex;
+    }
+
+    private void OnDestroy()
+    {
+        if (toBeCleanOnSceneChange != null)
+        {
+            CleanSceneOnChange();
+        }
+    }
+
+    //////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////// SAUVEGARDE ///////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////
+    private bool loadedSavedGame;
+
+    private Vector2 savedPosition;
+    private int p1Weapon;
+    private int p2Weapon;
+    private int savedScene;
+
+
+    public void Save()
+    {
+        savedPosition = player1.transform.position;
+        savedScene = currentScene;
+
+        BinaryFormatter bf = new BinaryFormatter();
+        FileStream file = File.Create(Application.persistentDataPath + "Save.dat");
+
+        SavedData data = new SavedData
+        {
+            potionNumber = potionNumber,
+            y = savedPosition[1],
+            x = savedPosition[0],
+            player1Weapon = player1.GetComponentInChildren<WeaponController>().GetWeaponID(),
+            player2Weapon = player2.GetComponentInChildren<WeaponController>().GetWeaponID(),
+            savedScene = savedScene
+        };
+
+        bf.Serialize(file, data);
+        file.Close();
+    }
+
+    public void RetrieveSavedData()
+    {
+        if (File.Exists(Application.persistentDataPath + "Save.dat"))
+        {
+            BinaryFormatter bf = new BinaryFormatter();
+            FileStream file = File.Open(Application.persistentDataPath + "Save.dat", FileMode.Open);
+
+            SavedData data = (SavedData)bf.Deserialize(file);
+            file.Close();
+
+            potionNumber = data.potionNumber;
+            savedPosition = new Vector3(data.x, data.y);
+            savedScene = data.savedScene;
+        }
+    }
+
+    public void LoadSavedGame()
+    {
+        RetrieveSavedData();
+        LoadByIndex(savedScene);
+        loadedSavedGame = true;
+    }
+    //////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////
+
 }
 
-[Serializable]
+[System.Serializable]
 class SavedData
 {
     [Range(0, 5)]
     public int potionNumber;
     public float x;
     public float y;
+    public int player1Weapon;
+    public int player2Weapon;
+    public int player1Trinket;
+    public int player2Trinket;
     public int savedScene;
-    //public int strength;
-    //public int agility;
-    //public int stamina;
-    //[Range(1, 4)]
-    //public int weaponTypeP1;
-    //[Range(1, 4)]
-    //public int weaponTypeP2;
-    //[Range(1, 4)]
-    //public int weaponTierP1;
-    //[Range(1, 4)]
-    //public int weaponTierP2;
 }

@@ -22,6 +22,27 @@ public abstract class AliveEnemy : EnemyController {
         }
     }
 
+    protected override void MoveToward(Vector2 target)
+    {
+        if(player.transform.position.x < enemyTransform.position.x)
+        {
+            if (faceRight)
+            {
+                Flip();
+            }
+            rb2d.velocity = new Vector2(-speed, rb2d.velocity.y);
+        }
+        else
+        {
+            if (!faceRight)
+            {
+                Flip();
+            }
+            rb2d.velocity = new Vector2(speed, rb2d.velocity.y);
+        }
+    }
+    
+
     protected override void Action()
     {
         rb2d.AddForce(Vector2.zero);
@@ -58,6 +79,7 @@ public abstract class AliveEnemy : EnemyController {
                     canAttack = Physics2D.Linecast(enemyTransform.position, end, 1 << LayerMask.NameToLayer(player.tag));
                     if (canAttack)
                     {
+                        Stop();
                         if (!isOnCD)
                         {
                             StartCoroutine(Attack());
@@ -65,7 +87,7 @@ public abstract class AliveEnemy : EnemyController {
                     }
                     else
                     {
-                        MoveTowards(player.transform.position);
+                        MoveToward(player.transform.position);
                     }
                 }
             }

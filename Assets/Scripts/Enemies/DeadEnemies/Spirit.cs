@@ -11,7 +11,7 @@ public class Spirit : DeadEnemy {
         health = 100f;
         speed = 2.5f;
         damage = 2;
-        attackRange = 1f;
+        attackRange = 2f;
         detectionRange = 10f;
     }
 

@@ -11,6 +11,7 @@ public abstract class WeaponController : MonoBehaviour
     public AudioClip deadSkillSound;
 
     [HideInInspector] public string weaponName;
+    protected int weaponID;
 
     protected Vector3 defaultLocalRotation;
     protected Vector3 defaultLocalPosition;
@@ -61,7 +62,7 @@ public abstract class WeaponController : MonoBehaviour
         isOnGlobalCoolDown = false;
         attacksDamage = new float[] { 10 * damage / 3, 10 * damage / 2, 10 * damage, 0f};
         defaultLocalPosition = new Vector3(1.3f, 0f, 0f);
-        transform.localPosition = defaultLocalPosition;
+        //transform.localPosition = defaultLocalPosition;
         transform.localEulerAngles = defaultLocalRotation;
         SetWeaponInfo();
     }
@@ -263,6 +264,11 @@ public abstract class WeaponController : MonoBehaviour
             SoundManager.instance.PlaySFX(livingSkillSound);
         else if (owner == 2)
             SoundManager.instance.PlaySFX(deadSkillSound);
+    }
+
+    public int GetWeaponID()
+    {
+        return weaponID;
     }
 
 }

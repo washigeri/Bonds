@@ -48,7 +48,6 @@ public class SettingManager : MonoBehaviour {
         if (File.Exists(settingsPath))
         {
             LoadSettings();
-            Debug.Log("Settings exists");
         }
     }
 

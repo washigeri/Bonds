@@ -20,11 +20,6 @@ public class FallingPlatform : MonoBehaviour
         startingPosition = transform.position;
     }
 
-    void update()
-    {
-
-    }
-
     void OnCollisionEnter2D(Collision2D other)
     {
         if (other.gameObject.CompareTag("Player1") && isFalling == false)

@@ -23,18 +23,23 @@ public abstract class DeadEnemy : EnemyController
         }
         else
         {
-            dP1 = 0;
+            dP1 = Mathf.Infinity;
         }
         float dP2;
-        if(GameManager.gameManager.player2 != null)
+        if (GameManager.gameManager.player2 != null)
         {
             dP2 = Vector2.Distance(GameManager.gameManager.player2.transform.position, enemyTransform.position);
         }
         else
         {
-            dP2 = 0;
+            dP2 = Mathf.Infinity; ;
         }
-        if (dP1 <= dP2)
+        if (dP1 == Mathf.Infinity && dP2 == Mathf.Infinity)
+        {
+            player = null;
+            return 0;
+        }
+        else if (dP1 <= dP2)
         {
             player = GameManager.gameManager.player1;
             return 1;
@@ -48,15 +53,52 @@ public abstract class DeadEnemy : EnemyController
 
     private bool IsVisible(int playerID)
     {
-        RaycastHit2D hit = Physics2D.Raycast(enemyTransform.position, (player.transform.position - enemyTransform.position), (playerID == hasATarget ? Mathf.Infinity : detectionRange), ~layerMask);
-        if (hit.collider != null)
-        {
-            return hit.collider.CompareTag(player.tag);
-        }
-        else
+        if(playerID == 0)
         {
             return false;
         }
+        else
+        {
+            RaycastHit2D hit = Physics2D.Raycast(enemyTransform.position, (player.transform.position - enemyTransform.position), (playerID == hasATarget ? Mathf.Infinity : detectionRange), ~layerMask);
+            if (hit.collider != null)
+            {
+                return hit.collider.CompareTag(player.tag);
+            }
+            else
+            {
+                return false;
+            }
+        }
+    }
+
+    protected override void MoveToward(Vector2 target)
+    {
+        Vector2 velocity = rb2d.velocity;
+        if(target.x < enemyTransform.position.x)
+        {
+            if (faceRight)
+            {
+                Flip();
+            }
+            velocity.x = -speed;
+        }
+        else
+        {
+            if (!faceRight)
+            {
+                Flip();
+            }
+            velocity.x = speed;
+        }
+        if (target.y > enemyTransform.position.y)
+        {
+            velocity.y = speed;
+        }
+        else
+        {
+            velocity.y = -speed;
+        }
+        rb2d.velocity = velocity.normalized * speed;
     }
 
     private void TryToAttackOrMove()
@@ -66,6 +108,7 @@ public abstract class DeadEnemy : EnemyController
         canAttack = Physics2D.Linecast(enemyTransform.position, end, 1 << LayerMask.NameToLayer(player.tag));
         if (canAttack)
         {
+            Stop();
             if (!isOnCD)
             {
                 StartCoroutine(Attack());
@@ -73,44 +116,48 @@ public abstract class DeadEnemy : EnemyController
         }
         else
         {
-            MoveTowards(player.transform.position);
+            MoveToward(player.transform.position);
         }
     }
 
     protected override void Action()
     {
         rb2d.AddForce(Vector2.zero);
-        if(player != null)
+        int playerID = GetTarget();
+        if (IsVisible(playerID))
         {
-            int playerID = GetTarget();
-            if (IsVisible(playerID))
-            {
-                hasATarget = playerID;
-                player = hasATarget == 1 ? GameManager.gameManager.player1 : GameManager.gameManager.player2;
-                TryToAttackOrMove();
-            }
-            else
-            {
-                if (playerID == 1)
-                {
-                    player = GameManager.gameManager.player2;
-                }
-                else
-                {
-                    player = GameManager.gameManager.player1;
-                }
-                playerID = playerID == 1 ? 2 : 1;
-                if (IsVisible(playerID))
-                {
-                    hasATarget = playerID;
-                    player = hasATarget == 1 ? GameManager.gameManager.player1 : GameManager.gameManager.player2;
-                    TryToAttackOrMove();
-                }
-                else
-                {
-                    hasATarget = 0;
-                }
-            }
+            hasATarget = playerID;
+            player = (hasATarget == 1 ? GameManager.gameManager.player1 : GameManager.gameManager.player2);
+            TryToAttackOrMove();
+        }
+        //else
+        //{
+        //    if (playerID == 1)
+        //    {
+        //        player = GameManager.gameManager.player2;
+        //    }
+        //    else
+        //    {
+        //        player = GameManager.gameManager.player1;
+        //    }
+        //    playerID = playerID == 1 ? 2 : 1;
+        //    if (IsVisible(playerID))
+        //    {
+        //        hasATarget = playerID;
+        //        player = hasATarget == 1 ? GameManager.gameManager.player1 : GameManager.gameManager.player2;
+        //        TryToAttackOrMove();
+        //    }
+        //    else
+        //    {
+        //        hasATarget = 0;
+        //    }
+        //}
+        else
+        {
+            hasATarget = 0;
+            playerID = 0;
+            player = null;
+            Stop();
         }
     }
 }

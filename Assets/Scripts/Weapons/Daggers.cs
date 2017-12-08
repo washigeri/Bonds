@@ -67,6 +67,7 @@ public class Daggers : WeaponController
         castedBuff = false;
 
         weaponName = "Daggers";
+        weaponID = 2;
 
         attacksDamage[0] = 15f;
         attacksDamage[1] = 5f;
