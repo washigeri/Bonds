@@ -15,6 +15,7 @@ public class Feather : MonoBehaviour
     private bool isAboutToBeDestroyed;
     private bool canBeDestroyed;
     private float roomMaxY;
+    private LayerMask layerMask;
 
     private void Awake()
     {
@@ -27,6 +28,7 @@ public class Feather : MonoBehaviour
         isAboutToBeDestroyed = false;
         canBeDestroyed = false;
         roomMaxY = (float)CameraController.cameraHeight / 2f;
+        layerMask = (1 << LayerMask.NameToLayer("Ground")) | (1 << LayerMask.NameToLayer("Plateform"));
     }
 
     // Update is called once per frame
@@ -34,7 +36,7 @@ public class Feather : MonoBehaviour
     {
         if (!hasExploded)
         {
-            isGrounded = Physics2D.Linecast(transform.position, transform.position + groundCheck, 1 << LayerMask.NameToLayer("Ground"));
+            isGrounded = Physics2D.Linecast(transform.position, transform.position + groundCheck, layerMask);
             if (isGrounded)
             {
                 if (!isAboutToExplode)

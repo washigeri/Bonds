@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 114929395339365678}
   - component: {fileID: 212029095541371070}
   m_Layer: 13
-  m_Name: OneWayUpPlatform
+  m_Name: OneWayUpPlatform1
   m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -133,7 +133,7 @@ PlatformEffector2D:
   m_UseColliderMask: 1
   m_ColliderMask:
     serializedVersion: 2
-    m_Bits: 4294901247
+    m_Bits: 4294868479
   m_RotationalOffset: 0
   m_UseOneWay: 1
   m_UseOneWayGrouping: 0

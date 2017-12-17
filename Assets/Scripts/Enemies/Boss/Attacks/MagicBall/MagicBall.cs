@@ -5,7 +5,7 @@ public class MagicBall : MonoBehaviour
 {
 
     BossController boss;
-    public bool isSet;
+    private bool isSet;
 
     private Transform target;
     private float hitDamage;
@@ -50,6 +50,7 @@ public class MagicBall : MonoBehaviour
         yield return new WaitForSeconds(timeBeforeActivation);
         startedActivation = false;
         isActivated = true;
+        moveSpeed *= 1.5f;
     }
 
     private IEnumerator OnExplosion()
@@ -109,6 +110,10 @@ public class MagicBall : MonoBehaviour
                 if (!startedActivation)
                 {
                     StartCoroutine(OnActivation());
+                }
+                else
+                {
+                    Move();
                 }
             }
         }

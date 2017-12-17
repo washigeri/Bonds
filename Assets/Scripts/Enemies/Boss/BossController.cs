@@ -48,6 +48,10 @@ public class BossController : EnemyController
 
     private float distanceToPlayer1;
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        Debug.Log("colliding with " + collision.collider.name + " with tag " + collision.collider.tag);
+    }
 
     protected override void Awake()
     {
@@ -76,7 +80,7 @@ public class BossController : EnemyController
         roomMaxX = (float)CameraController.cameraWidth / 2f;
         roomMiny = -(float)CameraController.cameraHeight / 2f;
         roomMaxY = (float)CameraController.cameraHeight / 2f;
-        defaultPosition = new Vector3((roomMaxX + roomMinX) / 2f, roomMiny, 0f);
+        defaultPosition = new Vector3((roomMaxX + roomMinX) / 2f, roomMiny + 1f, 0f);
         rb2d = GetComponent<Rigidbody2D>();
         isMovingTowardRayCastPosition = false;
         canCastRays = false;
@@ -131,7 +135,8 @@ public class BossController : EnemyController
             if (isMovingTowardDefaultPosition)
             {
                 GoTo(defaultPosition, speed * 2f);
-                if (transform.position == defaultPosition)
+                bool isGrounded = Physics2D.Linecast(transform.position, transform.position + 3 * Vector3.down, 1 << LayerMask.NameToLayer("Ground"));
+                if (transform.position == defaultPosition || isGrounded)
                 {
                     isMovingTowardDefaultPosition = false;
                     rb2d.gravityScale = 1f;
@@ -335,6 +340,7 @@ public class BossController : EnemyController
         this.isBlocked = false;
         startedMagicRay = false;
         isMovingTowardDefaultPosition = true;
+        isBusy = false;
     }
 
     private void PopFeather()

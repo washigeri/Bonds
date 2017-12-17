@@ -62,6 +62,7 @@ public class GameManager : MonoBehaviour
         isSceneLoaded = false;
         InitializeGameVariables();
         IgnoreCollision();
+        SceneManager.sceneUnloaded += OnSceneUnloaded;
     }
 
     private void IgnoreCollision()
@@ -69,16 +70,16 @@ public class GameManager : MonoBehaviour
         Physics2D.IgnoreLayerCollision(8, 9, true);
         Physics2D.IgnoreLayerCollision(9, 10, true);
         Physics2D.IgnoreLayerCollision(8, 10, false);
-        //Physics2D.IgnoreLayerCollision(4, 12, false);
-        //Physics2D.IgnoreLayerCollision(4, 10, true);
         Physics2D.IgnoreLayerCollision(8, 15, true);
-        //Physics2D.IgnoreLayerCollision(9, 15, true);
+        Physics2D.IgnoreLayerCollision(13, 15, true);
         Physics2D.IgnoreLayerCollision(10, 15, true);
         Physics2D.IgnoreLayerCollision(16, 13, true);
-        Physics2D.IgnoreLayerCollision(15, 13, true);
-        //Physics2D.IgnoreLayerCollision(8, 16, true);
-        //Physics2D.IgnoreLayerCollision(9, 16, true);
-        //Physics2D.IgnoreLayerCollision(4, 16, true);
+        Physics2D.IgnoreLayerCollision(0, 16, true);
+    }
+
+    private void OnSceneUnloaded(Scene scene)
+    {
+        CleanSceneOnChange();
     }
 
     private void InitializeGameVariables()
@@ -86,32 +87,6 @@ public class GameManager : MonoBehaviour
         maxPotion = 5;
         potionHeal = 0.5f;
     }
-
-    //private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    //{
-    //    Debug.Log("load " + currentScene);
-    //    if (mode == LoadSceneMode.Single)
-    //    {
-    //        currentScene = scene.buildIndex;
-    //        sceneChanged = true;
-    //        toBeCleanOnSceneChange = new List<GameObject>();
-    //    }
-    //    if (scene.buildIndex == 0)
-    //    {
-    //        CleanPlayers();
-    //        isGameInitialized = false;
-    //        sceneChanged = false;
-    //    }
-    //    SceneManager.sceneLoaded -= OnSceneLoaded;
-    //}
-
-    //private void OnSceneUnloaded(Scene scene)
-    //{
-    //    Debug.Log("unload " + currentScene);
-    //    CleanSceneOnChange();
-    //    Camera.main.GetComponent<CameraController>().SetIsCameraSet(false);
-    //    SceneManager.sceneUnloaded -= OnSceneUnloaded;
-    //}
 
     private void CleanPlayers()
     {
@@ -203,6 +178,7 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(player2);
         this.inGamePanel = Instantiate(Resources.Load("Prefabs/UI/InGamePanel"), Camera.main.transform) as GameObject;
         this.inGamePanel.GetComponent<Canvas>().worldCamera = Camera.main;
+        this.inGamePanel.GetComponent<Canvas>().sortingLayerName = "UI";
     }
 
     private void InstantiatePlayersWithItems(int p1WeaponID, int p1TrinketID, Vector3 p1Position, int p2WeaponID, int p2TrinketID, Vector3 p2Position)

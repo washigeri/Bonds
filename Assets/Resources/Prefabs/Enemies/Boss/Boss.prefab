@@ -23,7 +23,6 @@ GameObject:
   - component: {fileID: 61478294981190546}
   - component: {fileID: 212575776331951372}
   - component: {fileID: 114428236384259560}
-  - component: {fileID: 66251465272235610}
   m_Layer: 15
   m_Name: Boss
   m_TagString: Boss
@@ -57,7 +56,7 @@ GameObject:
   - component: {fileID: 61694299934916808}
   - component: {fileID: 212247416228600690}
   - component: {fileID: 114526311255100782}
-  m_Layer: 15
+  m_Layer: 0
   m_Name: Staff
   m_TagString: Weapon
   m_Icon: {fileID: 0}
@@ -175,26 +174,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.24178386, y: 0.51188004}
   m_EdgeRadius: 0
---- !u!66 &66251465272235610
-CompositeCollider2D:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1092992790292432}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_GeometryType: 0
-  m_GenerationType: 0
-  m_EdgeRadius: 0
-  m_ColliderPaths: []
-  m_CompositePaths:
-    m_Paths: []
-  m_VertexDistance: 0.0005
 --- !u!114 &114428236384259560
 MonoBehaviour:
   m_ObjectHideFlags: 1

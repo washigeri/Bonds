@@ -55,7 +55,7 @@ MonoBehaviour:
   soundClip: {fileID: 8300000, guid: eb57e2690ce4fc04ebaca350d25ed797, type: 3}
   layerMask:
     serializedVersion: 2
-    m_Bits: 4294963199
+    m_Bits: 4294955007
 --- !u!120 &120071877868553462
 LineRenderer:
   m_ObjectHideFlags: 1
