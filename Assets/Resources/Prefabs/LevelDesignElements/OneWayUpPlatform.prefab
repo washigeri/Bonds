@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 114929395339365678}
   - component: {fileID: 212029095541371070}
   m_Layer: 13
-  m_Name: OneWayUpPlatform1
+  m_Name: OneWayUpPlatform
   m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
