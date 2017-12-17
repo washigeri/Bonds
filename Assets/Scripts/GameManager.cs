@@ -67,14 +67,16 @@ public class GameManager : MonoBehaviour
 
     private void IgnoreCollision()
     {
-        Physics2D.IgnoreLayerCollision(8, 9, true);
-        Physics2D.IgnoreLayerCollision(9, 10, true);
-        Physics2D.IgnoreLayerCollision(8, 10, false);
-        Physics2D.IgnoreLayerCollision(8, 15, true);
-        Physics2D.IgnoreLayerCollision(13, 15, true);
-        Physics2D.IgnoreLayerCollision(10, 15, true);
-        Physics2D.IgnoreLayerCollision(16, 13, true);
-        Physics2D.IgnoreLayerCollision(0, 16, true);
+        //Physics2D.IgnoreLayerCollision(8, 9, true);
+        //Physics2D.IgnoreLayerCollision(9, 10, true);
+        //Physics2D.IgnoreLayerCollision(8, 10, false);
+        //Physics2D.IgnoreLayerCollision(8, 15, true);
+        //Physics2D.IgnoreLayerCollision(13, 15, true);
+        //Physics2D.IgnoreLayerCollision(10, 15, true);
+        //Physics2D.IgnoreLayerCollision(16, 13, true);
+        //Physics2D.IgnoreLayerCollision(0, 16, true);
+        Physics2D.IgnoreLayerCollision(8, 14, false);
+        Physics2D.IgnoreLayerCollision(9, 14, true);
     }
 
     private void OnSceneUnloaded(Scene scene)
