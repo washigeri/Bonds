@@ -2,22 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Spirit : DeadEnemy {
+public class Wasp : AliveEnemy
+{
 
     protected override void Awake()
     {
         base.Awake();
+        GetComponent<Rigidbody2D>().gravityScale = 0f;
         attackCD = 1.5f;
-        health = 59f;
-        speed = 5f;
+        health = 31f;
+        speed = 8f;
         damage = 4;
-        attackRange = 2f;
-        detectionRange = 20f;
+        attackRange = 1f;
+        detectionRange = 25f;
     }
 
     protected override IEnumerator Attack()
     {
-       
         player.GetComponent<PlayerController>().RemoveHealth(damage * damageMultiplier);
         isOnCD = true;
         yield return new WaitForSeconds(attackCD);
