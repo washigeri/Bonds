@@ -48,6 +48,9 @@ public class BossController : EnemyController
 
     private float distanceToPlayer1;
 
+    private int nextAttack;
+    private bool isDoingMeleeAttack;
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         Debug.Log("colliding with " + collision.collider.name + " with tag " + collision.collider.tag);
@@ -91,6 +94,8 @@ public class BossController : EnemyController
         isMeleeOnCD = false;
         meleeCD = 6f;
         startedMeleeCD = false;
+        nextAttack = 1;
+        isDoingMeleeAttack = false;
     }
 
     private IEnumerator WaitForInput()
@@ -233,6 +238,7 @@ public class BossController : EnemyController
         if (!isBusy)
         {
             startSlowAttack = true;
+            nextAttack = Random.Range(0f, 1f) < 0.25f ? 0 : 1;
         }
     }
 
@@ -318,7 +324,14 @@ public class BossController : EnemyController
                 Flip();
             }
         }
-        rb2d.velocity = new Vector3(speed * (faceRight ? 1 : -1), rb2d.velocity.y, 0f);
+        if(Mathf.Abs(transform.position.x - target.x) > attackRange / 2f)
+        {
+            rb2d.velocity = new Vector3(speed * (faceRight ? 1 : -1), rb2d.velocity.y, 0f);
+        }
+        else
+        {
+            Stop();
+        }
     }
 
     private void PopMagicRay(int direction)
@@ -423,5 +436,10 @@ public class BossController : EnemyController
     public void SetStartedMeleeCD(bool startedMeleeCD)
     {
         this.startedMeleeCD = startedMeleeCD;
+    }
+
+    public void SetIsDoingMeleeAttack(bool isDoingMeleeAttack)
+    {
+        this.isDoingMeleeAttack = isDoingMeleeAttack;
     }
 }

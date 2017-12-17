@@ -29,7 +29,7 @@ public class LaserScript : MonoBehaviour
     {
         isSet = false;
         laserWidth = 1f;
-        laserMaxLength = 20f;
+        laserMaxLength = 30f;
         laserLength = 0f;
         laserLineRenderer = GetComponent<LineRenderer>();
         Vector3[] initLaserPositions = new Vector3[2] { Vector3.zero, Vector3.zero };
