@@ -44,6 +44,7 @@ public class BossWeaponController : MonoBehaviour
     private BoxCollider2D bCollider2D;
 
     private float timeBetweenBothAttacks;
+    private float timeBetweenBothAttacksLeft;
 
     private void Awake()
     {
@@ -59,7 +60,6 @@ public class BossWeaponController : MonoBehaviour
         quickAttackTranslationSpeed = quickAttackFullTranslation / quickAttackTranslationDuration;
         quickAttackTimeBetweenHits = 0.15f;
         quickAttackWarningDuration = 0.5f;
-
 
         alreadyStartedSlowAttack = false;
         startSlowAttack = false;
@@ -80,9 +80,11 @@ public class BossWeaponController : MonoBehaviour
         attacksDamage = new float[] { quickAttackDamage, slowAttackDamage, 0f };
 
         defaultLocalPosition = new Vector3(-0.33f, 0f, 0f);
-        defaultLocalRotation = new Vector3(0, 0, 90);
+        defaultLocalRotation = new Vector3(0f, 0f, 90f);
         bCollider2D = GetComponent<BoxCollider2D>();
-        timeBetweenBothAttacks = 0.5f;
+
+        timeBetweenBothAttacks = 2f;
+        timeBetweenBothAttacksLeft = timeBetweenBothAttacks;
     }
 
     private void Start()
@@ -98,6 +100,18 @@ public class BossWeaponController : MonoBehaviour
             if (startQuickAttack)
             {
                 StartCoroutine(QuickAttack());
+            }
+        }
+        else
+        {
+            if (timeBetweenBothAttacksLeft > timeBetweenBothAttacks / 2f)
+            {
+                boss.MoveTo(GameManager.gameManager.player1.transform.position);
+                timeBetweenBothAttacksLeft -= Time.deltaTime;
+            }
+            else if(timeBetweenBothAttacksLeft > 0f)
+            {
+                timeBetweenBothAttacksLeft -= Time.deltaTime;
             }
         }
         if (!alreadyStartedSlowAttack)
@@ -129,14 +143,10 @@ public class BossWeaponController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("entered trigger");
         if (isAttacking >= 0)
         {
-            Debug.Log("Is attacking");
-            Debug.Log(collision.name);
             if (collision.gameObject.CompareTag("Player1") || collision.gameObject.CompareTag("Player2"))
             {
-                Debug.Log("shoud deal damage");
                 collision.GetComponent<PlayerController>().RemoveHealth(attacksDamage[isAttacking]);
             }
         }
@@ -147,8 +157,8 @@ public class BossWeaponController : MonoBehaviour
         boss.SetStartQuickAttack(false);
         boss.SetIsBusy(true);
         alreadyStartedQuickAttack = true;
-        yield return new WaitForSeconds(timeBetweenBothAttacks);
         boss.Target();
+        yield return new WaitUntil(() => timeBetweenBothAttacksLeft <= 0f);
         isAttacking = 0;
         yield return new WaitUntil(() => quickAttackTranslationLeft <= 0f);
         quickAttackTranslationLeft = quickAttackFullTranslation;
@@ -169,13 +179,14 @@ public class BossWeaponController : MonoBehaviour
         alreadyStartedQuickAttack = false;
         startQuickAttack = false;
         boss.SetIsBusy(false);
+        boss.SetIsDoingMeleeAttack(false);
         boss.SetStartedMeleeCD(true);
     }
 
     private IEnumerator SlowAttack()
     {
+        timeBetweenBothAttacksLeft = timeBetweenBothAttacks;
         boss.SetStartSlowAttack(false);
-        boss.SetIsBusy(true);
         alreadyStartedSlowAttack = true;
         boss.Target();
         slowFaceRight = (boss.faceRight ? 1 : -1);
@@ -187,7 +198,7 @@ public class BossWeaponController : MonoBehaviour
         yield return new WaitUntil(() => slowAttackRotationLeft <= 0f);
         isAttacking = -1;
         slowAttackRotationLeft = slowAttackFullRotation;
-        transform.parent.eulerAngles = slowFaceRight * defaultLocalRotation / 2;
+        transform.parent.eulerAngles = slowFaceRight * defaultLocalRotation / 2f;
         boss.Target();
         yield return new WaitForSeconds(slowAttackTimeBetweenHits);
         slowFaceRight = (boss.faceRight ? 1 : -1);
@@ -206,8 +217,32 @@ public class BossWeaponController : MonoBehaviour
         transform.parent.eulerAngles = slowDefaultRotation;
         alreadyStartedSlowAttack = false;
         startSlowAttack = false;
+
+        alreadyStartedQuickAttack = true;
+        boss.Target();
+        yield return new WaitUntil(() => timeBetweenBothAttacksLeft <= 0f);
+        isAttacking = 0;
+        yield return new WaitUntil(() => quickAttackTranslationLeft <= 0f);
+        quickAttackTranslationLeft = quickAttackFullTranslation;
+        transform.localPosition = defaultLocalPosition;
+        isAttacking = -1;
+        yield return new WaitForSeconds(quickAttackTimeBetweenHits);
+        isAttacking = 0;
+        yield return new WaitUntil(() => quickAttackTranslationLeft <= 0f);
+        quickAttackTranslationLeft = quickAttackFullTranslation;
+        transform.localPosition = defaultLocalPosition;
+        isAttacking = -1;
+        yield return new WaitForSeconds(quickAttackTimeBetweenHits);
+        isAttacking = 0;
+        yield return new WaitUntil(() => quickAttackTranslationLeft <= 0f);
+        quickAttackTranslationLeft = quickAttackFullTranslation;
+        transform.localPosition = defaultLocalPosition;
+        isAttacking = -1;
+        alreadyStartedQuickAttack = false;
+        startQuickAttack = false;
+        boss.SetStartedMeleeCD(true);
         boss.SetIsBusy(false);
-        boss.SetStartQuickAttack(true);
+        boss.SetIsDoingMeleeAttack(false);
     }
 
     public void SetStartQuickAttack(bool startQuickAttack)

@@ -35,7 +35,6 @@ public class CameraController : MonoBehaviour
 
     public void SetCameraForBoss()
     {
-        Debug.Log("st cam boss");
         cameraSpeed = 0;
         yOffset = 0;
         camTransform.position = new Vector3(0, 0, zOffset);
@@ -182,27 +181,22 @@ public class CameraController : MonoBehaviour
         switch (sceneType)
         {
             case 0:
-                Debug.Log("case 0");
                 SetCameraForMenu();
                 isCameraSet = true;
                 break;
             case 1:
-                Debug.Log("case 1");
                 SetCameraForGame();
                 isCameraSet = true;
                 break;
             case 2:
-                Debug.Log("case 2");
                 SetCameraForGame();
                 isCameraSet = true;
                 break;
             case 3:
-                Debug.Log("case 3");
                 SetCameraForBoss();
                 isCameraSet = true;
                 break;
             default:
-                Debug.Log("case default");
                 break;
         }
     }

@@ -84,12 +84,12 @@ TextMesh:
   m_GameObject: {fileID: 1286317277862292}
   m_Text: "Pour int\xE9ragir\n [F]\t\t      (RB)"
   m_OffsetZ: 0
-  m_CharacterSize: 0.5
+  m_CharacterSize: 0.025
   m_LineSpacing: 1
   m_Anchor: 4
   m_Alignment: 1
   m_TabSize: 4
-  m_FontSize: 0
+  m_FontSize: 400
   m_FontStyle: 0
   m_RichText: 1
   m_Font: {fileID: 12800000, guid: 5e58da3499d52b24c8cc70f60b8974b2, type: 3}
