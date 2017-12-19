@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 224818800841201234}
   - component: {fileID: 23614198621321638}
   - component: {fileID: 102742582637994104}
-  m_Layer: 15
+  m_Layer: 11
   m_Name: TextDialog
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39,7 +39,7 @@ GameObject:
   - component: {fileID: 58201238129516090}
   - component: {fileID: 212412057982465328}
   - component: {fileID: 114944040606531152}
-  m_Layer: 15
+  m_Layer: 11
   m_Name: NPC
   m_TagString: PNJ
   m_Icon: {fileID: 0}

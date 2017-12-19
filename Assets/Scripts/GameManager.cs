@@ -46,6 +46,7 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        //SoundManager.instance.PlayMusic(SoundManager.instance.bossMusic, true, 1000f);
     }
 
     private void Start()
@@ -77,6 +78,7 @@ public class GameManager : MonoBehaviour
         //Physics2D.IgnoreLayerCollision(0, 16, true);
         Physics2D.IgnoreLayerCollision(8, 14, false);
         Physics2D.IgnoreLayerCollision(9, 14, true);
+        Physics2D.IgnoreLayerCollision(8, 11, true);
     }
 
     private void OnSceneUnloaded(Scene scene)
@@ -122,7 +124,6 @@ public class GameManager : MonoBehaviour
                         TogglePause();
                     }
                 }
-                
             }
             else
             {
@@ -255,7 +256,7 @@ public class GameManager : MonoBehaviour
 
     private void GiveTrinket(int trinketType, GameObject player)
     {
-
+        
     }
 
     public void Quit()

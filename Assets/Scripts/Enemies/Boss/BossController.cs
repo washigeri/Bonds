@@ -10,6 +10,7 @@ public class BossController : EnemyController
     public float roomMiny;
     public float roomMaxY;
 
+    private bool fightStarted;
     private int phase;
 
     private Vector3 defaultPosition;
@@ -30,6 +31,9 @@ public class BossController : EnemyController
     private float timeBetweenMagicBalls;
     private int ballsCount;
     private int ballsLeft;
+    private bool startedMagicBallCD;
+    private float magicBallsCD;
+    private bool isMagicBallOnCD;
 
     private bool startedMagicRay;
     private int raysCount;
@@ -37,6 +41,9 @@ public class BossController : EnemyController
     private bool canCastRays;
     private bool isMovingTowardRayCastPosition;
     private Vector3 rayCastPosition;
+    private float magicRaysCD;
+    private bool isMagicRaysOnCD;
+    private bool startedMagicRayCD;
 
     private int numberOfFeathers;
 
@@ -45,20 +52,18 @@ public class BossController : EnemyController
     private bool isMeleeOnCD;
     private bool startQuickAttack;
     private bool startSlowAttack;
+    private bool isDoingMeleeAttack;
 
     private float distanceToPlayer1;
 
     private int nextAttack;
-    private bool isDoingMeleeAttack;
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        Debug.Log("colliding with " + collision.collider.name + " with tag " + collision.collider.tag);
-    }
+    private float globalCD;
+    private bool isOnGlobalCD;
 
     protected override void Awake()
     {
         phase = 0;
+        fightStarted = false;
         weapon = GetComponentInChildren<BossWeaponController>();
         maxHp = 2000f;
         attackRange = 2.5f;
@@ -75,6 +80,9 @@ public class BossController : EnemyController
         ballsCount = 4;
         ballsLeft = ballsCount;
         canCastBalls = false;
+        startedMagicBallCD = false;
+        magicBallsCD = 10f;
+        isMagicBallOnCD = false;
         startedMagicRay = false;
         raysCount = 2;
         raysLeft = raysCount;
@@ -88,13 +96,18 @@ public class BossController : EnemyController
         isMovingTowardRayCastPosition = false;
         canCastRays = false;
         rayCastPosition = new Vector3((roomMaxX + roomMinX) / 2f, 2f * roomMaxY / 3f, 0f);
+        magicRaysCD = 10f;
+        startedMagicRayCD = false;
+        isMagicRaysOnCD = false;
         startQuickAttack = false;
         startSlowAttack = false;
         distanceToPlayer1 = 0f;
         isMeleeOnCD = false;
         meleeCD = 6f;
         startedMeleeCD = false;
-        nextAttack = 1;
+        nextAttack = 0;
+        globalCD = 3f;
+        isOnGlobalCD = false;
         isDoingMeleeAttack = false;
     }
 
@@ -111,91 +124,126 @@ public class BossController : EnemyController
         }
         else
         {
-            if (GameManager.gameManager.player1 != null && GameManager.gameManager.player2 != null)
-            {
-                if (Input.GetButtonDown("WeakP1") || Input.GetButtonDown("WeakP2") || Input.GetButtonDown("StrongP1") || Input.GetButtonDown("StrongP2") || Input.GetButtonDown("SkillP1") || Input.GetButtonDown("SkillP2"))
-                {
-                    phase = 1;
-                }
-            }
+
             #region phase
-            if (health < 0.15f * maxHp)
-            {
-                phase = 3;
-            }
-            else if (health < 0.65f * maxHp)
-            {
-                phase = 2;
-            }
-            else
-            {
-                phase = 1;
-            }
-            //if (phase == 1)
+            //if (health < 0.15f * maxHp)
             //{
-            //    Phase1();
+            //    phase = 3;
+            //}
+            //else if (health < 0.65f * maxHp)
+            //{
+            //    phase = 2;
+            //}
+            //else
+            //{
+            //    phase = 1;
             //}
             #endregion
             #region Move To Default Position
-            if (isMovingTowardDefaultPosition)
-            {
-                GoTo(defaultPosition, speed * 2f);
-                bool isGrounded = Physics2D.Linecast(transform.position, transform.position + 3 * Vector3.down, 1 << LayerMask.NameToLayer("Ground"));
-                if (transform.position == defaultPosition || isGrounded)
-                {
-                    isMovingTowardDefaultPosition = false;
-                    rb2d.gravityScale = 1f;
-                }
-            }
+            //if (isMovingTowardDefaultPosition)
+            //{
+            //    GoTo(defaultPosition, speed * 2f);
+            //    bool isGrounded = Physics2D.Linecast(transform.position, transform.position + 3 * Vector3.down, 1 << LayerMask.NameToLayer("Ground"));
+            //    if (transform.position == defaultPosition || isGrounded)
+            //    {
+            //        isMovingTowardDefaultPosition = false;
+            //        rb2d.gravityScale = 1f;
+            //    }
+            //}
             #endregion
             #region Rays
-            if (Input.GetButtonDown("SkillP1") && !startedMagicRay)
-            {
-                isBusy = true;
-                isMovingTowardRayCastPosition = true;
-                rb2d.gravityScale = 0f;
-            }
-            if (isMovingTowardRayCastPosition)
-            {
-                if (startSlowAttack)
-                {
-                    startSlowAttack = false;
-                }
-                if (startQuickAttack)
-                {
-                    startQuickAttack = false;
-                }
-                GoTo(rayCastPosition, speed * 2f);
-                if (transform.position == rayCastPosition)
-                {
-                    isMovingTowardRayCastPosition = false;
-                    canCastRays = true;
-                }
-            }
-            if (canCastRays)
-            {
-                canCastRays = false;
-                StartCoroutine(CastMagicRays(false, true));
-            }
+            //if (Input.GetButtonDown("SkillP1") && !startedMagicRay)
+            //{
+            //    isBusy = true;
+            //    isMovingTowardRayCastPosition = true;
+            //    rb2d.gravityScale = 0f;
+            //}
+            //if (isMovingTowardRayCastPosition)
+            //{
+            //    if (startSlowAttack)
+            //    {
+            //        startSlowAttack = false;
+            //    }
+            //    if (startQuickAttack)
+            //    {
+            //        startQuickAttack = false;
+            //    }
+            //    GoTo(rayCastPosition, speed * 2f);
+            //    if (transform.position == rayCastPosition)
+            //    {
+            //        isMovingTowardRayCastPosition = false;
+            //        canCastRays = true;
+            //    }
+            //}
+            //if (canCastRays)
+            //{
+            //    canCastRays = false;
+            //    StartCoroutine(CastMagicRays(false, true));
+            //}
             #endregion
             #region Balls
-            if (Input.GetButtonDown("StrongP1") && !startedMagicBalls)
-            {
-                canCastBalls = true;
-            }
-            if (canCastBalls)
-            {
-                canCastBalls = false;
-                StartCoroutine(CastMagicBalls(true, true));
-            }
+            //if (Input.GetButtonDown("StrongP1") && !startedMagicBalls)
+            //{
+            //    canCastBalls = true;
+            //}
+            //if (canCastBalls)
+            //{
+            //    canCastBalls = false;
+            //    StartCoroutine(CastMagicBalls(true, true));
+            //}
             #endregion
-            if (Input.GetButtonDown("WeakP1"))
+            //if (Input.GetButtonDown("WeakP1"))
+            //{
+            //    SlowAttack();
+            //}
+            //if (startSlowAttack)
+            //{
+            //    if(GameManager.gameManager.player1 != null)
+            //    {
+            //        distanceToPlayer1 = Vector3.Distance(transform.position, GameManager.gameManager.player1.transform.position);
+            //        if (distanceToPlayer1 <= attackRange)
+            //        {
+            //            weapon.SetStartSlowAttack(true);
+            //        }
+            //        else
+            //        {
+            //            MoveTo(GameManager.gameManager.player1.transform.position);
+            //        }
+            //    }
+            //}
+            //if (startQuickAttack)
+            //{
+            //    Target();
+            //    weapon.SetStartQuickAttack(true);
+            //}
+            //if (Input.GetButtonDown("HealP1"))
+            //{
+            //    DropFeathers();
+            //}
+            //if (Input.GetButtonDown("InteractP1"))
+            //{
+            //    Target();
+            //}
+            GetPhase();
+            if (startedMeleeCD)
             {
-                SlowAttack();
+                if (!isMeleeOnCD)
+                {
+                    StartCoroutine(WaitForMeleeCD());
+                    StartCoroutine(WaitBetweenAttacks());
+                }
+            }
+            if (startedMagicBallCD)
+            {
+                if (!isMagicBallOnCD)
+                {
+                    StartCoroutine(WaitForBallsCD());
+                    StartCoroutine(WaitBetweenAttacks());
+                }
             }
             if (startSlowAttack)
             {
-                if(GameManager.gameManager.player1 != null)
+                if (GameManager.gameManager.player1 != null)
                 {
                     distanceToPlayer1 = Vector3.Distance(transform.position, GameManager.gameManager.player1.transform.position);
                     if (distanceToPlayer1 <= attackRange)
@@ -208,18 +256,9 @@ public class BossController : EnemyController
                     }
                 }
             }
-            if (startQuickAttack)
+            if (GameManager.gameManager.player1 != null && GameManager.gameManager.player2 != null)
             {
-                Target();
-                weapon.SetStartQuickAttack(true);
-            }
-            if (Input.GetButtonDown("HealP1"))
-            {
-                DropFeathers();
-            }
-            if (Input.GetButtonDown("InteractP1"))
-            {
-                Target();
+                Phase();
             }
         }
     }
@@ -233,40 +272,7 @@ public class BossController : EnemyController
         }
     }
 
-    private void SlowAttack()
-    {
-        if (!isBusy)
-        {
-            startSlowAttack = true;
-            nextAttack = Random.Range(0f, 1f) < 0.25f ? 0 : 1;
-        }
-    }
 
-    private void PopMagicBall()
-    {
-        int target = Random.Range(1, 3);
-        GameObject magicBall = Instantiate(Resources.Load("Prefabs/Enemies/Boss/Attacks/MagicBall"), transform.position, Quaternion.Euler(Vector3.zero)) as GameObject;
-        magicBall.GetComponent<MagicBall>().SetMagicBall(target, this);
-    }
-
-    private IEnumerator CastMagicBalls(bool isGod, bool isBlocked)
-    {
-        startedMagicBalls = true;
-        this.isGod = isGod;
-        this.isBlocked = isBlocked;
-        PopMagicBall();
-        yield return new WaitForSeconds(timeBetweenMagicBalls);
-        PopMagicBall();
-        yield return new WaitForSeconds(timeBetweenMagicBalls);
-        PopMagicBall();
-        yield return new WaitForSeconds(timeBetweenMagicBalls);
-        PopMagicBall();
-        yield return new WaitUntil(() => ballsLeft <= 0);
-        ballsLeft = ballsCount;
-        this.isGod = false;
-        this.isBlocked = false;
-        startedMagicBalls = false;
-    }
 
     public void Target()
     {
@@ -324,7 +330,7 @@ public class BossController : EnemyController
                 Flip();
             }
         }
-        if(Mathf.Abs(transform.position.x - target.x) > attackRange / 2f)
+        if (Mathf.Abs(transform.position.x - target.x) > attackRange / 2f)
         {
             rb2d.velocity = new Vector3(speed * (faceRight ? 1 : -1), rb2d.velocity.y, 0f);
         }
@@ -348,12 +354,17 @@ public class BossController : EnemyController
         PopMagicRay(-1);
         PopMagicRay(1);
         yield return new WaitUntil(() => raysLeft <= 0);
+        startedMagicRayCD = true;
         raysLeft = raysCount;
         this.isGod = false;
         this.isBlocked = false;
         startedMagicRay = false;
         isMovingTowardDefaultPosition = true;
         isBusy = false;
+        if(!isMagicBallOnCD && !startedMagicBalls)
+        {
+            
+        }
     }
 
     private void PopFeather()
@@ -400,16 +411,207 @@ public class BossController : EnemyController
 
     private IEnumerator WaitForMeleeCD()
     {
+        isMeleeOnCD = true;
         yield return new WaitForSeconds(meleeCD);
         isMeleeOnCD = false;
         startedMeleeCD = false;
     }
 
+    private IEnumerator WaitForBallsCD()
+    {
+        isMagicBallOnCD = true;
+        yield return new WaitForSeconds(magicBallsCD);
+        isMagicBallOnCD = false;
+        startedMagicBallCD = false;
+    }
+
+    private IEnumerator WaitForRaysCD()
+    {
+        isMagicRaysOnCD = true;
+        yield return new WaitForSeconds(magicRaysCD);
+        isMagicRaysOnCD = false;
+        startedMagicRayCD = false;
+    }
+
+    private IEnumerator WaitBetweenAttacks()
+    {
+        isOnGlobalCD = true;
+        yield return new WaitForSeconds(globalCD);
+        isOnGlobalCD = false;
+    }
+
+    private void SlowAttack()
+    {
+        startSlowAttack = true;
+    }
+
+    private void PopMagicBall()
+    {
+        int target = Random.Range(1, 3);
+        GameObject magicBall = Instantiate(Resources.Load("Prefabs/Enemies/Boss/Attacks/MagicBall"), transform.position, Quaternion.Euler(Vector3.zero)) as GameObject;
+        magicBall.GetComponent<MagicBall>().SetMagicBall(target, this);
+    }
+
+    private IEnumerator CastMagicBalls(bool isGod, bool isBlocked)
+    {
+        startedMagicBalls = true;
+        this.isGod = isGod;
+        this.isBlocked = isBlocked;
+        PopMagicBall();
+        yield return new WaitForSeconds(timeBetweenMagicBalls);
+        PopMagicBall();
+        yield return new WaitForSeconds(timeBetweenMagicBalls);
+        PopMagicBall();
+        yield return new WaitForSeconds(timeBetweenMagicBalls);
+        PopMagicBall();
+        yield return new WaitUntil(() => ballsLeft <= 0);
+        startedMagicBallCD = true;
+        ballsLeft = ballsCount;
+        this.isGod = false;
+        this.isBlocked = false;
+        startedMagicBalls = false;
+    }
+
     private void Phase1()
     {
-        if (!isMeleeOnCD)
+        if (!isOnGlobalCD)
         {
-            SlowAttack();
+            if (!isBusy)
+            {
+                if (nextAttack == 0)
+                {
+                    if (!isMeleeOnCD)
+                    {
+                        SlowAttack();
+                        nextAttack = Random.Range(0f, 1f) < 0.25f ? 0 : 1;
+                        isBusy = true;
+                    }
+                }
+                else if (nextAttack == 1)
+                {
+                    if (!isMagicBallOnCD)
+                    {
+                        MoveTo(GameManager.gameManager.player1.transform.position);
+                        if (!startedMagicBalls)
+                        {
+                            StartCoroutine(CastMagicBalls(true, true));
+                            nextAttack = 0;
+                        }
+                    }
+                    else
+                    {
+                        if (!isMeleeOnCD)
+                        {
+                            SlowAttack();
+                            isBusy = true;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private void Phase2()
+    {
+        if (!isOnGlobalCD)
+        {
+            if (!isBusy)
+            {
+                if (nextAttack == 0)
+                {
+                    if (!isMeleeOnCD)
+                    {
+                        SlowAttack();
+                        nextAttack = Random.Range(0f, 1f) < 0.25f ? 0 : 1;
+                        isBusy = true;
+                    }
+                }
+                else if (nextAttack == 1)
+                {
+                    if (!isMagicRaysOnCD && !startedMagicRay)
+                    {
+                        isBusy = true;
+                        rb2d.gravityScale = 0f;
+                        GoTo(rayCastPosition, speed * 2f);
+                        if (transform.position == rayCastPosition)
+                        {
+                            StartCoroutine(CastMagicRays(false, true));
+                        }
+                    }
+                    if (!isMagicBallOnCD)
+                    {
+                        MoveTo(GameManager.gameManager.player1.transform.position);
+                        if (!startedMagicBalls)
+                        {
+                            StartCoroutine(CastMagicBalls(true, true));
+                            nextAttack = 0;
+                        }
+                    }
+                    else
+                    {
+                        if (!isMeleeOnCD)
+                        {
+                            SlowAttack();
+                            isBusy = true;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private void Phase3()
+    {
+
+    }
+
+    private void Phase()
+    {
+        if (phase == 0)
+        {
+            if (!fightStarted)
+            {
+                if (Input.GetButtonDown("WeakP1") || Input.GetButtonDown("WeakP2") || Input.GetButtonDown("StrongP1") || Input.GetButtonDown("StrongP2") || Input.GetButtonDown("SkillP1") || Input.GetButtonDown("SkillP2"))
+                {
+                    phase = 1;
+                    fightStarted = true;
+                }
+            }
+        }
+        else if (phase == 1)
+        {
+            Phase1();
+        }
+        else if (phase == 2)
+        {
+            Phase2();
+        }
+        else if (phase == 3)
+        {
+            Phase3();
+        }
+    }
+
+    private void GetPhase()
+    {
+        if (fightStarted)
+        {
+            if (health < 0.20f * maxHp)
+            {
+                phase = 3;
+            }
+            else if (health < 0.75f * maxHp)
+            {
+                phase = 2;
+            }
+            else
+            {
+                phase = 1;
+            }
+        }
+        else
+        {
+            phase = 0;
         }
     }
 

@@ -24,7 +24,7 @@ public class Player1Controller : PlayerController
         interactBindName = "InteractP1";
         base.Awake();
     }
-    //1 << LayerMask.NameToLayer("Ground")
+
     //Update is called once per frame
     protected override void Update()
     {
@@ -52,8 +52,6 @@ public class Player1Controller : PlayerController
 
     private void MoveWithVelocity()
     {
-        //Cette ligne permet au Trigger de l'arme de se réinitialiser meme si le personnage ne bouge pas
-        //Il doit y avoir une vrai solution mais je ne trouve pas
         rb2d.AddForce(Vector2.zero);
         dirH = Input.GetAxisRaw("HorizontalP1");
         bool canMoveH = CanMoveH(dirH, !grounded);
