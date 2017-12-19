@@ -9,81 +9,82 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1402796883785196}
+  m_RootGameObject: {fileID: 1626914478881394}
   m_IsPrefabParent: 1
---- !u!1 &1402796883785196
+--- !u!1 &1626914478881394
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 4561473030923494}
-  - component: {fileID: 61065957401887296}
-  - component: {fileID: 114978483544653552}
-  - component: {fileID: 212558266960439460}
-  m_Layer: 0
-  m_Name: CheckPoint
-  m_TagString: Untagged
+  - component: {fileID: 4673573782402034}
+  - component: {fileID: 61042154916346416}
+  - component: {fileID: 251395277610729286}
+  - component: {fileID: 114274878751842718}
+  - component: {fileID: 212604223346899236}
+  m_Layer: 13
+  m_Name: OneWayUpPlatform_town
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4561473030923494
+--- !u!4 &4673573782402034
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1402796883785196}
+  m_GameObject: {fileID: 1626914478881394}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 117.23, y: 2.26, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 8.59828, y: 4.923463, z: -0.033228077}
+  m_LocalScale: {x: 1, y: 1, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &61065957401887296
+--- !u!61 &61042154916346416
 BoxCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1402796883785196}
+  m_GameObject: {fileID: 1626914478881394}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
+  m_IsTrigger: 0
+  m_UsedByEffector: 1
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 3.9756384}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 4.85, y: 4.18}
-    newSize: {x: 4.85, y: 4.18}
+    oldSize: {x: 4, y: 0.5}
+    newSize: {x: 4, y: 0.5}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 4.85, y: 12.131277}
+  m_Size: {x: 4, y: 0.5}
   m_EdgeRadius: 0
---- !u!114 &114978483544653552
+--- !u!114 &114274878751842718
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1402796883785196}
+  m_GameObject: {fileID: 1626914478881394}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c3b099770985e749b322cb5f7aa4ad8, type: 3}
+  m_Script: {fileID: 11500000, guid: 7dde87640e7b0384f989262df3406d4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!212 &212558266960439460
+--- !u!212 &212604223346899236
 SpriteRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1402796883785196}
+  m_GameObject: {fileID: 1626914478881394}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -111,14 +112,32 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1024582385
   m_SortingLayer: 2
-  m_SortingOrder: 2
-  m_Sprite: {fileID: 21300000, guid: 0d9b50890ff7642449ef4e31dc9cd66e, type: 3}
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 21300000, guid: 35abbd9d4f84aab44b59b55a75b1a9c9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 4.85, y: 4.18}
+  m_Size: {x: 4, y: 0.5}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
+--- !u!251 &251395277610729286
+PlatformEffector2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1626914478881394}
+  m_Enabled: 1
+  m_UseColliderMask: 1
+  m_ColliderMask:
+    serializedVersion: 2
+    m_Bits: 4294868479
+  m_RotationalOffset: 0
+  m_UseOneWay: 1
+  m_UseOneWayGrouping: 0
+  m_SurfaceArc: 180
+  m_UseSideFriction: 0
+  m_UseSideBounce: 0
+  m_SideArc: 90

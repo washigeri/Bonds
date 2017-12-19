@@ -27,7 +27,6 @@ public abstract class WeaponController : MonoBehaviour
     protected int isAttacking;
     protected bool isOnGlobalCoolDown;
 
-
     [HideInInspector] public string weakName;
     [HideInInspector] public string strongName;
     [HideInInspector] public string skillName;
@@ -35,7 +34,7 @@ public abstract class WeaponController : MonoBehaviour
     protected float weakCD;
     protected float strongCD;
     protected float skillCD;
-    
+
     protected bool isStrongOnCD;
     protected bool isSkillOnCD;
 
@@ -60,7 +59,7 @@ public abstract class WeaponController : MonoBehaviour
         }
         isAttacking = -1;
         isOnGlobalCoolDown = false;
-        attacksDamage = new float[] { 10 * damage / 3, 10 * damage / 2, 10 * damage, 0f};
+        attacksDamage = new float[] { 10 * damage / 3, 10 * damage / 2, 10 * damage, 0f };
         defaultLocalPosition = new Vector3(1.3f, 0f, 0f);
         //transform.localPosition = defaultLocalPosition;
         transform.localEulerAngles = defaultLocalRotation;
@@ -104,11 +103,11 @@ public abstract class WeaponController : MonoBehaviour
                     {
                         EnemyController enemy = collision.gameObject.GetComponent<EnemyController>();
                         enemy.RemoveHealth(player.GetDamageDoneMultiplier() * attacksDamage[isAttacking], false);
-                        if(player.GetEnemySpeedMultiplierDuration() > 0f)
+                        if (player.GetEnemySpeedMultiplierDuration() > 0f)
                         {
                             enemy.SetSpeedMultiplierParameters(player.GetEnemySpeedMultiplier(), player.GetEnemySpeedMultiplierDuration());
                         }
-                        if(player.GetEnemyBleedDuration() > 0f)
+                        if (player.GetEnemyBleedDuration() > 0f)
                         {
                             enemy.SetBleedingParameters(player.GetEnemyBleedPercentage() * attacksDamage[isAttacking] * player.GetDamageDoneMultiplier(), player.GetEnemyBleedDuration());
                         }
@@ -122,7 +121,7 @@ public abstract class WeaponController : MonoBehaviour
                         }
                         player.SetIsFighting(true);
                     }
-                    else if(collision.gameObject.CompareTag("Boss"))
+                    else if (collision.gameObject.CompareTag("Boss"))
                     {
                         EnemyController enemy = collision.gameObject.GetComponent<EnemyController>();
                         enemy.RemoveHealth(player.GetDamageDoneMultiplier() * attacksDamage[isAttacking], false);
@@ -197,17 +196,24 @@ public abstract class WeaponController : MonoBehaviour
             {
                 if (!isSkillOnCD)
                 {
-                    if(owner == 1)
+                    if (owner == 1)
                     {
                         StartCoroutine(SkillP1());
                     }
-                    else if(owner == 2)
+                    else if (owner == 2)
                     {
                         StartCoroutine(SkillP2());
                     }
                 }
             }
         }
+    }
+
+    public void SetSortingLayer(string layerName, int layerOrder = 0)
+    {
+        SpriteRenderer sr = GetComponent<SpriteRenderer>();
+        sr.sortingLayerName = layerName;
+        sr.sortingOrder = layerOrder;
     }
 
     public void SetHasOwner(bool hasOwner)
@@ -270,5 +276,4 @@ public abstract class WeaponController : MonoBehaviour
     {
         return weaponID;
     }
-
 }
