@@ -9,6 +9,8 @@ public class SoundManager : MonoBehaviour {
     public AudioClip bossMusic;
     public AudioClip theme1Music;
 
+    public int currentMusic = 0;
+
     [HideInInspector]
     public AudioSource musicSource;
     [HideInInspector]
@@ -43,6 +45,7 @@ public class SoundManager : MonoBehaviour {
             }
             else
             {
+                Debug.Log("ici");
                 if(fadeDuration == 0)
                 {
                     musicSource.Stop();
@@ -51,6 +54,7 @@ public class SoundManager : MonoBehaviour {
                 }
                 else
                 {
+                    Debug.Log("la");
                     StartCoroutine(this.MusicTransition(musicSource, music, fadeDuration));
                 }
             }

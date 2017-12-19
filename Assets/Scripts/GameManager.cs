@@ -70,12 +70,74 @@ public class GameManager : MonoBehaviour
         Physics2D.IgnoreLayerCollision(8, 10, true);
         Physics2D.IgnoreLayerCollision(8, 14, false);
         Physics2D.IgnoreLayerCollision(9, 14, true);
-        //Physics2D.IgnoreLayerCollision(8, 11, true);
     }
 
     private void OnSceneUnloaded(Scene scene)
     {
         CleanSceneOnChange();
+    }
+
+    private void SetMusic()
+    {
+        SoundManager sm = SoundManager.instance;
+        switch (currentScene)
+        {
+            case 0:
+                if(sm.currentMusic != 0)
+                {
+                    sm.PlayMusic(sm.titleMusic, true, 4f);
+                    sm.currentMusic = 0;
+                }
+                break;
+            case 1:
+
+                if (sm.currentMusic != 1)
+                {
+                    sm.PlayMusic(sm.theme1Music, true, 4f);
+                    sm.currentMusic = 1;
+                }
+                break;
+            case 2:
+
+                if (sm.currentMusic != 1)
+                {
+                    sm.PlayMusic(sm.theme1Music, true, 4f);
+                    sm.currentMusic = 1;
+                }
+                break;
+            case 3:
+
+                if (sm.currentMusic != 1)
+                {
+                    sm.PlayMusic(sm.theme1Music, true, 4f);
+                    sm.currentMusic = 1;
+                }
+                break;
+            case 4:
+
+                if (sm.currentMusic != 2)
+                {
+                    sm.PlayMusic(sm.bossMusic, true, 4f);
+                    sm.currentMusic = 2;
+                }
+                break;
+            case 5:
+                if (sm.currentMusic != 1)
+                {
+                    sm.PlayMusic(sm.theme1Music, true, 4f);
+                    sm.currentMusic = 1;
+                }
+                break;
+            case 6:
+                if (sm.currentMusic != 0)
+                {
+                    sm.PlayMusic(sm.titleMusic, true, 4f);
+                    sm.currentMusic = 0;
+                }
+                break;
+            default:
+                break;
+        }
     }
 
     private void InitializeGameVariables()
@@ -150,6 +212,8 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene(index);
         currentScene = index;
+        Debug.Log("currentscene in loadbyindex = " + currentScene);
+        SetMusic();
         isSceneLoaded = true;
     }
 
