@@ -5,33 +5,33 @@ using System.IO;
 using System.Xml;
 using UnityEngine;
 
-public class NPCController : MonoBehaviour {
-
+public class NPCController : MonoBehaviour
+{
     public string pnjName;
 
     private bool isTalking = false;
     private int dialogIndex = Int32.MinValue;
     private bool isPlayerInRange = false;
     private bool isCoroutineRunning = false;
-    private bool waitingForChoice = false;
-    IEnumerator coroutine;
+    private IEnumerator coroutine;
 
     private TextMesh textMesh;
 
     // Use this for initialization
-    void Awake () {
-        textMesh = gameObject.GetComponentInChildren<TextMesh>();		
-	}
+    private void Awake()
+    {
+        textMesh = gameObject.GetComponentInChildren<TextMesh>();
+    }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (isPlayerInRange)
         {
             if (!isTalking && dialogIndex == Int32.MinValue)
             {
                 DisplayInteractionText(true);
-                if (Input.GetButtonDown("InteractP1") )
+                if (Input.GetButtonDown("InteractP1"))
                 {
                     dialogIndex = -1;
                     isTalking = true;
@@ -41,28 +41,6 @@ public class NPCController : MonoBehaviour {
             {
                 coroutine = DoDialog(dialogIndex);
                 StartCoroutine(coroutine);
-                
-            }
-            else if(waitingForChoice)
-            {
-                if(dialogIndex == 1)
-                {
-                    if (Input.GetKeyDown(KeyCode.P))
-                    {
-                        StopCoroutine(coroutine);
-                        isCoroutineRunning = false;
-                        Instantiate(Resources.Load("Prefabs/UsableObjects/Potion"), gameObject.transform.position, Quaternion.identity);
-                        waitingForChoice = false;
-                    }
-                    else if (Input.GetKeyDown(KeyCode.T))
-                    {
-                        StopCoroutine(coroutine);
-                        isCoroutineRunning = false;
-                        AddStat(18);
-                        waitingForChoice = false;
-
-                    }
-                }
             }
         }
         else
@@ -74,7 +52,8 @@ public class NPCController : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Player1")){
+        if (collision.gameObject.CompareTag("Player1"))
+        {
             isPlayerInRange = true;
         }
     }
@@ -84,7 +63,7 @@ public class NPCController : MonoBehaviour {
         if (collision.gameObject.CompareTag("Player1"))
         {
             isPlayerInRange = false;
-            if(isTalking && dialogIndex != Int32.MaxValue)
+            if (isTalking && dialogIndex != Int32.MaxValue)
             {
                 dialogIndex = Int32.MinValue;
             }
@@ -94,7 +73,7 @@ public class NPCController : MonoBehaviour {
     private void DisplayInteractionText(bool toggle)
     {
         if (toggle)
-            textMesh.text = "Appuyez sur saut pour intéragir";
+            textMesh.text = "Intéragir";
         else
             textMesh.text = String.Empty;
     }
@@ -108,12 +87,12 @@ public class NPCController : MonoBehaviour {
                 WelcomeDialog();
                 dialogIndex = 0;
                 break;
+
             case 0:
                 GiveChoice();
                 dialogIndex = 1;
-                waitingForChoice = true;
-                yield return new WaitForSeconds(60f);
                 break;
+
             case 1:
                 SayGoodBye();
                 dialogIndex = Int32.MaxValue;
@@ -127,21 +106,17 @@ public class NPCController : MonoBehaviour {
     private void WelcomeDialog()
     {
         textMesh.text = "Bonjour !";
-
     }
 
     private void GiveChoice()
     {
-        textMesh.text = "Que voulez-vous ? \n\t- Potion\n\t- Point de caractéristique";
+        textMesh.text = "Voici deux potions de soin\npour vous aider";
     }
 
     private void SayGoodBye()
     {
         textMesh.text = "Au revoir !";
-    }
-
-    private void AddStat(int value, GameObject player = null)
-    {
-        Debug.Log(String.Format("+ {0} stat", value));
+        Instantiate(Resources.Load("Prefabs/UsableObjects/Potion"), gameObject.transform.position, Quaternion.identity);
+        Instantiate(Resources.Load("Prefabs/UsableObjects/Potion"), gameObject.transform.position, Quaternion.identity);
     }
 }

@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public abstract class PlayerController : MonoBehaviour
 {
-
     [HideInInspector] public bool faceRight = true;
     [HideInInspector] public bool isDead = false;
     [HideInInspector] public bool moveHability = false;
@@ -104,7 +103,6 @@ public abstract class PlayerController : MonoBehaviour
 
     protected float GetAxisRaw(string axis, float dir)
     {
-
         if (Input.GetButtonDown(axis))
         {
             if (dir == 0f)
@@ -238,8 +236,9 @@ public abstract class PlayerController : MonoBehaviour
     public void DropWeapon()
     {
         //WeaponController myWeapon = gameObject.GetComponentInChildren<WeaponController>();
-        if(myWeapon != null)
+        if (myWeapon != null)
         {
+            myWeapon.SetSortingLayer("Foreground");
             myWeapon.SetHasOwner(false);
             myWeapon.gameObject.transform.parent = null;
             myWeapon.transform.localScale = new Vector3(Mathf.Abs(myWeapon.transform.localScale.x), Mathf.Abs(myWeapon.transform.localScale.y), Mathf.Abs(myWeapon.transform.localScale.z));
@@ -251,7 +250,7 @@ public abstract class PlayerController : MonoBehaviour
 
     public void DropTrinket()
     {
-        if(myTrinket != null)
+        if (myTrinket != null)
         {
             myTrinket.SetOwner(false);
             myTrinket.ToggleSprite();
@@ -452,6 +451,8 @@ public abstract class PlayerController : MonoBehaviour
 
     public void SetMyWeapon(WeaponController myWeapon)
     {
+        SpriteRenderer sr = GetComponentInChildren<SpriteRenderer>();
+        myWeapon.SetSortingLayer(sr.sortingLayerName, sr.sortingOrder);
         this.myWeapon = myWeapon;
     }
 
@@ -484,5 +485,4 @@ public abstract class PlayerController : MonoBehaviour
     {
         this.isFighting = isFighting;
     }
- 
 }
