@@ -16,9 +16,7 @@ public class LevelEnd : MonoBehaviour
 
     private void FinishLevel()
     {
-        //GameManager.gameManager.CleanSceneOnChange();
         int currentScene = SceneManager.GetActiveScene().buildIndex;
-        Debug.Log("currentscene in levelEnd = " + currentScene);
         if(currentScene == GameManager.gameManager.GetBossSceneBuildIndex())
         {
             GameManager.gameManager.GoBackToMenu();

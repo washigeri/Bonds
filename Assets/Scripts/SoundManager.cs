@@ -45,7 +45,6 @@ public class SoundManager : MonoBehaviour {
             }
             else
             {
-                Debug.Log("ici");
                 if(fadeDuration == 0)
                 {
                     musicSource.Stop();
@@ -54,7 +53,6 @@ public class SoundManager : MonoBehaviour {
                 }
                 else
                 {
-                    Debug.Log("la");
                     StartCoroutine(this.MusicTransition(musicSource, music, fadeDuration));
                 }
             }

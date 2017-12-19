@@ -144,6 +144,7 @@ public abstract class WeaponController : MonoBehaviour
     {
         if (!hasOwner)
         {
+            Debug.Log(collision.name);
             if (Input.GetButtonDown("InteractP1"))
             {
                 if (collision.gameObject.CompareTag("Player1"))
@@ -153,6 +154,7 @@ public abstract class WeaponController : MonoBehaviour
             }
             else if (Input.GetButtonDown("InteractP2"))
             {
+                Debug.Log("InteractP2");
                 if (collision.gameObject.CompareTag("Player2"))
                 {
                     SwapWeapons(collision, 2);

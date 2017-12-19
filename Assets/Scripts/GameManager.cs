@@ -69,7 +69,7 @@ public class GameManager : MonoBehaviour
     {
         Physics2D.IgnoreLayerCollision(8, 10, true);
         Physics2D.IgnoreLayerCollision(8, 14, false);
-        Physics2D.IgnoreLayerCollision(9, 14, true);
+        Physics2D.IgnoreLayerCollision(9, 14, false);
     }
 
     private void OnSceneUnloaded(Scene scene)
@@ -212,7 +212,6 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene(index);
         currentScene = index;
-        Debug.Log("currentscene in loadbyindex = " + currentScene);
         SetMusic();
         isSceneLoaded = true;
     }
