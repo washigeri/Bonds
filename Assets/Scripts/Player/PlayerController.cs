@@ -228,8 +228,6 @@ public abstract class PlayerController : MonoBehaviour
         if (Input.GetButtonDown(potionBindName))
         {
             UsePotion();
-            //a retirer
-            hp = maxHp;
         }
     }
 

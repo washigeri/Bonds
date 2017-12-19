@@ -62,8 +62,11 @@ public class BossController : EnemyController
     private float globalCD;
     private bool isOnGlobalCD;
 
+    private bool isDead;
+
     protected override void Awake()
     {
+        isDead = false;
         phase = 0;
         fightStarted = false;
         weapon = GetComponentInChildren<BossWeaponController>();
@@ -124,110 +127,11 @@ public class BossController : EnemyController
     {
         if (health <= 0f)
         {
+            isDead = true;
             Destroy(gameObject);
         }
         else
         {
-
-            #region phase
-            //if (health < 0.15f * maxHp)
-            //{
-            //    phase = 3;
-            //}
-            //else if (health < 0.65f * maxHp)
-            //{
-            //    phase = 2;
-            //}
-            //else
-            //{
-            //    phase = 1;
-            //}
-            #endregion
-            #region Move To Default Position
-            //if (isMovingTowardDefaultPosition)
-            //{
-            //    GoTo(defaultPosition, speed * 2f);
-            //    bool isGrounded = Physics2D.Linecast(transform.position, transform.position + 3 * Vector3.down, 1 << LayerMask.NameToLayer("Ground"));
-            //    if (transform.position == defaultPosition || isGrounded)
-            //    {
-            //        isMovingTowardDefaultPosition = false;
-            //        rb2d.gravityScale = 1f;
-            //    }
-            //}
-            #endregion
-            #region Rays
-            //if (Input.GetButtonDown("SkillP1") && !startedMagicRay)
-            //{
-            //    isBusy = true;
-            //    isMovingTowardRayCastPosition = true;
-            //    rb2d.gravityScale = 0f;
-            //}
-            //if (isMovingTowardRayCastPosition)
-            //{
-            //    if (startSlowAttack)
-            //    {
-            //        startSlowAttack = false;
-            //    }
-            //    if (startQuickAttack)
-            //    {
-            //        startQuickAttack = false;
-            //    }
-            //    GoTo(rayCastPosition, speed * 2f);
-            //    if (transform.position == rayCastPosition)
-            //    {
-            //        isMovingTowardRayCastPosition = false;
-            //        canCastRays = true;
-            //    }
-            //}
-            //if (canCastRays)
-            //{
-            //    canCastRays = false;
-            //    StartCoroutine(CastMagicRays(false, true));
-            //}
-            #endregion
-            #region Balls
-            //if (Input.GetButtonDown("StrongP1") && !startedMagicBalls)
-            //{
-            //    canCastBalls = true;
-            //}
-            //if (canCastBalls)
-            //{
-            //    canCastBalls = false;
-            //    StartCoroutine(CastMagicBalls(true, true));
-            //}
-            #endregion
-            //if (Input.GetButtonDown("WeakP1"))
-            //{
-            //    SlowAttack();
-            //}
-            //if (startSlowAttack)
-            //{
-            //    if(GameManager.gameManager.player1 != null)
-            //    {
-            //        distanceToPlayer1 = Vector3.Distance(transform.position, GameManager.gameManager.player1.transform.position);
-            //        if (distanceToPlayer1 <= attackRange)
-            //        {
-            //            weapon.SetStartSlowAttack(true);
-            //        }
-            //        else
-            //        {
-            //            MoveTo(GameManager.gameManager.player1.transform.position);
-            //        }
-            //    }
-            //}
-            //if (startQuickAttack)
-            //{
-            //    Target();
-            //    weapon.SetStartQuickAttack(true);
-            //}
-            //if (Input.GetButtonDown("HealP1"))
-            //{
-            //    DropFeathers();
-            //}
-            //if (Input.GetButtonDown("InteractP1"))
-            //{
-            //    Target();
-            //}
             GetPhase();
             if (startedMeleeCD)
             {
@@ -695,5 +599,13 @@ public class BossController : EnemyController
     public void SetIsDoingMeleeAttack(bool isDoingMeleeAttack)
     {
         this.isDoingMeleeAttack = isDoingMeleeAttack;
+    }
+
+    private void OnDestroy()
+    {
+        if (isDead)
+        {
+            GameManager.gameManager.GoToNextLevel();
+        }
     }
 }

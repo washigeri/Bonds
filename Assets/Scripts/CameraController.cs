@@ -185,7 +185,7 @@ public class CameraController : MonoBehaviour
                 isCameraSet = true;
                 break;
             case 1:
-                SetCameraForGame();
+                SetCameraForMenu();
                 isCameraSet = true;
                 break;
             case 2:
@@ -193,7 +193,19 @@ public class CameraController : MonoBehaviour
                 isCameraSet = true;
                 break;
             case 3:
+                SetCameraForGame();
+                isCameraSet = true;
+                break;
+            case 4:
                 SetCameraForBoss();
+                isCameraSet = true;
+                break;
+            case 5:
+                SetCameraForMenu();
+                isCameraSet = true;
+                break;
+            case 6:
+                SetCameraForMenu();
                 isCameraSet = true;
                 break;
             default:

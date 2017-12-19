@@ -22,8 +22,7 @@ public class GameManager : MonoBehaviour
     private GameObject pauseMenu;
     private GameObject inGamePanel;
 
-    private bool isGameInitialized;
-
+    private int gameOverScene;
     private int bossSceneBuildIndex;
     private int currentScene;
     private bool sceneChanged;
@@ -53,10 +52,10 @@ public class GameManager : MonoBehaviour
     {
         toBeCleanOnSceneChange = new List<GameObject>();
         isPaused = false;
-        bossSceneBuildIndex = 3;
+        bossSceneBuildIndex = 4;
+        gameOverScene = 6;
         currentScene = 0;
         sceneChanged = false;
-        isGameInitialized = false;
         isOnMenu = true;
         isPlaying = false;
         isGameReady = false;
@@ -68,18 +67,10 @@ public class GameManager : MonoBehaviour
 
     private void IgnoreCollision()
     {
-        //Physics2D.IgnoreLayerCollision(8, 9, true);
-        //Physics2D.IgnoreLayerCollision(9, 10, true);
-        //Physics2D.IgnoreLayerCollision(8, 10, false);
-        //Physics2D.IgnoreLayerCollision(8, 15, true);
-        //Physics2D.IgnoreLayerCollision(13, 15, true);
-        //Physics2D.IgnoreLayerCollision(10, 15, true);
-        //Physics2D.IgnoreLayerCollision(16, 13, true);
-        //Physics2D.IgnoreLayerCollision(0, 16, true);
         Physics2D.IgnoreLayerCollision(8, 10, true);
         Physics2D.IgnoreLayerCollision(8, 14, false);
         Physics2D.IgnoreLayerCollision(9, 14, true);
-        Physics2D.IgnoreLayerCollision(8, 11, true);
+        //Physics2D.IgnoreLayerCollision(8, 11, true);
     }
 
     private void OnSceneUnloaded(Scene scene)
@@ -112,6 +103,10 @@ public class GameManager : MonoBehaviour
         {
             if (isGameReady)
             {
+                if (player1.GetComponent<PlayerController>().isDead || player2.GetComponent<PlayerController>().isDead)
+                {
+                    GameOver();
+                }
                 if (!isSceneLoaded)
                 {
                     LoadByIndex(currentScene);
@@ -215,6 +210,14 @@ public class GameManager : MonoBehaviour
         isGameReady = false;
         isSceneLoaded = false;
         currentScene = 0;
+    }
+
+    public void GameOver()
+    {
+        isPlaying = false;
+        isSceneLoaded = false;
+        isGameReady = false;
+        currentScene = 6;
     }
 
     private void GiveWeapon(int weaponType, GameObject player)
