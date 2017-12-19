@@ -46,6 +46,8 @@ public class BossController : EnemyController
     private bool startedMagicRayCD;
 
     private int numberOfFeathers;
+    private float featherCadency;
+    private bool isFeatherOnCD;
 
     private bool startedMeleeCD;
     private float meleeCD;
@@ -65,7 +67,7 @@ public class BossController : EnemyController
         phase = 0;
         fightStarted = false;
         weapon = GetComponentInChildren<BossWeaponController>();
-        maxHp = 2000f;
+        maxHp = 7500f;
         attackRange = 2.5f;
         health = maxHp;
         speed = 5;
@@ -87,6 +89,8 @@ public class BossController : EnemyController
         raysCount = 2;
         raysLeft = raysCount;
         numberOfFeathers = 1;
+        featherCadency = 5f;
+        isFeatherOnCD = false;
         roomMinX = -(float)CameraController.cameraWidth / 2f;
         roomMaxX = (float)CameraController.cameraWidth / 2f;
         roomMiny = -(float)CameraController.cameraHeight / 2f;
@@ -241,6 +245,24 @@ public class BossController : EnemyController
                     StartCoroutine(WaitBetweenAttacks());
                 }
             }
+            if (startedMagicRayCD)
+            {
+                if (!isMagicRaysOnCD)
+                {
+                    StartCoroutine(WaitForRaysCD());
+                }
+            }
+            if (isMovingTowardDefaultPosition)
+            {
+                GoTo(defaultPosition, 2f * speed);
+                bool isGrounded = Physics2D.Linecast(transform.position, transform.position + 3 * Vector3.down, 1 << LayerMask.NameToLayer("Ground"));
+                if (transform.position == defaultPosition || isGrounded)
+                {
+                    isMovingTowardDefaultPosition = false;
+                    rb2d.gravityScale = 1f;
+                    isBusy = false;
+                }
+            }
             if (startSlowAttack)
             {
                 if (GameManager.gameManager.player1 != null)
@@ -359,12 +381,7 @@ public class BossController : EnemyController
         this.isGod = false;
         this.isBlocked = false;
         startedMagicRay = false;
-        isMovingTowardDefaultPosition = true;
-        isBusy = false;
-        if(!isMagicBallOnCD && !startedMagicBalls)
-        {
-            
-        }
+        isMovingTowardDefaultPosition = true;        
     }
 
     private void PopFeather()
@@ -440,6 +457,12 @@ public class BossController : EnemyController
         isOnGlobalCD = false;
     }
 
+    private IEnumerator WaitBetweenFeathers()
+    {
+        yield return new WaitForSeconds(featherCadency);
+        isFeatherOnCD = false;
+    }
+
     private void SlowAttack()
     {
         startSlowAttack = true;
@@ -483,7 +506,7 @@ public class BossController : EnemyController
                     if (!isMeleeOnCD)
                     {
                         SlowAttack();
-                        nextAttack = Random.Range(0f, 1f) < 0.25f ? 0 : 1;
+                        nextAttack = 1;
                         isBusy = true;
                     }
                 }
@@ -494,7 +517,7 @@ public class BossController : EnemyController
                         MoveTo(GameManager.gameManager.player1.transform.position);
                         if (!startedMagicBalls)
                         {
-                            StartCoroutine(CastMagicBalls(true, true));
+                            StartCoroutine(CastMagicBalls(false, true));
                             nextAttack = 0;
                         }
                     }
@@ -522,7 +545,7 @@ public class BossController : EnemyController
                     if (!isMeleeOnCD)
                     {
                         SlowAttack();
-                        nextAttack = Random.Range(0f, 1f) < 0.25f ? 0 : 1;
+                        nextAttack = 1;
                         isBusy = true;
                     }
                 }
@@ -530,21 +553,13 @@ public class BossController : EnemyController
                 {
                     if (!isMagicRaysOnCD && !startedMagicRay)
                     {
-                        isBusy = true;
                         rb2d.gravityScale = 0f;
                         GoTo(rayCastPosition, speed * 2f);
                         if (transform.position == rayCastPosition)
                         {
+                            isBusy = true;
                             StartCoroutine(CastMagicRays(false, true));
-                        }
-                    }
-                    if (!isMagicBallOnCD)
-                    {
-                        MoveTo(GameManager.gameManager.player1.transform.position);
-                        if (!startedMagicBalls)
-                        {
-                            StartCoroutine(CastMagicBalls(true, true));
-                            nextAttack = 0;
+                            nextAttack = 2;
                         }
                     }
                     else
@@ -557,12 +572,49 @@ public class BossController : EnemyController
                     }
                 }
             }
+            if(nextAttack == 2 && !startedMagicRay)
+            {
+                if (!isMagicBallOnCD)
+                {
+                    if (!startedMagicBalls)
+                    {
+                        StartCoroutine(CastMagicBalls(false, false));
+                        nextAttack = 0;
+                    }
+                }
+            }
         }
     }
 
     private void Phase3()
     {
-
+        if (health < 0.1f * maxHp)
+        {
+            featherCadency = 0.5f;
+        }
+        else if (health < 0.2f * maxHp)
+        {
+            featherCadency = 1f;
+        }
+        else if (health < 0.3f * maxHp)
+        {
+            featherCadency = 2f;
+        }
+        else if (health < 0.4f * maxHp)
+        {
+            featherCadency = 4f;
+        }
+        else
+        {
+            featherCadency = 5f;
+        }
+        Phase2();
+        if (!isFeatherOnCD)
+        {
+            DropFeathers();
+            isFeatherOnCD = true;
+            StartCoroutine(WaitBetweenFeathers());
+        }
     }
 
     private void Phase()
