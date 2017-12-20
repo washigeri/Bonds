@@ -105,7 +105,6 @@ public class Bow : WeaponController
         PlaySkillSound();
         player.SetIsBlocked(true);
         player.SetMaxSpeed(disengageAcceleration * player.GetMaxSpeed());
-        Physics2D.IgnoreLayerCollision(8, 10, true);
         player.moveHability = true;
         yield return new WaitForSeconds(0.1f);
         player.rb2d.AddForce(365f * (player.faceRight ? Vector2.left : Vector2.right), ForceMode2D.Impulse);
@@ -113,7 +112,6 @@ public class Bow : WeaponController
         yield return new WaitForSeconds(disengageDuration);
         player.SetIsBlocked(false);
         player.SetMaxSpeed(player.GetMaxSpeed() / disengageAcceleration);
-        Physics2D.IgnoreLayerCollision(8, 10, false);
         yield return new WaitForSeconds(skillCD - disengageDuration);
         isSkillOnCD = false;
     }

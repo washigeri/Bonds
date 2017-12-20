@@ -50,7 +50,7 @@ public class Daggers : WeaponController
         strongDuration = 2f;
         strongRange = 1.25f;
 
-        rouladeAcceleration = 15f;
+        rouladeAcceleration = 5f;
         rouladeDuration = 0.2f;
         rouladeFullRotation = 360f;
         rouladeFaceRight = -1;
@@ -138,7 +138,6 @@ public class Daggers : WeaponController
         PlaySkillSound();
         startedRoulade = true;
         player.SetSpeedMultiplier(player.GetSpeedMutiplier() * rouladeAcceleration);
-        Physics2D.IgnoreLayerCollision(8, 10, true);
         player.rb2d.AddForce(365f * (player.faceRight ? Vector2.right : Vector2.left), ForceMode2D.Impulse);
         isSkillOnCD = true;
         isOnGlobalCoolDown = true;
@@ -150,7 +149,6 @@ public class Daggers : WeaponController
         player.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
         rouladeRotationLeft = rouladeFullRotation;
         player.SetSpeedMultiplier(player.GetSpeedMutiplier() / rouladeAcceleration);
-        Physics2D.IgnoreLayerCollision(8, 10, false);
         float currentGCD = localGlobalCD * player.GetAttackSpeedMultipler();
         yield return new WaitForSeconds(currentGCD - rouladeDuration);
         isOnGlobalCoolDown = false;

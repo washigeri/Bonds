@@ -521,11 +521,11 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Dans un monde inconnu, \ndans un univers m\xE9di\xE9val empreint de magie
-    et d'aventure, notre jeune h\xE9ros se r\xE9veille un matin dans sa maison vide.\n
-    \nAujourd'hui son p\xE8re n'est pas entrain de pr\xE9parer le d\xE9jeuner comme
-    \xE0 son habitude...\n\nCette myst\xE9rieuse disparition va marquer le d\xE9but
-    de son aventure, mais aussi de la v\xF4tre."
+  m_Text: "Dans un monde inconnu, \ndans un univers medieval empreint de magie et
+    d'aventure, notre jeune heros se reveille un matin dans sa maison vide.\n \nAujourd'hui
+    son pere n'est pas entrain de preparer le dejeuner comme a son habitude...\n\nCette
+    mysterieuse disparition va marquer le debut de son aventure, mais aussi de la
+    votre."
 --- !u!222 &1990131720
 CanvasRenderer:
   m_ObjectHideFlags: 0

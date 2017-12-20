@@ -45,7 +45,6 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        //SoundManager.instance.PlayMusic(SoundManager.instance.bossMusic, true, 1000f);
     }
 
     private void Start()
@@ -230,7 +229,7 @@ public class GameManager : MonoBehaviour
         else
         {
             player1 = Instantiate(Resources.Load("Prefabs/Players/Player1"), Vector3.zero, Quaternion.Euler(0, 0, 0)) as GameObject;
-            GiveWeapon(1, player1);
+            GiveWeapon(2, player1);
             GiveTrinket(-1, player1);
             player2 = Instantiate(Resources.Load("Prefabs/Players/Player2"), Vector3.zero, Quaternion.Euler(0, 0, 0)) as GameObject;
             GiveWeapon(3, player2);

@@ -601,11 +601,11 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "La premi\xE8re journ\xE9e de votre voyage s'ach\xE8ve, ce combat a r\xE9v\xE9ill\xE9
-    en vous l'impression de ne pas \xEAtre seul.\n \nLes pouvoirs auxquels le Fr\xE8re
-    Jack avait acc\xE8s n'ont rien d'humains. Son corps ne pourrait les supporter...\n\nPeut-\xEAtre
-    \xE9tait-ce le r\xE9sultat de la pr\xE9sence d'un esprit ?\n\nJe dois continuer
-    \xE0 chercher mon p\xE8re...\n\n"
+  m_Text: "La premiere journee de votre voyage s'acheve, ce combat a reveille en vous
+    l'impression de ne pas etre seul.\n \nLes pouvoirs auxquels le Frere Jack avait
+    acces n'ont rien d'humains. Son corps ne pourrait les supporter...\n\nPeut-etre
+    etait-ce le resultat de la presence d'un esprit ?\n\nJe dois continuer a chercher
+    mon pere...\n\n"
 --- !u!222 &1751851121
 CanvasRenderer:
   m_ObjectHideFlags: 0
