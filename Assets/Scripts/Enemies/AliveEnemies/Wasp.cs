@@ -15,6 +15,7 @@ public class Wasp : AliveEnemy
         damage = 4;
         attackRange = 1f;
         detectionRange = 25f;
+        isFlying = true;
     }
 
     protected override IEnumerator Attack()

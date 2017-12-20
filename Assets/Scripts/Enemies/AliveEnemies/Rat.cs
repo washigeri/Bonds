@@ -13,6 +13,7 @@ public class Rat : AliveEnemy {
         damage = 2;
         attackRange = 1f;
         detectionRange = 20f;
+        isFlying = false;
     }
 
     protected override IEnumerator Attack()

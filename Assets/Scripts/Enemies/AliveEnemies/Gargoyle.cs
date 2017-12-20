@@ -13,6 +13,7 @@ public class Gargoyle : AliveEnemy {
         damage = 10;
         attackRange = 1.5f;
         detectionRange = 10f;
+        isFlying = false;
     }
 
     protected override IEnumerator Attack()

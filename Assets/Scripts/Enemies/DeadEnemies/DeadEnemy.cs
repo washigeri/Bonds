@@ -74,13 +74,14 @@ public abstract class DeadEnemy : EnemyController
     protected override void MoveToward(Vector2 target)
     {
         Vector2 velocity = rb2d.velocity;
+        Vector2 direction = (new Vector3(target.x, target.y, 0f) - transform.position).normalized;
         if(target.x < enemyTransform.position.x)
         {
             if (faceRight)
             {
                 Flip();
             }
-            velocity.x = -speed;
+            velocity.x = -speed * Mathf.Abs(direction.x);
         }
         else
         {
@@ -88,17 +89,17 @@ public abstract class DeadEnemy : EnemyController
             {
                 Flip();
             }
-            velocity.x = speed;
+            velocity.x = speed * Mathf.Abs(direction.x);
         }
         if (target.y > enemyTransform.position.y)
         {
-            velocity.y = speed;
+            velocity.y = speed * Mathf.Abs(direction.y);
         }
         else
         {
-            velocity.y = -speed;
+            velocity.y = -speed * Mathf.Abs(direction.y);
         }
-        rb2d.velocity = velocity.normalized * speed;
+        rb2d.velocity = velocity;
     }
 
     private void TryToAttackOrMove()
@@ -130,28 +131,6 @@ public abstract class DeadEnemy : EnemyController
             player = (hasATarget == 1 ? GameManager.gameManager.player1 : GameManager.gameManager.player2);
             TryToAttackOrMove();
         }
-        //else
-        //{
-        //    if (playerID == 1)
-        //    {
-        //        player = GameManager.gameManager.player2;
-        //    }
-        //    else
-        //    {
-        //        player = GameManager.gameManager.player1;
-        //    }
-        //    playerID = playerID == 1 ? 2 : 1;
-        //    if (IsVisible(playerID))
-        //    {
-        //        hasATarget = playerID;
-        //        player = hasATarget == 1 ? GameManager.gameManager.player1 : GameManager.gameManager.player2;
-        //        TryToAttackOrMove();
-        //    }
-        //    else
-        //    {
-        //        hasATarget = 0;
-        //    }
-        //}
         else
         {
             hasATarget = 0;

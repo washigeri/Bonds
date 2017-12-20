@@ -130,31 +130,7 @@ public abstract class EnemyController : MonoBehaviour
 
     protected abstract void Action();
 
-
-    //protected void MoveTowards(Vector2 target)
-    //{
-    //    Vector2 nextPosition = Vector2.MoveTowards(enemyTransform.position, target, speedMultiplier * speed * Time.deltaTime);
-    //    if (nextPosition.x - enemyTransform.position.x > 0)
-    //    {
-    //        if (!faceRight)
-    //        {
-    //            Flip();
-    //        }
-    //    }
-    //    else if (nextPosition.x - enemyTransform.position.x < 0)
-    //    {
-    //        if (faceRight)
-    //        {
-    //            Flip();
-    //        }
-    //    }
-    //    enemyTransform.position = nextPosition;
-    //}
-
-    protected virtual void MoveToward(Vector2 target)
-    {
-
-    }
+    protected abstract void MoveToward(Vector2 target);
 
     protected void Stop()
     {

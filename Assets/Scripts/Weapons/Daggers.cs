@@ -50,7 +50,7 @@ public class Daggers : WeaponController
         strongDuration = 2f;
         strongRange = 1.25f;
 
-        rouladeAcceleration = 2.5f;
+        rouladeAcceleration = 15f;
         rouladeDuration = 0.2f;
         rouladeFullRotation = 360f;
         rouladeFaceRight = -1;

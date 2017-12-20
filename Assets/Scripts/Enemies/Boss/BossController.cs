@@ -198,7 +198,10 @@ public class BossController : EnemyController
         }
     }
 
-
+    protected override void MoveToward(Vector2 target)
+    {
+        
+    }
 
     public void Target()
     {
